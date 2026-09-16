@@ -80,7 +80,7 @@ export function OAuthButtons({ providers, onUnavailable, onSuccess, onError }: P
               }`}
             >
               {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <ProviderIcon id={provider.id} />}
-              <span className="hidden sm:inline">{provider.label}</span>
+              <span>{provider.label}</span>
               {provider.status !== "live" && (
                 <span className="absolute -right-1 -top-1 rounded-full border border-border bg-surface-elevated px-1.5 py-0.5 text-[9px] font-semibold uppercase text-foreground-subtle">
                   Soon

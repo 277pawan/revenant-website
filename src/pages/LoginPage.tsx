@@ -24,8 +24,18 @@ export function LoginPage() {
       .then((r) => setProviders(r.providers))
       .catch(() =>
         setProviders([
-          { id: "google", label: "Google", status: "coming_soon" },
-          { id: "github", label: "GitHub", status: "coming_soon" },
+          {
+            id: "google",
+            label: "Google",
+            status: "live",
+            authorizePath: "/api/v1/auth/oauth/google/start",
+          },
+          {
+            id: "github",
+            label: "GitHub",
+            status: "live",
+            authorizePath: "/api/v1/auth/oauth/github/start",
+          },
         ])
       );
   }, []);
