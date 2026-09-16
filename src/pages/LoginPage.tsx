@@ -21,7 +21,7 @@ export function LoginPage() {
 
   useEffect(() => {
     void getAuthProviders()
-      .then((r) => setProviders(r.providers))
+      .then((r) => setProviders(r.providers.filter((p) => p.id === "google" || p.id === "github")))
       .catch(() =>
         setProviders([
           {
