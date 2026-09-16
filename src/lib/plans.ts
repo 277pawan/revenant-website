@@ -1,0 +1,73 @@
+export type PlanId = "developer" | "starter" | "pro" | "enterprise";
+
+export type Plan = {
+  id: PlanId;
+  name: string;
+  price: string;
+  priceNote?: string;
+  tagline: string;
+  highlights: string[];
+  cta: string;
+  ctaHref: string;
+  featured?: boolean;
+};
+
+export const PLANS: Plan[] = [
+  {
+    id: "developer",
+    name: "Developer",
+    price: "Free forever",
+    tagline: "CLI + GitHub Action — your pipeline, your AWS sandbox.",
+    highlights: [
+      "revenant CLI + GitHub Action",
+      "AWS snapshot restore in your account",
+      "YAML in git — no cloud account",
+    ],
+    cta: "Get the CLI",
+    ctaHref: "/docs/cli/install",
+  },
+  {
+    id: "starter",
+    name: "Starter",
+    price: "₹999",
+    priceNote: "/ month after 30-day trial",
+    tagline: "One production workflow — Revenant runs restore drills for you.",
+    highlights: [
+      "30-day free trial — no card at signup",
+      "1 RDS workflow, managed AWS drill",
+      "Evidence vault, schedules, email alerts",
+      "No Docker — cloud executes drills",
+    ],
+    cta: "Start free trial",
+    ctaHref: "/register",
+    featured: true,
+  },
+  {
+    id: "pro",
+    name: "Pro",
+    price: "₹4,999",
+    priceNote: "/ month",
+    tagline: "Fleet DR proof — parallel drills, optional private-network agent.",
+    highlights: [
+      "Up to 10 production workflows",
+      "3 parallel restore drills",
+      "Slack, HTTP, 1-year evidence",
+      "Agent for private VPC Postgres only",
+    ],
+    cta: "Start with Pro",
+    ctaHref: "/register",
+  },
+  {
+    id: "enterprise",
+    name: "Enterprise",
+    price: "Contact us",
+    tagline: "SSO, custom SLAs, compliance packaging.",
+    highlights: [
+      "Unlimited workflows (fair use)",
+      "Dedicated support & retention",
+      "SSO and custom contracts",
+    ],
+    cta: "Talk to us",
+    ctaHref: "/talk",
+  },
+];

@@ -1,0 +1,245 @@
+import { useState, type FormEvent } from "react";
+import {
+  Coffee,
+  Heart,
+  Loader2,
+  Mail,
+  Phone,
+  Linkedin,
+  Github,
+  Check,
+} from "lucide-react";
+import { submitContact } from "../lib/api";
+import { site } from "../lib/site";
+import { Button } from "../components/ui/Button";
+
+const AMOUNTS = [
+  { inr: 99, label: "₹99", note: "One coffee" },
+  { inr: 299, label: "₹299", note: "A few coffees" },
+  { inr: 999, label: "₹999", note: "Serious support" },
+  { inr: 2499, label: "₹2,499", note: "Fuel a sprint" },
+];
+
+export function CoffeePage() {
+  const [amount, setAmount] = useState(299);
+  const [custom, setCustom] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [note, setNote] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [done, setDone] = useState(false);
+  const [error, setError] = useState("");
+
+  const selected =
+    custom.trim() && Number(custom) > 0 ? Number(custom) : amount;
+
+  async function onSubmit(e: FormEvent) {
+    e.preventDefault();
+    setError("");
+    if (!selected || selected < 1) {
+      setError("Pick or enter an amount.");
+      return;
+    }
+    setLoading(true);
+    try {
+      await submitContact({
+        type: "coffee",
+        name: name.trim(),
+        email: email.trim(),
+        amountInr: selected,
+        message: note.trim() || undefined,
+      });
+      setDone(true);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Could not submit");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <div className="px-4 py-16 sm:px-6 sm:py-20">
+      <div className="mx-auto max-w-5xl">
+        <div className="text-center">
+          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl border border-border-strong bg-accent-muted">
+            <Coffee size={28} className="text-accent-bright" />
+          </div>
+          <h1 className="ui-heading text-4xl">Fund Revenant</h1>
+          <p className="mx-auto mt-4 max-w-xl text-foreground-muted leading-relaxed">
+            Choose an amount to support development. We&apos;ll email you UPI /
+            payment details and confirm your pledge. This is funding — not a
+            chat form.
+          </p>
+        </div>
+
+        <div className="mt-12 grid gap-8 lg:grid-cols-2">
+          <div className="ui-card p-6">
+            {done ? (
+              <div className="py-8 text-center">
+                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-success-muted text-success">
+                  <Check size={24} />
+                </div>
+                <p className="mt-4 text-lg font-semibold text-foreground">
+                  Thanks — pledge recorded
+                </p>
+                <p className="mt-2 text-sm text-foreground-muted">
+                  We&apos;ll reply to <strong>{email}</strong> with how to send
+                  ₹{selected.toLocaleString("en-IN")}.
+                </p>
+                <Button
+                  variant="secondary"
+                  className="mt-6"
+                  onClick={() => setDone(false)}
+                >
+                  Pledge again
+                </Button>
+              </div>
+            ) : (
+              <form onSubmit={onSubmit} className="space-y-5">
+                <div>
+                  <p className="mb-2 text-sm font-medium text-foreground-muted">
+                    Select amount
+                  </p>
+                  <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+                    {AMOUNTS.map((a) => (
+                      <button
+                        key={a.inr}
+                        type="button"
+                        onClick={() => {
+                          setAmount(a.inr);
+                          setCustom("");
+                        }}
+                        className={`rounded-xl border px-3 py-3 text-left transition ${
+                          !custom && amount === a.inr
+                            ? "border-accent bg-accent-muted ring-2 ring-accent/20"
+                            : "border-border hover:border-border-strong"
+                        }`}
+                      >
+                        <div className="font-semibold text-foreground">
+                          {a.label}
+                        </div>
+                        <div className="text-[11px] text-foreground-subtle">{a.note}</div>
+                      </button>
+                    ))}
+                  </div>
+                  <div className="mt-3">
+                    <label className="mb-1.5 block text-xs text-foreground-subtle">
+                      Or custom amount (INR)
+                    </label>
+                    <input
+                      type="number"
+                      min={1}
+                      value={custom}
+                      onChange={(e) => setCustom(e.target.value)}
+                      className="ui-input"
+                      placeholder="e.g. 500"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="mb-1.5 block text-sm font-medium text-foreground-muted">
+                    Your name
+                  </label>
+                  <input
+                    required
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className="ui-input"
+                  />
+                </div>
+                <div>
+                  <label className="mb-1.5 block text-sm font-medium text-foreground-muted">
+                    Email (we send payment details here)
+                  </label>
+                  <input
+                    required
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="ui-input"
+                  />
+                </div>
+                <div>
+                  <label className="mb-1.5 block text-sm font-medium text-foreground-muted">
+                    Note (optional)
+                  </label>
+                  <textarea
+                    rows={2}
+                    value={note}
+                    onChange={(e) => setNote(e.target.value)}
+                    className="ui-input resize-none"
+                    placeholder="Anything you want us to know"
+                  />
+                </div>
+
+                {error && (
+                  <p className="text-sm text-error" role="alert">
+                    {error}
+                  </p>
+                )}
+
+                <Button type="submit" disabled={loading} className="w-full">
+                  {loading ? (
+                    <Loader2 size={16} className="animate-spin" />
+                  ) : (
+                    <Heart size={16} />
+                  )}
+                  Pledge ₹{selected.toLocaleString("en-IN")}
+                </Button>
+                <p className="text-center text-xs text-foreground-subtle">
+                  You won&apos;t be charged here. We email UPI / transfer details
+                  next.
+                </p>
+              </form>
+            )}
+          </div>
+
+          <div className="space-y-4">
+            <div className="ui-card p-6">
+              <h3 className="font-semibold text-foreground">Contact</h3>
+              <div className="mt-4 space-y-3 text-sm text-foreground-muted">
+                <a
+                  href={`mailto:${site.founder.email}`}
+                  className="flex items-center gap-3 hover:text-accent-bright"
+                >
+                  <Mail size={16} className="text-accent-bright" />
+                  {site.founder.email}
+                </a>
+                <a
+                  href={`tel:+91${site.founder.phone}`}
+                  className="flex items-center gap-3 hover:text-accent-bright"
+                >
+                  <Phone size={16} className="text-accent-bright" />
+                  {site.founder.phoneDisplay}
+                </a>
+                <a
+                  href={site.founder.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 hover:text-accent-bright"
+                >
+                  <Linkedin size={16} className="text-accent-bright" />
+                  LinkedIn — Revenant
+                </a>
+                <a
+                  href={site.githubCli}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 hover:text-accent-bright"
+                >
+                  <Github size={16} className="text-accent-bright" />
+                  revenant-cli on GitHub
+                </a>
+              </div>
+            </div>
+            <div className="rounded-2xl border border-border-strong bg-accent-muted p-6 text-sm text-foreground-muted">
+              Building DR tooling takes real time and AWS spend. Stars on GitHub
+              and funding both help keep Revenant moving.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

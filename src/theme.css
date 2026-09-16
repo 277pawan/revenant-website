@@ -1,0 +1,36 @@
+/**
+ * Theme tokens — keep in sync with themePalette in tailwind.config.js
+ */
+:root {
+  --rv-background: #050506;
+  --rv-foreground: #f0efec;
+  --rv-foreground-muted: #9c9b96;
+  --rv-foreground-subtle: #63635e;
+  --rv-surface: #0f0f12;
+  --rv-surface-elevated: #16161c;
+  --rv-surface-sunken: #0a0a0d;
+  --rv-border: #222228;
+  --rv-border-subtle: #1a1a1f;
+  --rv-border-strong: #2f2f38;
+  --rv-accent: skyblue;
+  --rv-accent-bright: #77cced;
+  --rv-accent-muted: #c9a2271a;
+  --rv-accent-foreground: #0a0a0a;
+  --rv-success: #3ecf8e;
+  --rv-success-muted: #3cb6ba;
+  --rv-warning: #e8b84a;
+  --rv-warning-muted: #e8b84a;
+  --rv-error: #f07070;
+  --rv-error-muted: #f0707018;
+  --rv-terminal-bg: #0a0a0c;
+  --rv-terminal-border: #1c1c22;
+  --rv-terminal-prompt: #e7c04a;
+  --rv-terminal-success: #4ade80;
+  --rv-terminal-info: #fcd34d;
+  --rv-terminal-muted: #6b6b66;
+  --rv-shadow-card:
+    0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 16px 48px rgba(0, 0, 0, 0.5);
+  --rv-shadow-glow: 0 0 60px -12px rgba(201, 162, 39, 0.35);
+  --rv-shadow-button: 0 4px 24px -4px rgba(201, 162, 39, 0.45);
+  --rv-radius-card: 1rem;
+}
