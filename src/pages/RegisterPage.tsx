@@ -21,7 +21,11 @@ export function RegisterPage() {
 
   useEffect(() => {
     void getAuthProviders()
-      .then((r) => setProviders(r.providers.filter((p) => p.id === "google" || p.id === "github")))
+      .then((r) =>
+        setProviders(
+          r.providers.filter((p) => p.id === "google" || p.id === "github"),
+        ),
+      )
       .catch(() =>
         setProviders([
           {
@@ -36,7 +40,7 @@ export function RegisterPage() {
             status: "live",
             authorizePath: "/api/v1/auth/oauth/github/start",
           },
-        ])
+        ]),
       );
   }, []);
 
@@ -63,30 +67,68 @@ export function RegisterPage() {
   }
 
   return (
-    <div className="flex min-h-[70vh] items-center justify-center px-4 py-16">
+    <div className="flex min-h-[70vh] items-center justify-center px-4 py-8">
       <div className="ui-card w-full max-w-md p-8">
-        <div className="mb-6 text-center">
-          <img src="/revenant_logo.svg" alt="" className="mx-auto h-12 w-12 rounded-xl" />
-          <h1 className="mt-4 text-2xl font-bold text-foreground">Start 30-day trial</h1>
-          <p className="mt-1 text-sm text-foreground-subtle">
+        <div className=" text-center">
+          <img
+            src="/revenant_logo.svg"
+            alt=""
+            className="mx-auto h-24 w-24 rounded-xl"
+          />
+          <h1 className=" text-2xl font-bold text-foreground">
+            Start 30-day trial
+          </h1>
+          <p className="my-2 text-sm text-foreground-subtle">
             Same backend as the cloud app — no card required.
           </p>
         </div>
 
         <form onSubmit={onSubmit} className="space-y-4">
           <div>
-            <label className="mb-1.5 block text-sm font-medium text-foreground-muted">Work email</label>
-            <input required type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="ui-input" autoComplete="email" />
+            <label className="mb-1.5 block text-sm font-medium text-foreground-muted">
+              Work email
+            </label>
+            <input
+              required
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="ui-input"
+              autoComplete="email"
+            />
           </div>
           <div>
-            <label className="mb-1.5 block text-sm font-medium text-foreground-muted">Organization name</label>
-            <input required minLength={2} value={organizationName} onChange={(e) => setOrganizationName(e.target.value)} className="ui-input" placeholder="Acme Engineering" />
+            <label className="mb-1.5 block text-sm font-medium text-foreground-muted">
+              Organization name
+            </label>
+            <input
+              required
+              minLength={2}
+              value={organizationName}
+              onChange={(e) => setOrganizationName(e.target.value)}
+              className="ui-input"
+              placeholder="Acme Engineering"
+            />
           </div>
           <div>
-            <label className="mb-1.5 block text-sm font-medium text-foreground-muted">Password</label>
-            <input required type="password" minLength={8} value={password} onChange={(e) => setPassword(e.target.value)} className="ui-input" autoComplete="new-password" />
+            <label className="mb-1.5 block text-sm font-medium text-foreground-muted">
+              Password
+            </label>
+            <input
+              required
+              type="password"
+              minLength={8}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="ui-input"
+              autoComplete="new-password"
+            />
           </div>
-          {error && <p className="text-sm text-error" role="alert">{error}</p>}
+          {error && (
+            <p className="text-sm text-error" role="alert">
+              {error}
+            </p>
+          )}
           <Button type="submit" disabled={loading} className="w-full">
             {loading ? <Loader2 size={16} className="animate-spin" /> : null}
             Create account
@@ -96,7 +138,9 @@ export function RegisterPage() {
         <div className="mt-5">
           <OAuthButtons
             providers={providers}
-            onUnavailable={(label) => setError(`${label} sign-up is not configured yet.`)}
+            onUnavailable={(label) =>
+              setError(`${label} sign-up is not configured yet.`)
+            }
             onSuccess={(token) => {
               void trackEngagement("marketing", { eventType: "register" });
               goToAppWithSession(token);
@@ -107,7 +151,10 @@ export function RegisterPage() {
 
         <p className="mt-6 text-center text-sm text-foreground-subtle">
           Already have an account?{" "}
-          <Link to="/login" className="font-medium text-accent-bright hover:underline">
+          <Link
+            to="/login"
+            className="font-medium text-accent-bright hover:underline"
+          >
             Sign in
           </Link>
         </p>

@@ -21,7 +21,11 @@ export function LoginPage() {
 
   useEffect(() => {
     void getAuthProviders()
-      .then((r) => setProviders(r.providers.filter((p) => p.id === "google" || p.id === "github")))
+      .then((r) =>
+        setProviders(
+          r.providers.filter((p) => p.id === "google" || p.id === "github"),
+        ),
+      )
       .catch(() =>
         setProviders([
           {
@@ -36,7 +40,7 @@ export function LoginPage() {
             status: "live",
             authorizePath: "/api/v1/auth/oauth/github/start",
           },
-        ])
+        ]),
       );
   }, []);
 
@@ -59,10 +63,14 @@ export function LoginPage() {
   }
 
   return (
-    <div className="flex min-h-[70vh] items-center justify-center px-4 py-16">
+    <div className="flex min-h-[70vh] items-center justify-center px-4 py-8">
       <div className="ui-card w-full max-w-md p-8">
         <div className="mb-6 text-center">
-          <img src="/revenant_logo.svg" alt="" className="mx-auto h-12 w-12 rounded-xl" />
+          <img
+            src="/revenant_logo.svg"
+            alt=""
+            className="mx-auto h-24 w-24 rounded-xl"
+          />
           <h1 className="mt-4 text-2xl font-bold text-foreground">Sign in</h1>
           <p className="mt-1 text-sm text-foreground-subtle">
             Same account as Revenant Cloud — continues to the dashboard.
@@ -71,14 +79,36 @@ export function LoginPage() {
 
         <form onSubmit={onSubmit} className="space-y-4">
           <div>
-            <label className="mb-1.5 block text-sm font-medium text-foreground-muted">Email</label>
-            <input required type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="ui-input" autoComplete="email" />
+            <label className="mb-1.5 block text-sm font-medium text-foreground-muted">
+              Email
+            </label>
+            <input
+              required
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="ui-input"
+              autoComplete="email"
+            />
           </div>
           <div>
-            <label className="mb-1.5 block text-sm font-medium text-foreground-muted">Password</label>
-            <input required type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="ui-input" autoComplete="current-password" />
+            <label className="mb-1.5 block text-sm font-medium text-foreground-muted">
+              Password
+            </label>
+            <input
+              required
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="ui-input"
+              autoComplete="current-password"
+            />
           </div>
-          {error && <p className="text-sm text-error" role="alert">{error}</p>}
+          {error && (
+            <p className="text-sm text-error" role="alert">
+              {error}
+            </p>
+          )}
           <Button type="submit" disabled={loading} className="w-full">
             {loading ? <Loader2 size={16} className="animate-spin" /> : null}
             Sign in
@@ -88,7 +118,9 @@ export function LoginPage() {
         <div className="mt-5">
           <OAuthButtons
             providers={providers}
-            onUnavailable={(label) => setError(`${label} sign-in is not configured yet.`)}
+            onUnavailable={(label) =>
+              setError(`${label} sign-in is not configured yet.`)
+            }
             onSuccess={(token) => {
               void trackEngagement("marketing", { eventType: "login" });
               goToAppWithSession(token);
@@ -99,7 +131,10 @@ export function LoginPage() {
 
         <p className="mt-6 text-center text-sm text-foreground-subtle">
           No account?{" "}
-          <Link to="/register" className="font-medium text-accent-bright hover:underline">
+          <Link
+            to="/register"
+            className="font-medium text-accent-bright hover:underline"
+          >
             Start free trial
           </Link>
         </p>

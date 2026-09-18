@@ -16,15 +16,15 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-border-subtle bg-background/80 backdrop-blur-xl">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3.5 sm:px-6">
-        <Link to="/" className="flex items-center gap-2.5">
+      <div className="mx-auto flex max-w-full items-center justify-between px-4 py-3.5 sm:px-6">
+        <Link to="/" className="flex items-center">
           <img
             src="/revenant_logo.svg"
             alt="Revenant"
-            className="h-8 w-8 rounded-lg"
+            className="h-16 w-16 rounded-lg"
           />
-          <span className="text-lg font-semibold tracking-tight text-foreground">
-            Revenant
+          <span className="text-2xl relative right-4 font-semibold tracking-tight text-foreground">
+            evenant
           </span>
         </Link>
 
@@ -49,8 +49,12 @@ export function Header() {
         </nav>
 
         <div className="hidden items-center gap-2 md:flex">
-          <Button variant="ghost" href="/login">Sign in</Button>
-          <Button href="/register" size="sm">Start free trial</Button>
+          <Button variant="ghost" href="/login">
+            Sign in
+          </Button>
+          <Button href="/register" size="sm">
+            Start free trial
+          </Button>
         </div>
 
         <button

@@ -1,36 +1,107 @@
 /**
- * Theme tokens — keep in sync with themePalette in tailwind.config.js
+ * Revenant Marketing Theme
+ *
+ * Visual system:
+ * - Near-black foundation
+ * - Violet atmospheric glow
+ * - Teal / cyan center glow
+ * - Electric blue secondary glow
+ * - Cyan/mint primary accent
+ * - No gold/yellow brand lighting
  */
+
 :root {
-  --rv-background: #050506;
-  --rv-foreground: #f0efec;
-  --rv-foreground-muted: #9c9b96;
-  --rv-foreground-subtle: #63635e;
-  --rv-surface: #0f0f12;
-  --rv-surface-elevated: #16161c;
-  --rv-surface-sunken: #0a0a0d;
-  --rv-border: #222228;
-  --rv-border-subtle: #1a1a1f;
-  --rv-border-strong: #2f2f38;
-  --rv-accent: skyblue;
-  --rv-accent-bright: #77cced;
-  --rv-accent-muted: #c9a2271a;
-  --rv-accent-foreground: #0a0a0a;
-  --rv-success: #3ecf8e;
-  --rv-success-muted: #3cb6ba;
-  --rv-warning: #e8b84a;
-  --rv-warning-muted: #e8b84a;
-  --rv-error: #f07070;
-  --rv-error-muted: #f0707018;
-  --rv-terminal-bg: #0a0a0c;
-  --rv-terminal-border: #1c1c22;
-  --rv-terminal-prompt: #e7c04a;
+  /* ============================================================
+     BASE
+     ============================================================ */
+
+  --rv-background: #050608;
+
+  --rv-foreground: #f4f5f7;
+
+  --rv-foreground-muted: #a3a8b2;
+
+  --rv-foreground-subtle: #c0d7e4
+    /* ============================================================
+     SURFACES
+     ============================================================ */
+    --rv-surface: #0c0e12;
+
+  --rv-surface-elevated: #12151b;
+
+  --rv-surface-sunken: #08090c;
+
+  /* ============================================================
+     BORDERS
+     ============================================================ */
+
+  --rv-border: #20242c;
+
+  --rv-border-subtle: #2d3037;
+  --rv-border-strong: #303641;
+
+  /* ============================================================
+     PRIMARY ACCENT
+     
+     Cyan / teal instead of gold.
+     ============================================================ */
+
+  --rv-accent: #22d3ee;
+
+  --rv-accent-bright: #67e8f9;
+
+  --rv-accent-muted: rgba(34, 211, 238, 0.1);
+
+  --rv-accent-foreground: #041014;
+
+  /* ============================================================
+     STATUS COLORS
+     ============================================================ */
+
+  --rv-success: #4ade80;
+
+  --rv-success-muted: rgba(74, 222, 128, 0.1);
+
+  --rv-warning: #fbbf24;
+
+  --rv-warning-muted: rgba(251, 191, 36, 0.1);
+
+  --rv-error: #fb7185;
+
+  --rv-error-muted: rgba(251, 113, 133, 0.1);
+
+  /* ============================================================
+     TERMINAL
+     ============================================================ */
+
+  --rv-terminal-bg: #07090c;
+
+  --rv-terminal-border: #1c2129;
+
+  --rv-terminal-prompt: #67e8f9;
+
   --rv-terminal-success: #4ade80;
-  --rv-terminal-info: #fcd34d;
-  --rv-terminal-muted: #6b6b66;
+
+  --rv-terminal-info: #38bdf8;
+
+  --rv-terminal-muted: #69717d;
+
+  /* ============================================================
+     SHADOWS / GLOWS
+     
+     These were still GOLD before.
+     ============================================================ */
+
   --rv-shadow-card:
-    0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 16px 48px rgba(0, 0, 0, 0.5);
-  --rv-shadow-glow: 0 0 60px -12px rgba(201, 162, 39, 0.35);
-  --rv-shadow-button: 0 4px 24px -4px rgba(201, 162, 39, 0.45);
+    0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 16px 48px rgba(0, 0, 0, 0.55);
+
+  --rv-shadow-glow: 0 0 60px -14px rgba(34, 211, 238, 0.35);
+
+  --rv-shadow-button: 0 4px 28px -6px rgba(34, 211, 238, 0.4);
+
+  /* ============================================================
+     RADIUS
+     ============================================================ */
+
   --rv-radius-card: 1rem;
 }
