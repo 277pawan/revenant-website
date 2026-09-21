@@ -23,11 +23,11 @@ export function DocsModulePage() {
   const { section, module } = match;
 
   return (
-    <article className="ui-card p-5 sm:p-8">
+    <article className="ui-card overflow-x-auto p-4 sm:p-8">
       <p className="text-xs font-medium uppercase tracking-wider text-foreground-subtle">
         {section.title}
       </p>
-      <h1 className="ui-heading mt-1 text-3xl">{module.title}</h1>
+      <h1 className="ui-heading mt-1 text-2xl sm:text-3xl">{module.title}</h1>
       <p className="mt-2 text-foreground-subtle">{module.summary}</p>
       <div className="mt-8">
         <DocRenderer blocks={module.blocks} />

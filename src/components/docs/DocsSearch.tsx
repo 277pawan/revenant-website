@@ -7,24 +7,33 @@ import { cn } from "../../lib/cn";
 export function DocsSearchTrigger({
   className,
   onOpen,
+  compact = false,
 }: {
   className?: string;
   onOpen: () => void;
+  compact?: boolean;
 }) {
   return (
     <button
       type="button"
       onClick={onOpen}
+      aria-label="Search docs"
       className={cn(
-        "inline-flex items-center gap-2 rounded-lg border border-border bg-surface-sunken px-3 py-1.5 text-sm text-foreground-muted transition-colors hover:border-border-strong hover:text-foreground",
+        compact
+          ? "inline-flex h-9 w-9 items-center justify-center rounded-lg text-foreground-muted hover:bg-surface-elevated hover:text-foreground"
+          : "inline-flex items-center gap-2 rounded-lg border border-border bg-surface-sunken px-3 py-1.5 text-sm text-foreground-muted transition-colors hover:border-border-strong hover:text-foreground",
         className,
       )}
     >
-      <Search size={15} />
-      <span className="hidden sm:inline">Search docs</span>
-      <kbd className="hidden rounded border border-border bg-surface px-1.5 py-0.5 font-mono text-[10px] text-foreground-subtle sm:inline">
-        Ctrl K
-      </kbd>
+      <Search size={compact ? 18 : 15} />
+      {!compact && (
+        <>
+          <span className="hidden sm:inline">Search docs</span>
+          <kbd className="hidden rounded border border-border bg-surface px-1.5 py-0.5 font-mono text-[10px] text-foreground-subtle sm:inline">
+            Ctrl K
+          </kbd>
+        </>
+      )}
     </button>
   );
 }
