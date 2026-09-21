@@ -23,6 +23,29 @@ export const awsSection: DocSection = {
       ],
     },
     {
+      slug: "workflow",
+      title: "Typical AWS workflow",
+      summary: "migrate (demo) → snapshot → verify → reap.",
+      keywords: ["aws", "workflow", "freetier", "snapshot", "verify", "reap"],
+      blocks: [
+        {
+          type: "code",
+          language: "bash",
+          code: `# Optional demo tables (see revenant migrate — demo only)
+revenant migrate
+
+revenant snapshot --config revenant-aws-freetier.yaml
+revenant verify --config revenant-aws-freetier.yaml
+revenant reap --max-age 4h --region us-east-1`,
+        },
+        {
+          type: "paragraph",
+          text:
+            "Full zero-cost setup: AWS_FREETIER_SETUP.md in the revenant-cli repository.",
+        },
+      ],
+    },
+    {
       slug: "iam",
       title: "IAM & credentials",
       summary: "Keys stay in your account; least privilege for restore.",

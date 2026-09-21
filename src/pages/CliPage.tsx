@@ -1,4 +1,5 @@
 import { Button } from "../components/ui/Button";
+import { CodeBlock } from "../components/ui/CodeBlock";
 import { site } from "../lib/site";
 
 const COMMANDS = [
@@ -23,18 +24,18 @@ export function CliPage() {
         <div className="mt-10 space-y-8">
           <section className="ui-card p-6">
             <h2 className="text-lg font-semibold text-foreground">Install</h2>
-            <pre className="mt-4 overflow-x-auto rounded-xl border border-terminal-border bg-terminal-bg p-4 font-mono text-sm text-foreground-muted">
-{`# GitHub Action (recommended)
+            <div className="mt-4">
+              <CodeBlock
+                language="yaml"
+                code={`# GitHub Action (recommended)
 - uses: 277pawan/revenant-action@v1.0.3
   with:
     version: v0.1.1
     config: revenant.yaml
   env:
-    DATABASE_URL: \${{ secrets.DATABASE_URL }}
-
-# Or download binary from GitHub Releases
-# https://github.com/277pawan/revenant-cli/releases`}
-            </pre>
+    DATABASE_URL: \${{ secrets.DATABASE_URL }}`}
+              />
+            </div>
             <div className="mt-4 flex flex-wrap gap-3">
               <Button href="/docs/cli/install" variant="secondary">
                 Full docs
@@ -50,11 +51,14 @@ export function CliPage() {
 
           <section className="ui-card p-6">
             <h2 className="text-lg font-semibold text-foreground">Quick start</h2>
-            <pre className="mt-4 overflow-x-auto rounded-xl border border-terminal-border bg-terminal-bg p-4 font-mono text-sm text-foreground-muted">
-{`export DATABASE_URL="postgres://..."
+            <div className="mt-4">
+              <CodeBlock
+                language="bash"
+                code={`export DATABASE_URL="postgres://..."
 revenant init --url $DATABASE_URL
 revenant verify --config revenant.yaml`}
-            </pre>
+              />
+            </div>
           </section>
 
           <section className="ui-card p-6">

@@ -23,7 +23,7 @@ export function DocsModulePage() {
   const { section, module } = match;
 
   return (
-    <article className="ui-card p-6 sm:p-8">
+    <article className="ui-card p-5 sm:p-8">
       <p className="text-xs font-medium uppercase tracking-wider text-foreground-subtle">
         {section.title}
       </p>

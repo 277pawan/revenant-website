@@ -85,5 +85,78 @@ export const gettingStartedSection: DocSection = {
         },
       ],
     },
+    {
+      slug: "local-quickstart",
+      title: "Quick start (local Postgres)",
+      summary: "DATABASE_URL, init, verify — expected PASS output.",
+      keywords: ["quickstart", "postgres", "local", "init", "verify", "tutorial"],
+      blocks: [
+        {
+          type: "code",
+          language: "bash",
+          code: `export DATABASE_URL='postgres://user:pass@localhost:5432/mydb?sslmode=disable'
+revenant init --plan my-app --force
+revenant verify`,
+        },
+        {
+          type: "heading",
+          level: 2,
+          text: "Expected output",
+        },
+        {
+          type: "code",
+          language: "text",
+          code: `✓ customers table exists
+✓ orders row count 3 >= 1
+✓ foreign key orders -> customers intact
+
+Restore Validation: PASS
+Wrote report.json
+Wrote report.md`,
+        },
+        {
+          type: "callout",
+          tone: "tip",
+          text: "Run revenant doctor first if anything fails — it checks config, env vars, and DB connectivity.",
+        },
+      ],
+    },
+    {
+      slug: "github-actions",
+      title: "GitHub Actions",
+      summary: "Local Postgres weekly proof and AWS restore + reap cleanup.",
+      keywords: ["github", "actions", "ci", "workflow", "aws", "local"],
+      blocks: [
+        {
+          type: "paragraph",
+          text:
+            "Copy example workflows from revenant-cli: examples/workflows/local-verify.yml for local Postgres, or aws-verify.yml for RDS restore drills.",
+        },
+        {
+          type: "list",
+          items: [
+            "No Go or npm in the runner — use 277pawan/revenant-action@v1.0.3.",
+            "AWS workflows need secrets: AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, SANDBOX_USER, SANDBOX_PASSWORD.",
+            "Always run revenant reap with if: always() after AWS verify so sandboxes never linger.",
+          ],
+        },
+      ],
+    },
+    {
+      slug: "roadmap",
+      title: "Roadmap",
+      summary: "CLI phases 1–4 done; Phase 5 hosted UI in cloud product.",
+      keywords: ["roadmap", "phase", "fleet", "dashboard", "future"],
+      blocks: [
+        {
+          type: "list",
+          items: [
+            "Phases 1–4 (done): CLI, checks, AWS restore, reports, GitHub Action.",
+            "Phase 5 (planned): hosted UI, scheduler, fleet view, signed evidence vault UX.",
+            "Phase 5 operations UI ships with Revenant Cloud — not in the open-source CLI repo.",
+          ],
+        },
+      ],
+    },
   ],
 };

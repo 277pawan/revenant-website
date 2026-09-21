@@ -24,10 +24,10 @@ export default function App() {
         <Route path="login" element={<LoginPage />} />
         <Route path="register" element={<RegisterPage />} />
         <Route path="auth/oauth/complete" element={<OAuthCompletePage />} />
-      </Route>
-      <Route path="docs" element={<DocsLayout />}>
-        <Route index element={<DocsIndexPage />} />
-        <Route path=":sectionId/:moduleSlug" element={<DocsModulePage />} />
+        <Route path="docs" element={<DocsLayout />}>
+          <Route index element={<DocsIndexPage />} />
+          <Route path=":sectionId/:moduleSlug" element={<DocsModulePage />} />
+        </Route>
       </Route>
     </Routes>
   );

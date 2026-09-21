@@ -1,107 +1,134 @@
 /**
- * Revenant Marketing Theme
- *
- * Visual system:
- * - Near-black foundation
- * - Violet atmospheric glow
- * - Teal / cyan center glow
- * - Electric blue secondary glow
- * - Cyan/mint primary accent
- * - No gold/yellow brand lighting
+ * Revenant theme — dark default, light as a first-class twin.
+ * Swap tokens via html[data-theme], not Tailwind dark: classes.
  */
 
-:root {
-  /* ============================================================
-     BASE
-     ============================================================ */
+:root,
+[data-theme="dark"] {
+  color-scheme: dark;
 
-  --rv-background: #050608;
+  --rv-background: #07080b;
+  --rv-foreground: #f3f5f7;
+  --rv-foreground-muted: #9aa3ad;
+  --rv-foreground-subtle: #6d7680;
 
-  --rv-foreground: #f4f5f7;
-
-  --rv-foreground-muted: #a3a8b2;
-
-  --rv-foreground-subtle: #c0d7e4
-    /* ============================================================
-     SURFACES
-     ============================================================ */
-    --rv-surface: #0c0e12;
-
-  --rv-surface-elevated: #12151b;
-
+  --rv-surface: #0e1116;
+  --rv-surface-elevated: #151920;
   --rv-surface-sunken: #08090c;
 
-  /* ============================================================
-     BORDERS
-     ============================================================ */
-
-  --rv-border: #20242c;
-
-  --rv-border-subtle: #2d3037;
-  --rv-border-strong: #303641;
-
-  /* ============================================================
-     PRIMARY ACCENT
-     
-     Cyan / teal instead of gold.
-     ============================================================ */
+  --rv-border: #232830;
+  --rv-border-subtle: #1a1e24;
+  --rv-border-strong: #343b46;
 
   --rv-accent: #22d3ee;
-
   --rv-accent-bright: #67e8f9;
-
-  --rv-accent-muted: rgba(34, 211, 238, 0.1);
-
+  --rv-accent-muted: rgba(34, 211, 238, 0.12);
   --rv-accent-foreground: #041014;
 
-  /* ============================================================
-     STATUS COLORS
-     ============================================================ */
-
   --rv-success: #4ade80;
-
-  --rv-success-muted: rgba(74, 222, 128, 0.1);
-
+  --rv-success-muted: rgba(74, 222, 128, 0.12);
   --rv-warning: #fbbf24;
-
-  --rv-warning-muted: rgba(251, 191, 36, 0.1);
-
+  --rv-warning-muted: rgba(251, 191, 36, 0.12);
   --rv-error: #fb7185;
-
-  --rv-error-muted: rgba(251, 113, 133, 0.1);
-
-  /* ============================================================
-     TERMINAL
-     ============================================================ */
+  --rv-error-muted: rgba(251, 113, 133, 0.12);
 
   --rv-terminal-bg: #07090c;
-
   --rv-terminal-border: #1c2129;
-
   --rv-terminal-prompt: #67e8f9;
-
   --rv-terminal-success: #4ade80;
-
   --rv-terminal-info: #38bdf8;
-
   --rv-terminal-muted: #69717d;
 
-  /* ============================================================
-     SHADOWS / GLOWS
-     
-     These were still GOLD before.
-     ============================================================ */
+  --rv-shadow-card: 0 1px 2px rgba(0, 0, 0, 0.35);
+  --rv-shadow-glow: 0 0 32px -12px rgba(34, 211, 238, 0.22);
+  --rv-shadow-button: 0 1px 2px rgba(0, 0, 0, 0.25);
 
-  --rv-shadow-card:
-    0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 16px 48px rgba(0, 0, 0, 0.55);
-
-  --rv-shadow-glow: 0 0 60px -14px rgba(34, 211, 238, 0.35);
-
-  --rv-shadow-button: 0 4px 28px -6px rgba(34, 211, 238, 0.4);
-
-  /* ============================================================
-     RADIUS
-     ============================================================ */
+  --rv-glow-teal: rgba(20, 184, 166, 0.18);
+  --rv-glow-violet: rgba(139, 92, 246, 0.14);
+  --rv-glow-blue: rgba(37, 99, 235, 0.14);
+  --rv-grid-line: rgba(255, 255, 255, 0.035);
+  --rv-hero-photo-opacity: 0.55;
+  --rv-hero-mesh-opacity: 1;
+  --rv-hero-grid-opacity: 0.35;
+  --rv-hero-scrim: linear-gradient(
+    95deg,
+    var(--rv-background) 0%,
+    color-mix(in srgb, var(--rv-background) 92%, transparent) 38%,
+    color-mix(in srgb, var(--rv-background) 45%, transparent) 58%,
+    transparent 78%
+  );
+  --rv-chamber-scan: rgba(103, 232, 249, 0.07);
 
   --rv-radius-card: 1rem;
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+
+  /* Cool paper + teal ink — distinct from generic gray SaaS */
+  --rv-background: #e8f0f4;
+  --rv-foreground: #0b1220;
+  --rv-foreground-muted: #334155;
+  --rv-foreground-subtle: #475569;
+
+  --rv-surface: #fafcfd;
+  --rv-surface-elevated: #ffffff;
+  --rv-surface-sunken: #dce8ee;
+
+  --rv-border: #a8c4d4;
+  --rv-border-subtle: #c5d9e4;
+  --rv-border-strong: #6b9aad;
+
+  --rv-accent: #0d9488;
+  --rv-accent-bright: #0f766e;
+  --rv-accent-muted: rgba(13, 148, 136, 0.16);
+  --rv-accent-foreground: #ffffff;
+
+  --rv-success: #047857;
+  --rv-success-muted: rgba(4, 120, 87, 0.12);
+  --rv-warning: #b45309;
+  --rv-warning-muted: rgba(180, 83, 9, 0.12);
+  --rv-error: #be123c;
+  --rv-error-muted: rgba(190, 18, 60, 0.1);
+
+  --rv-terminal-bg: #0f1419;
+  --rv-terminal-border: #1c2129;
+  --rv-terminal-prompt: #5eead4;
+  --rv-terminal-success: #4ade80;
+  --rv-terminal-info: #38bdf8;
+  --rv-terminal-muted: #8b95a1;
+
+  --rv-shadow-card: 0 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 1px 3px rgba(11, 45, 62, 0.08);
+  --rv-shadow-glow: 0 8px 28px -8px rgba(13, 148, 136, 0.25);
+  --rv-shadow-button: 0 1px 2px rgba(11, 45, 62, 0.12);
+
+  --rv-glow-teal: rgba(13, 148, 136, 0.22);
+  --rv-glow-violet: rgba(79, 70, 229, 0.07);
+  --rv-glow-blue: rgba(2, 132, 199, 0.1);
+  --rv-grid-line: rgba(13, 148, 136, 0.09);
+
+  --rv-page-wash: radial-gradient(
+      ellipse 120% 80% at 50% -30%,
+      rgba(167, 243, 232, 0.45),
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse 60% 50% at 100% 0%,
+      rgba(186, 230, 253, 0.35),
+      transparent 50%
+    ),
+    linear-gradient(180deg, #eef6f9 0%, var(--rv-background) 42%, #e2ecf2 100%);
+
+  --rv-hero-photo-opacity: 0.42;
+  --rv-hero-mesh-opacity: 0.45;
+  --rv-hero-grid-opacity: 0.22;
+  --rv-hero-scrim: linear-gradient(
+    95deg,
+    #eef6f9 0%,
+    color-mix(in srgb, #eef6f9 90%, transparent) 34%,
+    color-mix(in srgb, #e8f0f4 50%, transparent) 55%,
+    transparent 76%
+  );
+  --rv-chamber-scan: rgba(13, 148, 136, 0.1);
 }

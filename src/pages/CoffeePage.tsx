@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from "react";
+import { motion } from "motion/react";
 import {
-  Coffee,
   Heart,
   Loader2,
   Mail,
@@ -19,6 +19,20 @@ const AMOUNTS = [
   { inr: 999, label: "₹999", note: "Serious support" },
   { inr: 2499, label: "₹2,499", note: "Fuel a sprint" },
 ];
+
+function Steam() {
+  return (
+    <div className="pointer-events-none absolute -top-7 left-1/2 flex -translate-x-1/2 gap-1.5">
+      {[0, 1, 2].map((i) => (
+        <span
+          key={i}
+          className="steam-wisp h-8 w-1 rounded-full bg-accent/50"
+          style={{ animationDelay: `${i * 0.45}s` }}
+        />
+      ))}
+    </div>
+  );
+}
 
 export function CoffeePage() {
   const [amount, setAmount] = useState(299);
@@ -61,8 +75,11 @@ export function CoffeePage() {
     <div className="px-4 py-16 sm:px-6 sm:py-20">
       <div className="mx-auto max-w-5xl">
         <div className="text-center">
-          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl border border-border-strong bg-accent-muted">
-            <Coffee size={28} className="text-accent-bright" />
+          <div className="relative mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl border border-border-strong bg-accent-muted">
+            <Steam />
+            <span className="text-3xl" aria-hidden>
+              ☕
+            </span>
           </div>
           <h1 className="ui-heading text-4xl">Fund Revenant</h1>
           <p className="mx-auto mt-4 max-w-xl text-foreground-muted leading-relaxed">
@@ -73,7 +90,11 @@ export function CoffeePage() {
         </div>
 
         <div className="mt-12 grid gap-8 lg:grid-cols-2">
-          <div className="ui-card p-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="ui-card p-6"
+          >
             {done ? (
               <div className="py-8 text-center">
                 <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-success-muted text-success">
@@ -98,29 +119,40 @@ export function CoffeePage() {
               <form onSubmit={onSubmit} className="space-y-5">
                 <div>
                   <p className="mb-2 text-sm font-medium text-foreground-muted">
-                    Select amount
+                    Fill a cup
                   </p>
                   <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-                    {AMOUNTS.map((a) => (
-                      <button
-                        key={a.inr}
-                        type="button"
-                        onClick={() => {
-                          setAmount(a.inr);
-                          setCustom("");
-                        }}
-                        className={`rounded-xl border px-3 py-3 text-left transition ${
-                          !custom && amount === a.inr
-                            ? "border-accent bg-accent-muted ring-2 ring-accent/20"
-                            : "border-border hover:border-border-strong"
-                        }`}
-                      >
-                        <div className="font-semibold text-foreground">
-                          {a.label}
-                        </div>
-                        <div className="text-[11px] text-foreground-subtle">{a.note}</div>
-                      </button>
-                    ))}
+                    {AMOUNTS.map((a) => {
+                      const on = !custom && amount === a.inr;
+                      return (
+                        <button
+                          key={a.inr}
+                          type="button"
+                          onClick={() => {
+                            setAmount(a.inr);
+                            setCustom("");
+                          }}
+                          className={`relative overflow-hidden rounded-xl border px-3 py-3 text-left transition ${
+                            on
+                              ? "border-accent ring-2 ring-accent/20"
+                              : "border-border hover:border-border-strong"
+                          }`}
+                        >
+                          <motion.span
+                            className="absolute inset-x-0 bottom-0 bg-accent-muted"
+                            initial={false}
+                            animate={{ height: on ? "100%" : "0%" }}
+                            transition={{ duration: 0.35 }}
+                          />
+                          <div className="relative font-semibold text-foreground">
+                            {a.label}
+                          </div>
+                          <div className="relative text-[11px] text-foreground-subtle">
+                            {a.note}
+                          </div>
+                        </button>
+                      );
+                    })}
                   </div>
                   <div className="mt-3">
                     <label className="mb-1.5 block text-xs text-foreground-subtle">
@@ -193,7 +225,7 @@ export function CoffeePage() {
                 </p>
               </form>
             )}
-          </div>
+          </motion.div>
 
           <div className="space-y-4">
             <div className="ui-card p-6">

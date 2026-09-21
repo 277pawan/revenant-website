@@ -8,8 +8,16 @@ export function DocsIndexPage() {
       <div className="mb-8">
         <h1 className="ui-heading text-3xl">Documentation</h1>
         <p className="mt-2 text-foreground-muted">
-          Learn how Revenant proves your PostgreSQL backups actually recover.
-          Content is modular — add new sections without touching UI code.
+          CLI, AWS restore, evidence exports, Slack/webhooks, and cloud
+          schedules. Add a module under{" "}
+          <code className="rounded bg-accent-muted px-1 font-mono text-xs text-accent-bright">
+            src/content/docs/sections/
+          </code>{" "}
+          — navigation and search update automatically. Press{" "}
+          <kbd className="rounded border border-border px-1.5 font-mono text-xs">
+            Ctrl+K
+          </kbd>{" "}
+          to search.
         </p>
       </div>
 

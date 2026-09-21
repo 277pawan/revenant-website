@@ -22,7 +22,7 @@ export function PricingPreview() {
             <article
               key={plan.id}
               className={`ui-card relative flex flex-col p-6 ${
-                plan.featured ? "border-border-strong shadow-glow" : ""
+                plan.featured ? "border-accent/40" : ""
               }`}
             >
               {plan.featured && (

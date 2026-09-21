@@ -1,66 +1,100 @@
+import { useState } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
+import { Menu, X } from "lucide-react";
 import { DOC_SECTIONS } from "../../content/docs";
+import { cn } from "../../lib/cn";
+
+function moduleHref(sectionId: string, slug: string) {
+  return `/docs/${sectionId}/${slug}`;
+}
+
+function isModuleActive(pathname: string, sectionId: string, slug: string) {
+  const href = moduleHref(sectionId, slug);
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
+
+function isSectionActive(pathname: string, sectionId: string) {
+  return pathname.startsWith(`/docs/${sectionId}/`);
+}
 
 export function DocsLayout() {
   const { pathname } = useLocation();
+  const [navOpen, setNavOpen] = useState(false);
+
+  const navLinkClass = (active: boolean) =>
+    cn(
+      "block rounded-r-lg border-l-2 py-1.5 pl-2.5 pr-2 text-sm transition-colors",
+      active
+        ? "border-accent bg-accent-muted font-semibold text-foreground"
+        : "border-transparent text-foreground-muted hover:border-border-strong hover:bg-surface-elevated hover:text-foreground",
+    );
+
+  const toc = (
+    <>
+      {DOC_SECTIONS.map((section) => {
+        const sectionOn = isSectionActive(pathname, section.id);
+        return (
+          <div key={section.id} className="mb-4 last:mb-0">
+            <p
+              className={cn(
+                "rounded-md px-2 py-0.5 text-xs font-semibold uppercase tracking-wider",
+                sectionOn
+                  ? "bg-accent-muted text-accent-bright"
+                  : "text-foreground-subtle",
+              )}
+            >
+              {section.title}
+            </p>
+            <ul className="mt-2 space-y-0.5">
+              {section.modules.map((mod) => {
+                const active = isModuleActive(pathname, section.id, mod.slug);
+                return (
+                  <li key={mod.slug}>
+                    <Link
+                      to={moduleHref(section.id, mod.slug)}
+                      onClick={() => setNavOpen(false)}
+                      className={navLinkClass(active)}
+                    >
+                      {mod.title}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        );
+      })}
+    </>
+  );
 
   return (
-    <div className="ui-shell">
-      <header className="sticky top-0 z-40 border-b border-border-subtle bg-background/85 backdrop-blur-md">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
-          <Link to="/" className="flex items-center gap-2">
-            <img src="/revenant_logo.svg" alt="" className="h-7 w-7 rounded-lg" />
-            <span className="font-semibold text-foreground">Revenant</span>
-            <span className="text-foreground-subtle">/</span>
-            <span className="text-sm text-foreground-muted">Docs</span>
-          </Link>
-          <div className="flex items-center gap-3 text-sm">
-            <Link to="/login" className="text-foreground-muted hover:text-accent-bright">
-              Sign in
-            </Link>
-            <Link to="/" className="text-foreground-subtle hover:text-accent-bright">
-              Home
-            </Link>
-          </div>
-        </div>
-      </header>
+    <div className="mx-auto w-full max-w-6xl px-4 py-6 sm:px-6 sm:py-8">
+      <div className="mb-4 lg:hidden">
+        <button
+          type="button"
+          className="inline-flex items-center gap-2 rounded-lg border border-border px-3 py-1.5 text-sm text-foreground-muted"
+          onClick={() => setNavOpen(!navOpen)}
+        >
+          {navOpen ? <X size={16} /> : <Menu size={16} />}
+          Browse docs
+        </button>
+        {navOpen && (
+          <nav className="mt-3 rounded-xl border border-border bg-surface p-4">
+            {toc}
+          </nav>
+        )}
+      </div>
 
-      <div className="mx-auto flex max-w-6xl gap-8 px-4 py-8 sm:px-6">
+      <div className="flex gap-8">
         <aside className="hidden w-56 shrink-0 lg:block">
-          <nav className="sticky top-20 space-y-6">
-            {DOC_SECTIONS.map((section) => (
-              <div key={section.id}>
-                <p className="text-xs font-semibold uppercase tracking-wider text-foreground-subtle">
-                  {section.title}
-                </p>
-                <ul className="mt-2 space-y-1">
-                  {section.modules.map((mod) => {
-                    const href = `/docs/${section.id}/${mod.slug}`;
-                    const active = pathname === href;
-                    return (
-                      <li key={mod.slug}>
-                        <Link
-                          to={href}
-                          className={`block rounded-lg px-2.5 py-1.5 text-sm transition-colors ${
-                            active
-                              ? "bg-accent-muted font-medium text-accent-bright"
-                              : "text-foreground-muted hover:bg-surface-elevated hover:text-foreground"
-                          }`}
-                        >
-                          {mod.title}
-                        </Link>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
-            ))}
+          <nav className="sticky top-[4.75rem] max-h-[calc(100vh-6rem)] space-y-6 overflow-y-auto pr-2">
+            {toc}
           </nav>
         </aside>
 
-        <main className="min-w-0 flex-1">
+        <div className="min-w-0 flex-1 pb-10">
           <Outlet />
-        </main>
+        </div>
       </div>
     </div>
   );

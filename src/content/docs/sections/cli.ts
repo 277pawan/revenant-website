@@ -1,4 +1,5 @@
 import type { DocSection } from "../types";
+import { cliCommandModules } from "./cli-commands";
 
 export const cliSection: DocSection = {
   id: "cli",
@@ -9,6 +10,15 @@ export const cliSection: DocSection = {
       slug: "install",
       title: "Install the CLI",
       summary: "GitHub Action, binary download, or build from source.",
+      keywords: [
+        "install",
+        "binary",
+        "windows",
+        "linux",
+        "darwin",
+        "releases",
+        "path",
+      ],
       blocks: [
         {
           type: "heading",
@@ -41,7 +51,25 @@ revenant --help`,
         {
           type: "paragraph",
           text:
-            "Releases: github.com/277pawan/revenant-cli/releases — pick linux_amd64, linux_arm64, darwin_amd64, darwin_arm64, or windows_amd64.",
+            "Releases: github.com/277pawan/revenant-cli/releases — linux_amd64, linux_arm64, darwin_amd64, darwin_arm64, windows_amd64.",
+        },
+        {
+          type: "heading",
+          level: 2,
+          text: "Build from source",
+        },
+        {
+          type: "code",
+          language: "bash",
+          code: `git clone https://github.com/277pawan/revenant-cli.git
+cd revenant-cli
+go build -o revenant .`,
+        },
+        {
+          type: "callout",
+          tone: "tip",
+          text:
+            "Install the binary on your PATH (/usr/local/bin or ~/bin) so you type revenant — not ./revenant from the download folder.",
         },
       ],
     },
@@ -118,26 +146,57 @@ checks:
     {
       slug: "check-types",
       title: "Check types",
-      summary: "schema, row_count, golden_query, freshness, and more.",
+      summary: "Seven yaml check types — connect through index.",
+      keywords: [
+        "checks",
+        "schema",
+        "row_count",
+        "foreign_key",
+        "golden_query",
+        "freshness",
+        "index",
+      ],
       blocks: [
         {
           type: "list",
           items: [
-            "connect — database reachable",
-            "schema — expected tables exist",
-            "row_count — min/max row ranges",
-            "foreign_key — referential integrity samples",
-            "golden_query — SQL assertions / expected values",
-            "freshness — max age on timestamp columns",
-            "index — expected indexes present",
+            "connect — DB accepts connections",
+            "schema — expect_tables: [a, b]",
+            "row_count — table, min, max (optional)",
+            "foreign_key — table, references (no orphans)",
+            "golden_query — query, expect_min",
+            "freshness — table, column, max_age",
+            "index — expect_indexes: [name, …]",
           ],
+        },
+        {
+          type: "code",
+          language: "yaml",
+          code: `checks:
+  - type: connect
+  - type: schema
+    expect_tables: [customers, orders]
+  - type: row_count
+    table: orders
+    min: 1
+  - type: foreign_key
+    table: orders
+    references: customers
+  - type: golden_query
+    query: "SELECT count(*) FROM orders"
+    expect_min: 1
+  - type: freshness
+    table: orders
+    column: created_at
+    max_age: 24h`,
         },
         {
           type: "paragraph",
           text:
-            "Full field reference lives in CONFIG.md in revenant-cli. Proof Composer in the cloud UI can draft schema-aware YAML from a live DB.",
+            "Full field reference: CONFIG.md in revenant-cli. Proof Composer in the cloud UI drafts schema-aware YAML from a live DB.",
         },
       ],
     },
+    ...cliCommandModules,
   ],
 };

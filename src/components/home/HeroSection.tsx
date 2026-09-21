@@ -2,7 +2,9 @@ import { useEffect } from "react";
 import { Shield, Terminal, ArrowRight } from "lucide-react";
 
 import { Button } from "../ui/Button";
-import { HeroLogo3D } from "./HeroLogo3D";
+import { HeroBackdrop } from "./HeroBackdrop";
+import { RestoreChamber } from "./RestoreChamber";
+import { RestoreProofRail } from "./RestoreProofRail";
 
 import {
   trackMarketingHeroView,
@@ -10,18 +12,9 @@ import {
 } from "../../lib/engagement";
 
 const STATS = [
-  {
-    value: "4m 12s",
-    label: "avg restore RTO",
-  },
-  {
-    value: "Free",
-    label: "CLI forever",
-  },
-  {
-    value: "30 days",
-    label: "cloud trial",
-  },
+  { value: "4m 12s", label: "avg restore RTO" },
+  { value: "Free", label: "CLI forever" },
+  { value: "7 checks", label: "yaml plan types" },
 ];
 
 export function HeroSection() {
@@ -31,92 +24,62 @@ export function HeroSection() {
   }, []);
 
   return (
-    <section className="relative overflow-hidden px-4 pb-24 pt-16 sm:px-6 sm:pt-20">
-      {/* =========================================================
-          ATMOSPHERIC LIGHTS
-          ========================================================= */}
+    <section className="relative overflow-hidden px-4 pb-16 pt-8 sm:px-6 sm:pb-20 sm:pt-12">
+      <HeroBackdrop />
 
-      <div
-        className="pointer-events-none absolute inset-0 bg-hero-mesh"
-        aria-hidden="true"
-      />
-
-      <div
-        className="pointer-events-none absolute inset-x-0 top-0 h-[520px] bg-hero-glow"
-        aria-hidden="true"
-      />
-
-      {/* =========================================================
-          GRID
-          ========================================================= */}
-
-      <div
-        className="pointer-events-none absolute inset-x-0 top-0 h-[516px] bg-grid-fade bg-grid opacity-40"
-        aria-hidden="true"
-      />
-
-      {/* =========================================================
-          CONTENT
-          ========================================================= */}
-
-      <div className="relative mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-[1.1fr_0.9fr]">
-        {/* LEFT */}
-        <div>
-          {/* Badge */}
-          <div className="ui-badge mb-8">
+      <div className="relative z-10 mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12">
+        <div className="max-w-xl lg:max-w-none">
+          <div className="ui-badge mb-5 sm:mb-6">
             <Shield size={14} className="text-accent-bright" />
-
-            <span>PostgreSQL DR proof · AWS RDS · signed evidence</span>
+            <span>PostgreSQL · AWS RDS · language-agnostic</span>
           </div>
 
-          {/* Heading */}
-          <h1 className="text-[2.75rem] font-bold leading-[1.05] tracking-tight text-foreground sm:text-6xl">
-            Your backups are not proof
-            <span
-              className="
-                mt-1
-                block
-                bg-gradient-to-r
-                from-violet-400
-                via-cyan-400
-                to-emerald-300
-                bg-clip-text
-                text-transparent
-              "
-            >
-              until they restore.
+          <h1 className="text-[2.15rem] font-bold leading-[1.08] tracking-tight text-foreground sm:text-5xl lg:text-6xl">
+            Prove your backups
+            <span className="hero-headline-accent mt-1 block">
+              actually restore.
             </span>
           </h1>
 
-          {/* Description */}
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-foreground-muted">
-            Revenant runs real restore drills on PostgreSQL — free in CI,
-            managed in the cloud — and gives your team signed evidence auditors
-            can trust.
+          <RestoreProofRail />
+
+          <p className="mt-5 text-base leading-relaxed text-foreground-muted sm:mt-6 sm:text-lg">
+            Not that they exist. Revenant connects to live PostgreSQL, runs
+            checks from{" "}
+            <code className="hero-inline-code rounded px-1.5 py-0.5 font-mono text-[0.85em]">
+              revenant.yaml
+            </code>
+            , measures recovery time, writes evidence, and tears the sandbox
+            down.
           </p>
 
-          {/* Buttons */}
-          <div className="mt-9 flex flex-wrap items-center gap-3">
-            <Button variant="surface" href="/register" size="lg">
+          <div className="mt-7 flex flex-wrap items-center gap-3 sm:mt-8">
+            <Button variant="primary" href="/register" size="lg">
               Start 30-day trial
               <ArrowRight size={18} />
             </Button>
-
-            <Button variant="secondary" href="/docs" size="lg">
+            <Button
+              variant="secondary"
+              href="/docs/getting-started/local-quickstart"
+              size="lg"
+            >
               <Terminal size={18} />
-              Read the docs
+              Quick start
             </Button>
           </div>
 
-          {/* Stats */}
-          <dl className="mt-12 grid max-w-md grid-cols-3 gap-4 border-t border-border-subtle pt-8">
+          <p className="mt-4 text-xs text-foreground-subtle sm:text-sm">
+            Free CLI + GitHub Action. Node, Python, Go, Rails — we never read
+            your source.
+          </p>
+
+          <dl className="mt-8 grid max-w-md grid-cols-3 gap-3 border-t border-border-subtle pt-6 sm:gap-4">
             {STATS.map((stat) => (
               <div key={stat.label}>
-                <dt className="font-mono text-lg font-semibold text-accent-bright">
+                <dt className="font-mono text-base font-semibold text-accent-bright sm:text-lg">
                   {stat.value}
                 </dt>
-
-                <dd className="mt-0.5 text-xs text-foreground-subtle">
+                <dd className="mt-0.5 text-[11px] text-foreground-subtle sm:text-xs">
                   {stat.label}
                 </dd>
               </div>
@@ -124,8 +87,7 @@ export function HeroSection() {
           </dl>
         </div>
 
-        {/* RIGHT */}
-        <HeroLogo3D />
+        <RestoreChamber />
       </div>
     </section>
   );

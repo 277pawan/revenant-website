@@ -71,9 +71,9 @@ export function RegisterPage() {
       <div className="ui-card w-full max-w-md p-8">
         <div className=" text-center">
           <img
-            src="/revenant_logo.svg"
+            src="/Revenant_verify_logo.png"
             alt=""
-            className="mx-auto h-24 w-24 rounded-xl"
+            className="mx-auto h-16 w-auto max-w-[280px] object-contain"
           />
           <h1 className=" text-2xl font-bold text-foreground">
             Start 30-day trial

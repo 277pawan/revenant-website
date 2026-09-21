@@ -7,10 +7,13 @@ export function Footer() {
     <footer className="border-t border-border-subtle bg-surface">
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-4">
         <div className="md:col-span-2">
-          <div className="flex items-center gap-2">
-            <img src="/revenant_logo.svg" alt="" className="h-7 w-7 rounded-lg" />
-            <span className="font-semibold text-foreground">Revenant</span>
-          </div>
+          <Link to="/" className="inline-block">
+            <img
+              src="/Revenant_verify_logo.png"
+              alt="Revenant"
+              className="h-12 w-auto max-w-[240px] object-contain object-left"
+            />
+          </Link>
           <p className="mt-3 max-w-sm text-sm leading-relaxed text-foreground-muted">
             Disaster recovery proof for PostgreSQL. Free CLI, managed AWS restore
             drills, and signed evidence.

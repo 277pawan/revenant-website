@@ -9,6 +9,8 @@ export type DocModule = {
   slug: string;
   title: string;
   summary: string;
+  /** Extra tokens for search — pages still render from blocks only */
+  keywords?: string[];
   blocks: DocBlock[];
 };
 

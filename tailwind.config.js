@@ -80,16 +80,16 @@ export default {
 
       backgroundImage: {
         "hero-glow":
-          "radial-gradient(ellipse 70% 45% at 50% -5%, rgba(20, 184, 166, 0.16), transparent 70%)",
+          "radial-gradient(ellipse 70% 45% at 50% -5%, var(--rv-glow-teal), transparent 70%)",
 
         "hero-mesh":
-          "radial-gradient(circle 420px at 5% 32%, rgba(139, 92, 246, 0.14), transparent 70%), radial-gradient(circle 460px at 52% 5%, rgba(20, 184, 166, 0.10), transparent 70%), radial-gradient(circle 420px at 95% 30%, rgba(37, 99, 235, 0.14), transparent 70%)",
+          "radial-gradient(circle 420px at 5% 32%, var(--rv-glow-violet), transparent 70%), radial-gradient(circle 460px at 52% 5%, var(--rv-glow-teal), transparent 70%), radial-gradient(circle 420px at 95% 30%, var(--rv-glow-blue), transparent 70%)",
 
         "grid-fade":
-          "linear-gradient(to bottom, transparent 0%, var(--rv-background) 100%), linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px)",
+          "linear-gradient(to bottom, transparent 0%, var(--rv-background) 100%), linear-gradient(var(--rv-grid-line) 1px, transparent 1px), linear-gradient(90deg, var(--rv-grid-line) 1px, transparent 1px)",
 
         "cta-glow":
-          "linear-gradient(145deg, rgba(20, 184, 166, 0.08), transparent 60%)",
+          "linear-gradient(145deg, var(--rv-glow-teal), transparent 60%)",
       },
 
       backgroundSize: {

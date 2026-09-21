@@ -1,4 +1,5 @@
 import type { DocBlock } from "../../content/docs/types";
+import { CodeBlock } from "../ui/CodeBlock";
 
 function Callout({
   tone,
@@ -43,12 +44,7 @@ export function DocRenderer({ blocks }: { blocks: DocBlock[] }) {
         }
         if (block.type === "code") {
           return (
-            <pre
-              key={i}
-              className="overflow-x-auto rounded-xl border border-terminal-border bg-terminal-bg p-4 font-mono text-[13px] leading-relaxed text-foreground-muted"
-            >
-              <code>{block.code}</code>
-            </pre>
+            <CodeBlock key={i} language={block.language} code={block.code} />
           );
         }
         if (block.type === "list") {

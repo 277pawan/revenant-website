@@ -343,11 +343,11 @@ export function HeroLogo3D() {
         <div
           className="
             relative
-            h-48
-            w-48
+            h-32
+            w-80
             [transform-style:preserve-3d]
-            sm:h-56
-            sm:w-56
+            sm:h-36
+            sm:w-96
           "
           style={{
             transform: "translateZ(45px)",
@@ -356,7 +356,7 @@ export function HeroLogo3D() {
           {/* Deep shadow / extrusion */}
 
           <motion.img
-            src="/revenant_logo.png"
+            src="/Revenant_verify_logo.png"
             alt=""
             aria-hidden="true"
             draggable={false}
@@ -377,7 +377,7 @@ export function HeroLogo3D() {
           {/* Cyan depth layer */}
 
           <motion.img
-            src="/revenant_logo.png"
+            src="/Revenant_verify_logo.png"
             alt=""
             aria-hidden="true"
             draggable={false}
@@ -398,7 +398,7 @@ export function HeroLogo3D() {
           {/* Main logo */}
 
           <motion.img
-            src="/revenant_logo.png"
+            src="/Revenant_verify_logo.png"
             alt="Revenant"
             draggable={false}
             className="
