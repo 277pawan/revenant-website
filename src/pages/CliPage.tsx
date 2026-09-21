@@ -1,5 +1,7 @@
 import { Button } from "../components/ui/Button";
 import { CodeBlock } from "../components/ui/CodeBlock";
+import { PageMeta } from "../components/seo/PageMeta";
+import { cliSeo } from "../lib/seo-pages";
 import { site } from "../lib/site";
 
 const COMMANDS = [
@@ -13,6 +15,7 @@ const COMMANDS = [
 export function CliPage() {
   return (
     <div className="px-4 py-16 sm:px-6 sm:py-20">
+      <PageMeta {...cliSeo} />
       <div className="mx-auto max-w-3xl">
         <p className="ui-section-label">Developer</p>
         <h1 className="ui-heading mt-2 text-4xl">revenant CLI</h1>

@@ -1,0 +1,21 @@
+{
+  "name": "Revenant",
+  "short_name": "Revenant",
+  "description": "Prove your PostgreSQL backups actually recover.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#07080b",
+  "theme_color": "#07080b",
+  "icons": [
+    {
+      "src": "/revenant_logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/revenant_logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

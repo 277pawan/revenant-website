@@ -10,6 +10,8 @@ import {
 import { trackEngagement } from "../lib/engagement";
 import { Button } from "../components/ui/Button";
 import { OAuthButtons } from "../components/auth/OAuthButtons";
+import { PageMeta } from "../components/seo/PageMeta";
+import { registerSeo } from "../lib/seo-pages";
 
 export function RegisterPage() {
   const [email, setEmail] = useState("");
@@ -68,6 +70,7 @@ export function RegisterPage() {
 
   return (
     <div className="flex min-h-[70vh] items-center justify-center px-4 py-8">
+      <PageMeta {...registerSeo} />
       <div className="ui-card w-full max-w-md p-8">
         <div className=" text-center">
           <img

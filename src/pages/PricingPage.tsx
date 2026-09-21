@@ -2,10 +2,13 @@ import { Check } from "lucide-react";
 import { PLANS } from "../lib/plans";
 import { Button } from "../components/ui/Button";
 import { CtaBanner } from "../components/home/CtaBanner";
+import { PageMeta } from "../components/seo/PageMeta";
+import { pricingSeo } from "../lib/seo-pages";
 
 export function PricingPage() {
   return (
     <>
+      <PageMeta {...pricingSeo} />
       <section className="px-4 pb-8 pt-16 sm:px-6 sm:pt-20">
         <div className="mx-auto max-w-4xl text-center">
           <h1 className="ui-heading text-4xl sm:text-5xl">

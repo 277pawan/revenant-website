@@ -4,6 +4,8 @@ import { Loader2 } from "lucide-react";
 import { OAUTH_MESSAGE_TYPE } from "../lib/oauth-popup";
 import { goToAppWithSession } from "../lib/api";
 import { trackEngagement } from "../lib/engagement";
+import { PageMeta } from "../components/seo/PageMeta";
+import { oauthCompleteSeo } from "../lib/seo-pages";
 
 export function OAuthCompletePage() {
   const navigate = useNavigate();
@@ -54,6 +56,7 @@ export function OAuthCompletePage() {
 
   return (
     <div className="flex min-h-[50vh] flex-col items-center justify-center gap-3 text-foreground-muted">
+      <PageMeta {...oauthCompleteSeo} />
       <Loader2 className="h-8 w-8 animate-spin text-accent" />
       <p className="text-sm">{message}</p>
     </div>

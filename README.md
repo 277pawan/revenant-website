@@ -27,8 +27,8 @@ Serve `dist/` on `https://revenant.dev` (Vercel, Netlify, Cloudflare Pages, or n
 ```bash
 # .env.production
 VITE_SITE_URL=https://revenant.dev
-VITE_APP_URL=https://app.revenant.dev
-VITE_API_URL=https://api.revenant.dev
+VITE_APP_URL=https://revenant-cloud-web.web.app
+VITE_API_URL=https://revenant-api-171384186168.asia-south1.run.app
 ```
 
 ## Pages

@@ -10,6 +10,8 @@ import {
   Check,
 } from "lucide-react";
 import { submitContact } from "../lib/api";
+import { PageMeta } from "../components/seo/PageMeta";
+import { coffeeSeo } from "../lib/seo-pages";
 import { site } from "../lib/site";
 import { Button } from "../components/ui/Button";
 
@@ -73,6 +75,7 @@ export function CoffeePage() {
 
   return (
     <div className="px-4 py-16 sm:px-6 sm:py-20">
+      <PageMeta {...coffeeSeo} />
       <div className="mx-auto max-w-5xl">
         <div className="text-center">
           <div className="relative mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl border border-border-strong bg-accent-muted">

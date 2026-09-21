@@ -1,6 +1,8 @@
 import { motion } from "motion/react";
 import { Mail, Phone, Linkedin, Github } from "lucide-react";
 import { ContactForm } from "../components/contact/ContactForm";
+import { PageMeta } from "../components/seo/PageMeta";
+import { talkSeo } from "../lib/seo-pages";
 import { site } from "../lib/site";
 
 const CHANNELS = [
@@ -41,6 +43,7 @@ const CHANNELS = [
 export function TalkPage() {
   return (
     <div className="relative overflow-hidden px-4 py-16 sm:px-6 sm:py-20">
+      <PageMeta {...talkSeo} />
       <p className="pointer-events-none absolute -right-6 top-10 hidden text-[18vw] font-bold leading-none text-foreground/[0.04] lg:block">
         RX
       </p>
