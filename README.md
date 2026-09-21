@@ -22,14 +22,17 @@ npm run build
 
 ## Deploy
 
-Serve `dist/` on `https://revenant.dev` (Vercel, Netlify, Cloudflare Pages, or nginx).
+Serve `dist/` on Firebase (`revenant-verify-933e4.web.app`) or any static host.
+
+Production URLs are baked in via `src/lib/env.defaults.ts`. Optional overrides in `.env.production`:
 
 ```bash
-# .env.production
-VITE_SITE_URL=https://revenant.dev
+VITE_SITE_URL=https://revenant-verify-933e4.web.app
 VITE_APP_URL=https://revenant-cloud-web.web.app
 VITE_API_URL=https://revenant-api-171384186168.asia-south1.run.app
 ```
+
+`npm run build` fails if the bundle still references `localhost:8080` or `localhost:8000`.
 
 ## Pages
 

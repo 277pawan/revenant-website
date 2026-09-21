@@ -1,17 +1,22 @@
+import { DEVELOPMENT_URLS, PRODUCTION_URLS } from "./env.defaults";
+
+const defaults = import.meta.env.PROD ? PRODUCTION_URLS : DEVELOPMENT_URLS;
+
+const API_URL =
+  import.meta.env.VITE_API_URL?.trim().replace(/\/$/, "") || defaults.apiUrl;
 const APP_URL =
-  import.meta.env.VITE_APP_URL?.trim() || "http://app.revenant.dev";
-const API_URL = import.meta.env.VITE_API_URL?.trim() || "http://localhost:8080";
+  import.meta.env.VITE_APP_URL?.trim().replace(/\/$/, "") || defaults.appUrl;
 const SITE_URL =
-  import.meta.env.VITE_SITE_URL?.trim() || "https://revenant.dev";
+  import.meta.env.VITE_SITE_URL?.trim().replace(/\/$/, "") || defaults.siteUrl;
 
 export const site = {
   name: "Revenant",
   tagline: "Prove your backups actually recover",
   description:
     "Disaster recovery proof for PostgreSQL. Free CLI, managed AWS restore drills, signed evidence vault.",
-  url: SITE_URL.replace(/\/$/, ""),
-  appUrl: APP_URL.replace(/\/$/, ""),
-  apiUrl: API_URL.replace(/\/$/, ""),
+  url: SITE_URL,
+  appUrl: APP_URL,
+  apiUrl: API_URL,
   githubCli: "https://github.com/277pawan/revenant-cli",
   githubAction: "https://github.com/277pawan/revenant-action",
   founder: {
