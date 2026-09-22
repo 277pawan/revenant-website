@@ -1,4 +1,5 @@
 import type { DocSection } from "../types";
+import { docsPublicUrls } from "../public-urls";
 
 export const cloudSection: DocSection = {
   id: "cloud",
@@ -13,7 +14,7 @@ export const cloudSection: DocSection = {
         {
           type: "paragraph",
           text:
-            "Register on this site (/register) or at app.revenant.dev. New orgs start on Starter with subscription_status=trialing and trial_ends_at +30 days. Google/GitHub SSO is available when configured on the API.",
+            `Register on this site (/register) or sign in at the cloud dashboard (${docsPublicUrls.cloudDashboard}/login). New orgs start on Starter with subscription_status=trialing and trial_ends_at +30 days. Sign in with Google or GitHub — no separate SSO setup required for users.`,
         },
         {
           type: "list",
@@ -54,7 +55,7 @@ export const cloudSection: DocSection = {
         {
           type: "list",
           items: [
-            "Schedules enqueue restore jobs on a cron.",
+            "Schedules enqueue restore jobs on a cron — create, edit, pause, and delete from the dashboard.",
             "Starter: 1 schedule, 1 parallel restore drill.",
             "Pro: 10 schedules, 3 parallel restore drills.",
             "Embedded runner on the API executes Starter drills without a customer agent.",
@@ -70,7 +71,7 @@ export const cloudSection: DocSection = {
         {
           type: "paragraph",
           text:
-            "Each successful (or failed) drill stores evidence artifacts. Starter retains 30 days; Pro retains 365 days. Download JSON/PDF-style reports for auditors. Evidence is org-scoped with audit log events.",
+            "Each drill stores signed artifacts: drill reports (JSON + branded PDF) and recovery passports (signed JSON). Starter retains 30 days; Pro retains 365 days. Evidence Vault lists both types with integrity verification on download.",
         },
       ],
     },

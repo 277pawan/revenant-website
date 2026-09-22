@@ -4,6 +4,7 @@ import { Loader2 } from "lucide-react";
 import {
   getAuthProviders,
   goToAppWithSession,
+  me,
   register,
   type AuthProviderInfo,
 } from "../lib/api";
@@ -25,7 +26,9 @@ export function RegisterPage() {
     void getAuthProviders()
       .then((r) =>
         setProviders(
-          r.providers.filter((p) => p.id === "google" || p.id === "github"),
+          r.providers.filter(
+            (p) => p.id === "google" || p.id === "github" || p.id === "microsoft"
+          ),
         ),
       )
       .catch(() =>
@@ -61,7 +64,7 @@ export function RegisterPage() {
         userId: res.user.id,
         userEmail: res.user.email,
       });
-      goToAppWithSession(res.token);
+      goToAppWithSession(res.token, res.user);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Registration failed");
       setLoading(false);
@@ -146,7 +149,9 @@ export function RegisterPage() {
             }
             onSuccess={(token) => {
               void trackEngagement("marketing", { eventType: "register" });
-              goToAppWithSession(token);
+              void me()
+                .then((r) => goToAppWithSession(token, r.user))
+                .catch(() => goToAppWithSession(token));
             }}
             onError={setError}
           />

@@ -9,7 +9,7 @@ function sitemapPlugin(): Plugin {
     buildStart() {
       const baseUrl =
         process.env.VITE_SITE_URL?.trim().replace(/\/$/, "") ||
-        "https://revenant.dev";
+        "https://revenant-verify-933e4.web.app";
       writeFileSync("public/sitemap.xml", renderSitemapXml(baseUrl));
     },
   };

@@ -30,10 +30,10 @@ export const PLANS: Plan[] = [
     id: "starter",
     name: "Starter",
     price: "₹999",
-    priceNote: "/ month after 30-day trial",
+    priceNote: "/ month after first month free",
     tagline: "One production workflow — Revenant runs restore drills for you.",
     highlights: [
-      "30-day free trial — no card at signup",
+      "First month free — no credit card at signup",
       "1 RDS workflow, managed AWS drill",
       "Evidence vault, schedules, email alerts",
       "No Docker — cloud executes drills",

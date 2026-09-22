@@ -27,7 +27,9 @@ export function getSitemapEntries(): SitemapEntry[] {
   return [...STATIC_ROUTES, ...docRoutes];
 }
 
-export function renderSitemapXml(baseUrl = "https://revenant.dev"): string {
+export function renderSitemapXml(
+  baseUrl = "https://revenant-verify-933e4.web.app"
+): string {
   const entries = getSitemapEntries();
   const today = new Date().toISOString().slice(0, 10);
 

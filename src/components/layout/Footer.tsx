@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Mail, Phone, Linkedin, Github } from "lucide-react";
-import { site } from "../../lib/site";
+import { appLink, site } from "../../lib/site";
 
 export function Footer() {
   return (
@@ -60,7 +60,9 @@ export function Footer() {
           </h3>
           <ul className="mt-4 space-y-2 text-sm text-foreground-muted">
             <li><Link to="/docs" className="hover:text-accent-bright">Docs</Link></li>
+            <li><Link to="/cli" className="hover:text-accent-bright">CLI</Link></li>
             <li><Link to="/pricing" className="hover:text-accent-bright">Pricing</Link></li>
+            <li><a href={appLink("/login")} className="hover:text-accent-bright">Cloud dashboard</a></li>
             <li><Link to="/login" className="hover:text-accent-bright">Sign in</Link></li>
             <li><Link to="/register" className="hover:text-accent-bright">Start trial</Link></li>
           </ul>
@@ -74,7 +76,7 @@ export function Footer() {
             <li><Link to="/talk" className="hover:text-accent-bright">Talk to us</Link></li>
             <li><Link to="/coffee" className="hover:text-accent-bright">Fund us</Link></li>
             <li><a href={site.githubCli} className="hover:text-accent-bright">GitHub</a></li>
-            <li><a href={site.appUrl} className="hover:text-accent-bright">Cloud dashboard</a></li>
+            <li><a href={appLink("/register")} className="hover:text-accent-bright">Create cloud account</a></li>
           </ul>
         </div>
       </div>

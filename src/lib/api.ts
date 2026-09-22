@@ -41,13 +41,25 @@ export async function submitContact(payload: ContactPayload): Promise<void> {
   });
 }
 
+export type AuthUser = {
+  id: string;
+  email: string;
+  role?: string;
+  organizationId?: string;
+  organizationName?: string;
+  organizationPlan?: string;
+  subscriptionStatus?: string;
+  trialEndsAt?: string | null;
+  subscriptionActive?: boolean;
+};
+
 export type LoginResponse = {
   token: string;
-  user: { id: string; email: string };
+  user: AuthUser;
 };
 
 export type AuthProviderInfo = {
-  id: "google" | "github";
+  id: "google" | "github" | "microsoft";
   label: string;
   status: "live" | "coming_soon";
   authorizePath?: string;
@@ -57,6 +69,13 @@ export async function getAuthProviders(): Promise<{
   providers: AuthProviderInfo[];
 }> {
   return request("/api/v1/auth/providers");
+}
+
+export async function me(): Promise<{ user: AuthUser }> {
+  const token = localStorage.getItem("revenant_token");
+  return request("/api/v1/me", {
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
+  });
 }
 
 export async function login(email: string, password: string) {
@@ -77,8 +96,12 @@ export async function register(body: {
   });
 }
 
-/** After marketing auth, hand off token to cloud app */
-export function goToAppWithSession(token: string) {
+/** After marketing auth, hand off token to cloud app when Starter trial is active. */
+export function goToAppWithSession(token: string, user?: AuthUser) {
   localStorage.setItem("revenant_token", token);
+  if (user && user.subscriptionActive === false) {
+    window.location.href = "/trial-ended";
+    return;
+  }
   window.location.href = `${site.appUrl}/auth/oauth/complete#token=${encodeURIComponent(token)}`;
 }

@@ -5,6 +5,7 @@ import {
   getAuthProviders,
   goToAppWithSession,
   login,
+  me,
   type AuthProviderInfo,
 } from "../lib/api";
 import { trackEngagement } from "../lib/engagement";
@@ -25,7 +26,9 @@ export function LoginPage() {
     void getAuthProviders()
       .then((r) =>
         setProviders(
-          r.providers.filter((p) => p.id === "google" || p.id === "github"),
+          r.providers.filter(
+            (p) => p.id === "google" || p.id === "github" || p.id === "microsoft"
+          ),
         ),
       )
       .catch(() =>
@@ -57,7 +60,7 @@ export function LoginPage() {
         userId: res.user.id,
         userEmail: res.user.email,
       });
-      goToAppWithSession(res.token);
+      goToAppWithSession(res.token, res.user);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Sign in failed");
       setLoading(false);
@@ -76,7 +79,8 @@ export function LoginPage() {
           />
           <h1 className="mt-4 text-2xl font-bold text-foreground">Sign in</h1>
           <p className="mt-1 text-sm text-foreground-subtle">
-            Same account as Revenant Cloud — continues to the dashboard.
+            Active Starter trial required for the cloud dashboard. New accounts:
+            register for 30 days free.
           </p>
         </div>
 
@@ -126,7 +130,9 @@ export function LoginPage() {
             }
             onSuccess={(token) => {
               void trackEngagement("marketing", { eventType: "login" });
-              goToAppWithSession(token);
+              void me()
+                .then((r) => goToAppWithSession(token, r.user))
+                .catch(() => goToAppWithSession(token));
             }}
             onError={setError}
           />

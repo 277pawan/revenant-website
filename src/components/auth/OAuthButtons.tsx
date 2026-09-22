@@ -55,6 +55,12 @@ export function OAuthButtons({ providers, onUnavailable, onSuccess, onError }: P
     }
   }
 
+  const liveProviders = providers.filter(
+    (p) => p.status === "live" && p.authorizePath
+  );
+
+  if (liveProviders.length === 0) return null;
+
   return (
     <div className="space-y-3">
       <div className="relative flex items-center gap-3 py-1">
@@ -65,7 +71,7 @@ export function OAuthButtons({ providers, onUnavailable, onSuccess, onError }: P
         <div className="h-px flex-1 bg-border" />
       </div>
       <div className="grid gap-2 sm:grid-cols-2">
-        {providers.map((provider) => {
+        {liveProviders.map((provider) => {
           const busy = busyProvider === provider.id;
           return (
             <button
@@ -73,19 +79,10 @@ export function OAuthButtons({ providers, onUnavailable, onSuccess, onError }: P
               type="button"
               disabled={busyProvider != null}
               onClick={() => void handleClick(provider)}
-              className={`relative flex items-center justify-center gap-2 rounded-xl border px-3 py-2.5 text-sm font-medium transition ${
-                provider.status === "live"
-                  ? "border-border bg-surface text-foreground-muted hover:border-border-strong hover:bg-surface-elevated"
-                  : "border-border-subtle bg-surface-sunken text-foreground-subtle"
-              }`}
+              className="flex items-center justify-center gap-2 rounded-xl border border-border bg-surface px-3 py-2.5 text-sm font-medium text-foreground-muted transition hover:border-border-strong hover:bg-surface-elevated"
             >
               {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <ProviderIcon id={provider.id} />}
               <span>{provider.label}</span>
-              {provider.status !== "live" && (
-                <span className="absolute -right-1 -top-1 rounded-full border border-border bg-surface-elevated px-1.5 py-0.5 text-[9px] font-semibold uppercase text-foreground-subtle">
-                  Soon
-                </span>
-              )}
             </button>
           );
         })}

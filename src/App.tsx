@@ -11,6 +11,7 @@ import { RegisterPage } from "./pages/RegisterPage";
 import { OAuthCompletePage } from "./pages/OAuthCompletePage";
 import { DocsIndexPage } from "./pages/DocsIndexPage";
 import { DocsModulePage } from "./pages/DocsModulePage";
+import { TrialEndedPage } from "./pages/TrialEndedPage";
 
 export default function App() {
   return (
@@ -21,6 +22,7 @@ export default function App() {
         <Route path="cli" element={<CliPage />} />
         <Route path="talk" element={<TalkPage />} />
         <Route path="coffee" element={<CoffeePage />} />
+        <Route path="trial-ended" element={<TrialEndedPage />} />
         <Route path="login" element={<LoginPage />} />
         <Route path="register" element={<RegisterPage />} />
         <Route path="auth/oauth/complete" element={<OAuthCompletePage />} />

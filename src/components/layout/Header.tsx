@@ -6,6 +6,7 @@ import { Coffee } from "lucide-react";
 import { Button } from "../ui/Button";
 import { ThemeToggle } from "./ThemeToggle";
 import { cn } from "../../lib/cn";
+import { appLink } from "../../lib/site";
 import {
   DocsSearchDialog,
   DocsSearchTrigger,
@@ -14,6 +15,7 @@ import {
 
 const NAV = [
   { to: "/docs", label: "Docs" },
+  { to: "/cli", label: "CLI" },
   { to: "/pricing", label: "Pricing" },
   { to: "/talk", label: "Talk to us" },
   { to: "/coffee", label: "Fund us", icon: Coffee },
@@ -113,6 +115,13 @@ export function Header() {
                   {item.label}
                 </NavLink>
               ))}
+              <a
+                href={appLink("/login")}
+                onClick={() => setOpen(false)}
+                className="rounded-xl px-3 py-3 text-foreground hover:bg-surface-elevated"
+              >
+                Cloud dashboard
+              </a>
               <Link
                 to="/login"
                 onClick={() => setOpen(false)}
@@ -177,6 +186,9 @@ export function Header() {
           )}
           <ThemeToggle />
           <div className="hidden items-center gap-2 md:flex">
+            <Button variant="ghost" href={appLink("/login")} external>
+              Cloud dashboard
+            </Button>
             <Button variant="ghost" href="/login">
               Sign in
             </Button>

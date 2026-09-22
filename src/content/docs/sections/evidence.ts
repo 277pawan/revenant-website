@@ -45,8 +45,8 @@ export const evidenceSection: DocSection = {
         {
           type: "list",
           items: [
-            "Signed evidence bundle per drill (tamper-evident hash).",
-            "Download JSON, Markdown, and PDF from the dashboard.",
+            "Drill reports (JSON + branded PDF) and recovery passports (signed JSON) per job.",
+            "Integrity verified on every download.",
             "Starter retention 30 days; Pro 365 days.",
             "Org-scoped with audit log events for compliance reviews.",
           ],

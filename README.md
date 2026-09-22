@@ -1,8 +1,12 @@
 # Revenant Marketing Website
 
-Public site for **revenant.dev** — homepage, pricing, CLI docs, and open-source Toast component showcase.
+Marketing site — homepage, pricing, CLI docs, and contact forms.
 
-Separate from `revenant-cloud-web` (the authenticated dashboard at `app.revenant.dev`).
+| App | URL |
+|-----|-----|
+| Marketing (`revenant-website`) | https://revenant-verify-933e4.web.app |
+| Cloud dashboard (`revenant-cloud-web`) | https://revenant-cloud-web.web.app |
+| API | https://revenant-api-171384186168.asia-south1.run.app |
 
 ## Develop
 

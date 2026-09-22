@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://revenant.dev/sitemap.xml
+Sitemap: https://revenant-verify-933e4.web.app/sitemap.xml

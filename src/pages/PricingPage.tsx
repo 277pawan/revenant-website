@@ -4,6 +4,7 @@ import { Button } from "../components/ui/Button";
 import { CtaBanner } from "../components/home/CtaBanner";
 import { PageMeta } from "../components/seo/PageMeta";
 import { pricingSeo } from "../lib/seo-pages";
+import { StarterTrialBadge, TrialPromoBanner } from "../components/pricing/TrialPromoBanner";
 
 export function PricingPage() {
   return (
@@ -20,6 +21,8 @@ export function PricingPage() {
           </p>
         </div>
 
+        <TrialPromoBanner />
+
         <div className="mx-auto mt-14 grid max-w-6xl gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {PLANS.map((plan) => (
             <article
@@ -29,9 +32,12 @@ export function PricingPage() {
               }`}
             >
               {plan.featured && (
-                <span className="mb-3 w-fit rounded-full bg-accent-muted px-2.5 py-0.5 text-[11px] font-semibold text-accent-bright">
-                  Recommended
-                </span>
+                <>
+                  <span className="mb-3 w-fit rounded-full bg-accent-muted px-2.5 py-0.5 text-[11px] font-semibold text-accent-bright">
+                    Recommended
+                  </span>
+                  <StarterTrialBadge />
+                </>
               )}
               <h2 className="text-xl font-semibold text-foreground">{plan.name}</h2>
               <div className="mt-2">

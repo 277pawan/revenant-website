@@ -17,6 +17,9 @@ export const site = {
   url: SITE_URL,
   appUrl: APP_URL,
   apiUrl: API_URL,
+  docsUrl: `${SITE_URL}/docs`,
+  cliUrl: `${SITE_URL}/cli`,
+  pricingUrl: `${SITE_URL}/pricing`,
   githubCli: "https://github.com/277pawan/revenant-cli",
   githubAction: "https://github.com/277pawan/revenant-action",
   founder: {
@@ -32,4 +35,9 @@ export const site = {
 export function appLink(path = ""): string {
   const p = path.startsWith("/") ? path : `/${path}`;
   return `${site.appUrl}${p}`;
+}
+
+export function marketingLink(path = ""): string {
+  const p = path.startsWith("/") ? path : `/${path}`;
+  return `${site.url}${p}`;
 }

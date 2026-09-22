@@ -1,4 +1,5 @@
 import type { DocSection } from "../types";
+import { docsPublicUrls } from "../public-urls";
 
 export const gettingStartedSection: DocSection = {
   id: "getting-started",
@@ -77,7 +78,8 @@ export const gettingStartedSection: DocSection = {
           items: [
             "Pass / fail verdict with per-check detail — not a vague “backup OK”.",
             "Measured RTO — how long from trigger to validated recovery.",
-            "Signed evidence artifacts (JSON + PDF certificate) stored in the Evidence Vault (Cloud).",
+            "Signed evidence artifacts (JSON + PDF certificate) and recovery passports stored in the Evidence Vault (Cloud).",
+            "Recovery readiness score, contract, and drift alerts per workflow (Cloud).",
             "Audit log entries for who ran what, when, and on which workflow.",
             "Alerts via email, Slack, or custom HTTP webhooks when a drill fails.",
           ],
@@ -126,7 +128,7 @@ export const gettingStartedSection: DocSection = {
         {
           type: "paragraph",
           text:
-            "Hosted dashboard at app.revenant.dev (or your deployed instance). Register databases, build validation plans, schedule automatic drills, view fleet health and RTO trends, invite teammates, and browse the Evidence Vault. Starter runs one managed AWS RDS workflow with a 30-day trial. Pro expands to a fleet (up to 10 workflows), parallel drills, Slack integrations, and longer evidence retention.",
+            `Hosted dashboard at ${docsPublicUrls.cloudDashboard}. Register databases, build validation plans, schedule automatic drills, view fleet health and RTO trends, invite teammates, and browse the Evidence Vault. Starter runs one managed AWS RDS workflow with a 30-day trial. Pro expands to a fleet (up to 10 workflows), parallel drills, Slack integrations, and longer evidence retention.`,
         },
         {
           type: "heading",
@@ -292,15 +294,16 @@ Wrote report.md`,
     {
       slug: "roadmap",
       title: "Roadmap",
-      summary: "CLI phases 1–4 done; Phase 5 hosted UI in cloud product.",
+      summary: "CLI core done; Cloud ships recovery readiness; challenges and observability next.",
       keywords: ["roadmap", "phase", "fleet", "dashboard", "future"],
       blocks: [
         {
           type: "list",
           items: [
-            "Phases 1–4 (done): CLI, checks, AWS restore, reports, GitHub Action.",
-            "Phase 5 (planned): hosted UI, scheduler, fleet view, signed evidence vault UX.",
-            "Phase 5 operations UI ships with Revenant Cloud — not in the open-source CLI repo.",
+            "CLI (done): verify, AWS restore, reports, GitHub Action.",
+            "Cloud (shipped): dashboard, workflows, schedules, evidence vault, team RBAC, Google/GitHub login.",
+            "Recovery readiness (shipped): contracts, readiness scores, drift, passports, RTO trends, HTTP health checks.",
+            "Next: recovery challenges, historical readiness/RPO trends, API tokens, passport PDF, observability.",
           ],
         },
       ],

@@ -5,12 +5,14 @@ import { cloudSection } from "./sections/cloud";
 import { awsSection } from "./sections/aws";
 import { evidenceSection } from "./sections/evidence";
 import { integrationsSection } from "./sections/integrations";
+import { recoveryReadinessSection } from "./sections/recovery-readiness";
 
 /** Add new section files under sections/ and append here */
 export const DOC_SECTIONS: DocSection[] = [
   gettingStartedSection,
   cliSection,
   evidenceSection,
+  recoveryReadinessSection,
   integrationsSection,
   cloudSection,
   awsSection,
