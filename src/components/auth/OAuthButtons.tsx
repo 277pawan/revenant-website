@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
 import type { AuthProviderInfo } from "../../lib/api";
+import { TOKEN_KEY } from "../../lib/session";
 import { openOAuthPopup, waitForOAuthPopupMessage } from "../../lib/oauth-popup";
 
 function ProviderIcon({ id }: { id: AuthProviderInfo["id"] }) {
@@ -48,7 +49,7 @@ export function OAuthButtons({ providers, onUnavailable, onSuccess, onError }: P
         onError(result.error);
         return;
       }
-      localStorage.setItem("revenant_token", result.token);
+      localStorage.setItem(TOKEN_KEY, result.token);
       onSuccess(result.token);
     } finally {
       setBusyProvider(null);

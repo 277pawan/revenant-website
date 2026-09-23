@@ -1,5 +1,5 @@
 import { useEffect, useState, type FormEvent } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import {
   getAuthProviders,
@@ -13,14 +13,32 @@ import { Button } from "../components/ui/Button";
 import { OAuthButtons } from "../components/auth/OAuthButtons";
 import { PageMeta } from "../components/seo/PageMeta";
 import { loginSeo } from "../lib/seo-pages";
+import { consumeTokenFromHash, TOKEN_KEY } from "../lib/session";
+import { openCloudDashboard } from "../lib/cloud-navigation";
+import { canAccessCloudDashboard } from "../lib/subscription-access";
 
 export function LoginPage() {
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(searchParams.get("oauth_error") ?? "");
   const [providers, setProviders] = useState<AuthProviderInfo[]>([]);
+
+  useEffect(() => {
+    consumeTokenFromHash();
+    const next = searchParams.get("next") || "/billing";
+    void me()
+      .then(({ user }) => {
+        if (canAccessCloudDashboard(user)) {
+          void openCloudDashboard(localStorage.getItem(TOKEN_KEY));
+          return;
+        }
+        navigate(next, { replace: true });
+      })
+      .catch(() => {});
+  }, [navigate, searchParams]);
 
   useEffect(() => {
     void getAuthProviders()

@@ -1,5 +1,8 @@
 export type PlanId = "developer" | "starter" | "pro" | "enterprise";
 
+export const STARTER_PRICE_INR = 499;
+export const PRO_PRICE_INR = 1499;
+
 export type Plan = {
   id: PlanId;
   name: string;
@@ -29,7 +32,7 @@ export const PLANS: Plan[] = [
   {
     id: "starter",
     name: "Starter",
-    price: "₹999",
+    price: "₹499",
     priceNote: "/ month after first month free",
     tagline: "One production workflow — Revenant runs restore drills for you.",
     highlights: [
@@ -45,7 +48,7 @@ export const PLANS: Plan[] = [
   {
     id: "pro",
     name: "Pro",
-    price: "₹4,999",
+    price: "₹1,499",
     priceNote: "/ month",
     tagline: "Fleet DR proof — parallel drills, optional private-network agent.",
     highlights: [

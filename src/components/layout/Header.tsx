@@ -6,7 +6,9 @@ import { Coffee } from "lucide-react";
 import { Button } from "../ui/Button";
 import { ThemeToggle } from "./ThemeToggle";
 import { cn } from "../../lib/cn";
-import { appLink } from "../../lib/site";
+import { useWebsiteSession } from "../../hooks/useWebsiteSession";
+import { openCloudDashboard } from "../../lib/cloud-navigation";
+import { canAccessCloudDashboard, hasActiveCloudPlan } from "../../lib/subscription-access";
 import {
   DocsSearchDialog,
   DocsSearchTrigger,
@@ -51,6 +53,8 @@ export function Header() {
   const [searchOpen, setSearchOpen] = useState(false);
   const { pathname } = useLocation();
   const onDocs = pathname.startsWith("/docs");
+  const { user, token, logout } = useWebsiteSession();
+  const showCloudNav = Boolean(user && hasActiveCloudPlan(user));
 
   const openSearch = useCallback(() => {
     if (!pathname.startsWith("/docs")) return;
@@ -71,6 +75,17 @@ export function Header() {
       document.body.style.overflow = prev;
     };
   }, [open]);
+
+  function handleOpenCloud() {
+    setOpen(false);
+    void openCloudDashboard(token);
+  }
+
+  async function handleLogout() {
+    setOpen(false);
+    await logout();
+    window.location.href = "/";
+  }
 
   const menu = (
     <AnimatePresence>
@@ -115,23 +130,57 @@ export function Header() {
                   {item.label}
                 </NavLink>
               ))}
-              <a
-                href={appLink("/login")}
-                onClick={() => setOpen(false)}
-                className="rounded-xl px-3 py-3 text-foreground hover:bg-surface-elevated"
-              >
-                Cloud dashboard
-              </a>
-              <Link
-                to="/login"
-                onClick={() => setOpen(false)}
-                className="rounded-xl px-3 py-3 text-foreground hover:bg-surface-elevated"
-              >
-                Sign in
-              </Link>
-              <Button href="/register" className="mt-3 w-full">
-                Start free trial
-              </Button>
+              {showCloudNav && (
+                <button
+                  type="button"
+                  onClick={handleOpenCloud}
+                  className="rounded-xl px-3 py-3 text-left font-medium text-accent-bright hover:bg-surface-elevated"
+                >
+                  Cloud dashboard
+                </button>
+              )}
+              {user ? (
+                <>
+                  <p className="px-3 py-2 text-xs text-foreground-muted">{user.email}</p>
+                  {canAccessCloudDashboard(user) ? (
+                    <button
+                      type="button"
+                      onClick={handleOpenCloud}
+                      className="w-full rounded-xl px-3 py-3 text-left font-medium text-accent-bright hover:bg-surface-elevated"
+                    >
+                      Open cloud dashboard
+                    </button>
+                  ) : (
+                    <Link
+                      to="/billing"
+                      onClick={() => setOpen(false)}
+                      className="rounded-xl px-3 py-3 font-medium text-accent-bright hover:bg-surface-elevated"
+                    >
+                      Set up autopay — ₹1
+                    </Link>
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => void handleLogout()}
+                    className="rounded-xl px-3 py-3 text-left text-foreground-muted hover:bg-surface-elevated"
+                  >
+                    Log out
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link
+                    to="/login"
+                    onClick={() => setOpen(false)}
+                    className="rounded-xl px-3 py-3 text-foreground hover:bg-surface-elevated"
+                  >
+                    Sign in
+                  </Link>
+                  <Button href="/register" className="mt-3 w-full">
+                    Start free trial
+                  </Button>
+                </>
+              )}
             </nav>
           </motion.aside>
         </div>
@@ -168,6 +217,15 @@ export function Header() {
               {item.label}
             </NavLink>
           ))}
+          {showCloudNav && (
+            <button
+              type="button"
+              onClick={handleOpenCloud}
+              className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-lg px-2.5 py-1.5 text-sm font-medium text-accent-bright transition-colors hover:bg-accent-muted"
+            >
+              Cloud dashboard
+            </button>
+          )}
         </nav>
 
         <div className="flex shrink-0 items-center justify-end gap-0.5 sm:gap-1 md:justify-self-end">
@@ -186,15 +244,34 @@ export function Header() {
           )}
           <ThemeToggle />
           <div className="hidden items-center gap-2 md:flex">
-            <Button variant="ghost" href={appLink("/login")} external>
-              Cloud dashboard
-            </Button>
-            <Button variant="ghost" href="/login">
-              Sign in
-            </Button>
-            <Button href="/register" size="sm">
-              Start free trial
-            </Button>
+            {user ? (
+              <>
+                <span className="max-w-[140px] truncate text-xs text-foreground-muted">
+                  {user.email}
+                </span>
+                {canAccessCloudDashboard(user) ? (
+                  <Button size="sm" onClick={handleOpenCloud}>
+                    Cloud dashboard
+                  </Button>
+                ) : (
+                  <Button href="/billing" size="sm">
+                    Set up autopay — ₹1
+                  </Button>
+                )}
+                <Button variant="ghost" size="sm" onClick={() => void handleLogout()}>
+                  Log out
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button variant="ghost" href="/login">
+                  Sign in
+                </Button>
+                <Button href="/register" size="sm">
+                  Start free trial
+                </Button>
+              </>
+            )}
           </div>
           <button
             type="button"

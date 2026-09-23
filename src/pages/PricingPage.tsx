@@ -5,8 +5,12 @@ import { CtaBanner } from "../components/home/CtaBanner";
 import { PageMeta } from "../components/seo/PageMeta";
 import { pricingSeo } from "../lib/seo-pages";
 import { StarterTrialBadge, TrialPromoBanner } from "../components/pricing/TrialPromoBanner";
+import { useWebsiteSession } from "../hooks/useWebsiteSession";
+import { planCheckoutTarget } from "../lib/session";
 
 export function PricingPage() {
+  const { user } = useWebsiteSession();
+
   return (
     <>
       <PageMeta {...pricingSeo} />
@@ -24,46 +28,54 @@ export function PricingPage() {
         <TrialPromoBanner />
 
         <div className="mx-auto mt-14 grid max-w-6xl gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {PLANS.map((plan) => (
-            <article
-              key={plan.id}
-              className={`ui-card flex flex-col p-6 ${
-                plan.featured ? "border-accent/40 ring-2 ring-accent/15 lg:scale-[1.02]" : ""
-              }`}
-            >
-              {plan.featured && (
-                <>
-                  <span className="mb-3 w-fit rounded-full bg-accent-muted px-2.5 py-0.5 text-[11px] font-semibold text-accent-bright">
-                    Recommended
-                  </span>
-                  <StarterTrialBadge />
-                </>
-              )}
-              <h2 className="text-xl font-semibold text-foreground">{plan.name}</h2>
-              <div className="mt-2">
-                <span className="text-2xl font-bold text-foreground">{plan.price}</span>
-                {plan.priceNote && (
-                  <p className="text-sm text-foreground-subtle">{plan.priceNote}</p>
-                )}
-              </div>
-              <p className="mt-3 text-sm text-foreground-muted">{plan.tagline}</p>
-              <ul className="mt-6 flex-1 space-y-2">
-                {plan.highlights.map((h) => (
-                  <li key={h} className="flex gap-2 text-sm text-foreground-muted">
-                    <Check size={15} className="mt-0.5 shrink-0 text-accent-bright" />
-                    {h}
-                  </li>
-                ))}
-              </ul>
-              <Button
-                href={plan.ctaHref}
-                variant={plan.featured ? "primary" : "secondary"}
-                className="mt-6 w-full"
+          {PLANS.map((plan) => {
+            const cta = planCheckoutTarget(
+              plan.id,
+              { href: plan.ctaHref, label: plan.cta },
+              user,
+            );
+
+            return (
+              <article
+                key={plan.id}
+                className={`ui-card flex flex-col p-6 ${
+                  plan.featured ? "border-accent/40 ring-2 ring-accent/15 lg:scale-[1.02]" : ""
+                }`}
               >
-                {plan.cta}
-              </Button>
-            </article>
-          ))}
+                {plan.featured && (
+                  <>
+                    <span className="mb-3 w-fit rounded-full bg-accent-muted px-2.5 py-0.5 text-[11px] font-semibold text-accent-bright">
+                      Recommended
+                    </span>
+                    <StarterTrialBadge />
+                  </>
+                )}
+                <h2 className="text-xl font-semibold text-foreground">{plan.name}</h2>
+                <div className="mt-2">
+                  <span className="text-2xl font-bold text-foreground">{plan.price}</span>
+                  {plan.priceNote && (
+                    <p className="text-sm text-foreground-subtle">{plan.priceNote}</p>
+                  )}
+                </div>
+                <p className="mt-3 text-sm text-foreground-muted">{plan.tagline}</p>
+                <ul className="mt-6 flex-1 space-y-2">
+                  {plan.highlights.map((h) => (
+                    <li key={h} className="flex gap-2 text-sm text-foreground-muted">
+                      <Check size={15} className="mt-0.5 shrink-0 text-accent-bright" />
+                      {h}
+                    </li>
+                  ))}
+                </ul>
+                <Button
+                  href={cta.href}
+                  variant={plan.featured ? "primary" : "secondary"}
+                  className="mt-6 w-full"
+                >
+                  {cta.label}
+                </Button>
+              </article>
+            );
+          })}
         </div>
 
         <div className="ui-card mx-auto mt-16 max-w-3xl p-6 text-sm text-foreground-muted">

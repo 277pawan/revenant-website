@@ -113,14 +113,14 @@ export const cloudSection: DocSection = {
     {
       slug: "plans",
       title: "Plans & limits",
-      summary: "Developer, Starter ₹999, Pro ₹4,999, Enterprise.",
+      summary: "Developer, Starter ₹499, Pro ₹1,499, Enterprise.",
       blocks: [
         {
           type: "list",
           items: [
             "Developer — free CLI + GitHub Action, no cloud account.",
-            "Starter — ₹999/mo after 30-day trial; 1 workflow; managed AWS; no agent.",
-            "Pro — ₹4,999/mo; 10 workflows; 3 parallel drills; optional agent; Slack/HTTP.",
+            "Starter — ₹499/mo after 30-day trial; 1 workflow; managed AWS; no agent.",
+            "Pro — ₹1,499/mo; 10 workflows; 3 parallel drills; optional agent; Slack/HTTP.",
             "Enterprise — contact us for SSO and custom SLAs.",
           ],
         },

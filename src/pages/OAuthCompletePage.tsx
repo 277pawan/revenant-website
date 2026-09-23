@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import { OAUTH_MESSAGE_TYPE } from "../lib/oauth-popup";
 import { goToAppWithSession } from "../lib/api";
+import { TOKEN_KEY } from "../lib/session";
 import { trackEngagement } from "../lib/engagement";
 import { PageMeta } from "../components/seo/PageMeta";
 import { oauthCompleteSeo } from "../lib/seo-pages";
@@ -40,7 +41,7 @@ export function OAuthCompletePage() {
       return;
     }
 
-    localStorage.setItem("revenant_token", token);
+    localStorage.setItem(TOKEN_KEY, token);
     void trackEngagement("marketing", { eventType: "login" });
 
     if (popup && window.opener) {

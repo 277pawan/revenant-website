@@ -1,7 +1,27 @@
 import { ArrowRight } from "lucide-react";
 import { Button } from "../ui/Button";
+import { useWebsiteSession } from "../../hooks/useWebsiteSession";
+import { canAccessCloudDashboard, hasActiveCloudPlan } from "../../lib/subscription-access";
 
 export function CtaBanner() {
+  const { user } = useWebsiteSession();
+
+  let href = "/register";
+  let label = "Start free trial";
+
+  if (user) {
+    if (canAccessCloudDashboard(user)) {
+      href = "/billing?open=cloud";
+      label = "Open cloud dashboard";
+    } else if (hasActiveCloudPlan(user)) {
+      href = "/billing";
+      label = "Set up autopay — ₹1";
+    } else {
+      href = "/billing";
+      label = "Set up autopay — ₹1";
+    }
+  }
+
   return (
     <section className="px-4 pb-24 sm:px-6">
       <div className="mx-auto max-w-4xl">
@@ -16,8 +36,8 @@ export function CtaBanner() {
               30-day cloud trial with managed AWS sandboxes.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
-              <Button href="/register" size="lg">
-                Start free trial
+              <Button href={href} size="lg">
+                {label}
                 <ArrowRight size={18} />
               </Button>
               <Button variant="secondary" href="/docs" size="lg">

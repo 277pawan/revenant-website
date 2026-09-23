@@ -22,18 +22,18 @@ export function TrialEndedPage() {
           or paid plan. Your trial may have ended, or this account never started one.
         </p>
         <p className="mt-2 text-sm text-foreground-subtle">
-          New organizations get <strong>30 days free</strong> — no credit card at signup.
-          Razorpay checkout is coming soon.
+          Set up autopay with a <strong>₹1</strong> card check on this site, then open the cloud
+          dashboard with the same login.
         </p>
         <div className="mt-6 flex flex-col gap-2 sm:flex-row sm:justify-center">
-          <Button href="/register">Start free trial</Button>
+          <Button href="/billing">Set up autopay — ₹1</Button>
+          <Button href="/login" variant="secondary">Sign in</Button>
           <Button href="/pricing" variant="secondary">View pricing</Button>
-          <Button href="/docs/cli/install" variant="secondary">Free CLI</Button>
         </div>
         <p className="mt-6 text-xs text-foreground-subtle">
-          Already subscribed?{" "}
+          Already paid?{" "}
           <a href={`${site.appUrl}/login`} className="text-accent-bright hover:underline">
-            Sign in on the dashboard
+            Open cloud dashboard
           </a>
         </p>
       </div>
