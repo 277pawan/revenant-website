@@ -162,7 +162,7 @@ export function LoginPage() {
             to="/register"
             className="font-medium text-accent-bright hover:underline"
           >
-            Start free trial
+            Sign Up
           </Link>
         </p>
       </div>
