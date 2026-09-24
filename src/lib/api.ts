@@ -70,6 +70,40 @@ export async function submitContact(payload: ContactPayload): Promise<void> {
   });
 }
 
+export type FundingOrderResponse = {
+  order: {
+    orderId: string;
+    amount: number;
+    currency: string;
+    keyId: string;
+    description: string;
+    amountInr: number;
+  };
+};
+
+export async function createFundingOrder(input: {
+  name: string;
+  email: string;
+  amountInr: number;
+  note?: string;
+}): Promise<FundingOrderResponse> {
+  return request("/api/v1/public/funding/create-order", {
+    method: "POST",
+    body: JSON.stringify(input),
+  });
+}
+
+export async function verifyFundingPayment(input: {
+  razorpay_order_id: string;
+  razorpay_payment_id: string;
+  razorpay_signature: string;
+}): Promise<{ ok: true; amountInr: number; email: string }> {
+  return request("/api/v1/public/funding/verify-payment", {
+    method: "POST",
+    body: JSON.stringify(input),
+  });
+}
+
 export type AuthUser = {
   id: string;
   email: string;

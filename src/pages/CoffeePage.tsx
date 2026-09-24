@@ -1,15 +1,16 @@
 import { useState, type FormEvent } from "react";
 import { motion } from "motion/react";
 import {
-  Heart,
   Loader2,
   Mail,
   Phone,
   Linkedin,
   Github,
   Check,
+  CreditCard,
 } from "lucide-react";
-import { submitContact } from "../lib/api";
+import { createFundingOrder, verifyFundingPayment } from "../lib/api";
+import { loadRazorpayCheckout } from "../lib/razorpay";
 import { PageMeta } from "../components/seo/PageMeta";
 import { coffeeSeo } from "../lib/seo-pages";
 import { site } from "../lib/site";
@@ -44,6 +45,7 @@ export function CoffeePage() {
   const [note, setNote] = useState("");
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
+  const [paidAmount, setPaidAmount] = useState(0);
   const [error, setError] = useState("");
 
   const selected =
@@ -58,16 +60,57 @@ export function CoffeePage() {
     }
     setLoading(true);
     try {
-      await submitContact({
-        type: "coffee",
+      await loadRazorpayCheckout();
+      const { order } = await createFundingOrder({
         name: name.trim(),
         email: email.trim(),
         amountInr: selected,
-        message: note.trim() || undefined,
+        note: note.trim() || undefined,
       });
-      setDone(true);
+
+      const Razorpay = window.Razorpay;
+      if (!Razorpay) throw new Error("Razorpay failed to load");
+
+      const keyId = import.meta.env.VITE_RAZORPAY_KEY_ID?.trim() || order.keyId;
+
+      await new Promise<void>((resolve, reject) => {
+        const rzp = new Razorpay({
+          key: keyId,
+          name: "Revenant",
+          description: order.description,
+          amount: order.amount,
+          currency: order.currency,
+          order_id: order.orderId,
+          prefill: { email: email.trim(), name: name.trim() },
+          theme: { color: "#3b82f6" },
+          handler: async (response: {
+            razorpay_payment_id: string;
+            razorpay_order_id: string;
+            razorpay_signature: string;
+          }) => {
+            try {
+              const result = await verifyFundingPayment({
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature,
+              });
+              setPaidAmount(result.amountInr);
+              setDone(true);
+              resolve();
+            } catch (err) {
+              reject(err instanceof Error ? err : new Error("Verification failed"));
+            }
+          },
+          modal: { ondismiss: () => reject(new Error("Payment cancelled")) },
+        });
+        rzp.on("payment.failed", (r) => {
+          reject(new Error(r.error?.description ?? "Payment failed"));
+        });
+        rzp.open();
+      });
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Could not submit");
+      const message = err instanceof Error ? err.message : "Payment failed";
+      if (message !== "Payment cancelled") setError(message);
     } finally {
       setLoading(false);
     }
@@ -86,9 +129,8 @@ export function CoffeePage() {
           </div>
           <h1 className="ui-heading text-4xl">Fund Revenant</h1>
           <p className="mx-auto mt-4 max-w-xl text-foreground-muted leading-relaxed">
-            Choose an amount to support development. We&apos;ll email you UPI /
-            payment details and confirm your pledge. This is funding — not a
-            chat form.
+            One-time support via Razorpay — card, UPI, or netbanking. Not a
+            subscription. Helps us ship open-source DR tooling faster.
           </p>
         </div>
 
@@ -104,25 +146,28 @@ export function CoffeePage() {
                   <Check size={24} />
                 </div>
                 <p className="mt-4 text-lg font-semibold text-foreground">
-                  Thanks — pledge recorded
+                  Thank you — payment received
                 </p>
                 <p className="mt-2 text-sm text-foreground-muted">
-                  We&apos;ll reply to <strong>{email}</strong> with how to send
-                  ₹{selected.toLocaleString("en-IN")}.
+                  ₹{paidAmount.toLocaleString("en-IN")} from{" "}
+                  <strong>{email}</strong>. We sent a confirmation email.
                 </p>
                 <Button
                   variant="secondary"
                   className="mt-6"
-                  onClick={() => setDone(false)}
+                  onClick={() => {
+                    setDone(false);
+                    setPaidAmount(0);
+                  }}
                 >
-                  Pledge again
+                  Support again
                 </Button>
               </div>
             ) : (
               <form onSubmit={onSubmit} className="space-y-5">
                 <div>
                   <p className="mb-2 text-sm font-medium text-foreground-muted">
-                    Fill a cup
+                    Choose amount
                   </p>
                   <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
                     {AMOUNTS.map((a) => {
@@ -185,7 +230,7 @@ export function CoffeePage() {
                 </div>
                 <div>
                   <label className="mb-1.5 block text-sm font-medium text-foreground-muted">
-                    Email (we send payment details here)
+                    Email (receipt)
                   </label>
                   <input
                     required
@@ -218,13 +263,12 @@ export function CoffeePage() {
                   {loading ? (
                     <Loader2 size={16} className="animate-spin" />
                   ) : (
-                    <Heart size={16} />
+                    <CreditCard size={16} />
                   )}
-                  Pledge ₹{selected.toLocaleString("en-IN")}
+                  Pay ₹{selected.toLocaleString("en-IN")} with Razorpay
                 </Button>
                 <p className="text-center text-xs text-foreground-subtle">
-                  You won&apos;t be charged here. We email UPI / transfer details
-                  next.
+                  Secure checkout · one-time payment · no subscription
                 </p>
               </form>
             )}

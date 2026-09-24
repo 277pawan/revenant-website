@@ -92,7 +92,7 @@ export const talkSeo: PageMetaInput = {
 export const coffeeSeo: PageMetaInput = {
   title: "Buy us a coffee",
   description:
-    "Support Revenant open-source disaster recovery tooling for PostgreSQL. Funding helps ship CLI improvements and docs.",
+    "Support Revenant open-source disaster recovery tooling. One-time Razorpay payments — card, UPI, or netbanking.",
   path: "/coffee",
   keywords: ["support Revenant", "open source funding", "PostgreSQL DR tools"],
 };
