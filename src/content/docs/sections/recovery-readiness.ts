@@ -40,10 +40,16 @@ export const recoveryReadinessSection: DocSection = {
             "Recovery passport JSON — signed artifact per passing drill, downloadable from run detail and Evidence Vault.",
             "Drill evidence — JSON + branded PDF report per job (Revenant Verify logo).",
             "RTO trend chart on the dashboard (30-day history).",
-            "HTTP application health checks during managed drills when configured in the contract.",
+            "HTTP application health checks during managed drills — contract healthcheck URL, optional endpoints[], or http_health in validation plan YAML.",
+            "Share with manager — one-click copy + PDF download from run detail.",
+            "In-app Product guide — step-by-step cards (sidebar) for onboarding.",
             "Schedules — create, edit, pause, and delete cron drills from the dashboard.",
             "Google, GitHub, and Microsoft sign-in for cloud accounts (when OAuth is configured on the API).",
             "Recovery challenges — prove older backup points restore, not just the latest snapshot.",
+            "Recovery regression detection — compares each passing drill to the prior one (RTO, RPO, score).",
+            "CI recovery gate API — GET /databases/:id/recovery-gate for deploy pipelines.",
+            "Dependency map on the workflow page — database → deps → application stack.",
+            "Audit log CSV export for compliance workflows.",
             "Readiness history chart per workflow and RPO trend chart on the dashboard.",
             "Recovery passport PDF export (branded, alongside signed JSON).",
             "Request metrics at GET /metrics — uptime, status codes, active jobs (Phase 10 MVP).",
@@ -101,6 +107,33 @@ export const recoveryReadinessSection: DocSection = {
             "Not recovery ready — a required check failed or recovery was invalidated.",
             "Advisory items (manual-only drills, unmeasured RPO) appear in the risk list without downgrading a strong score.",
           ],
+        },
+      ],
+    },
+    {
+      slug: "regression",
+      title: "Recovery regression",
+      summary: "Detect when RTO, RPO, or readiness score worsens vs the prior drill.",
+      keywords: ["regression", "rto", "rpo", "trend", "worse", "degraded"],
+      blocks: [
+        {
+          type: "paragraph",
+          text:
+            "After each passing drill, Revenant compares RTO, observed RPO (from freshness checks), and readiness score against the previous passing drill. A ≥10% worsening in RTO or RPO — or a ≥10 point score drop — flags regression on the workflow readiness card.",
+        },
+        {
+          type: "list",
+          items: [
+            "Critical regression blocks the CI recovery gate until resolved.",
+            "Subscribe to contract.regression in Settings → Integrations for Slack, email, or HTTP webhooks.",
+            "Use the readiness history chart to see whether regression is a one-off spike or a trend.",
+          ],
+        },
+        {
+          type: "callout",
+          tone: "info",
+          text:
+            "Regression is separate from contract breach: breach means you missed RTO/RPO targets; regression means performance got worse compared to your last verified drill.",
         },
       ],
     },

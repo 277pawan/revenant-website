@@ -1,15 +1,20 @@
+import { useMemo } from "react";
 import { Check } from "lucide-react";
+import { applyCatalogToPlans } from "../lib/catalog";
 import { PLANS } from "../lib/plans";
 import { Button } from "../components/ui/Button";
 import { CtaBanner } from "../components/home/CtaBanner";
 import { PageMeta } from "../components/seo/PageMeta";
 import { pricingSeo } from "../lib/seo-pages";
 import { StarterTrialBadge, TrialPromoBanner } from "../components/pricing/TrialPromoBanner";
+import { usePublicCatalog } from "../hooks/usePublicCatalog";
 import { useWebsiteSession } from "../hooks/useWebsiteSession";
 import { planCheckoutTarget } from "../lib/session";
 
 export function PricingPage() {
   const { user } = useWebsiteSession();
+  const { catalog } = usePublicCatalog();
+  const plans = useMemo(() => applyCatalogToPlans(PLANS, catalog), [catalog]);
 
   return (
     <>
@@ -28,7 +33,7 @@ export function PricingPage() {
         <TrialPromoBanner />
 
         <div className="mx-auto mt-14 grid max-w-6xl gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {PLANS.map((plan) => {
+          {plans.map((plan) => {
             const cta = planCheckoutTarget(
               plan.id,
               { href: plan.ctaHref, label: plan.cta },

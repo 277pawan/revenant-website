@@ -27,6 +27,25 @@ export type PlanCheckoutTarget = {
   label: string;
 };
 
+function userOrgPlan(user: AuthUser): "starter" | "pro" | "enterprise" {
+  if (user.organizationPlan === "pro") return "pro";
+  if (user.organizationPlan === "enterprise") return "enterprise";
+  return "starter";
+}
+
+export function billingHref(options?: {
+  plan?: "starter" | "pro";
+  upgrade?: boolean;
+  openCloud?: boolean;
+}): string {
+  const params = new URLSearchParams();
+  if (options?.plan) params.set("plan", options.plan);
+  if (options?.upgrade) params.set("upgrade", "1");
+  if (options?.openCloud) params.set("open", "cloud");
+  const query = params.toString();
+  return query ? `/billing?${query}` : "/billing";
+}
+
 /** Pricing / trial CTAs — logged-in users go to billing or cloud, not register again. */
 export function planCheckoutTarget(
   planId: string,
@@ -38,16 +57,38 @@ export function planCheckoutTarget(
   }
 
   if (!user) {
+    if (planId === "pro") {
+      return { href: "/register?plan=pro", label: defaults.label };
+    }
     return { href: "/register", label: defaults.label };
   }
 
-  if (canAccessCloudDashboard(user)) {
-    return { href: "/billing?open=cloud", label: "Open cloud dashboard" };
+  const currentPlan = userOrgPlan(user);
+
+  if (planId === "pro") {
+    if (currentPlan === "pro") {
+      if (canAccessCloudDashboard(user)) {
+        return { href: billingHref({ openCloud: true }), label: "Open cloud dashboard" };
+      }
+      return { href: billingHref({ plan: "pro" }), label: "Set up Pro autopay — ₹1" };
+    }
+
+    if (canAccessCloudDashboard(user)) {
+      return { href: billingHref({ plan: "pro", upgrade: true }), label: "Upgrade to Pro" };
+    }
+
+    return { href: billingHref({ plan: "pro" }), label: defaults.label };
   }
 
-  if (hasActiveCloudPlan(user)) {
+  if (planId === "starter") {
+    if (canAccessCloudDashboard(user)) {
+      return { href: billingHref({ openCloud: true }), label: "Open cloud dashboard" };
+    }
+    if (hasActiveCloudPlan(user)) {
+      return { href: "/billing", label: "Set up autopay — ₹1" };
+    }
     return { href: "/billing", label: "Set up autopay — ₹1" };
   }
 
-  return { href: "/billing", label: "Set up autopay — ₹1" };
+  return defaults;
 }

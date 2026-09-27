@@ -114,6 +114,67 @@ export const integrationsSection: DocSection = {
       ],
     },
     {
+      slug: "ci-gate",
+      title: "CI/CD recovery gate",
+      summary: "Block deploys when recovery readiness is below your floor.",
+      keywords: [
+        "ci",
+        "cd",
+        "gate",
+        "deploy",
+        "github actions",
+        "pipeline",
+        "readiness",
+        "api",
+      ],
+      blocks: [
+        {
+          type: "paragraph",
+          text:
+            "Before shipping to production, call the recovery gate API for each critical workflow. The endpoint returns HTTP 200 when recovery is verified and above your score floor, or HTTP 412 with blockers when deploy should wait.",
+        },
+        {
+          type: "heading",
+          level: 2,
+          text: "Endpoint",
+        },
+        {
+          type: "code",
+          language: "bash",
+          code: `curl -fsS -H "Authorization: Bearer $REVENANT_TOKEN" \\
+  "https://api.revenant.example/api/v1/databases/{databaseId}/recovery-gate?minScore=70"`,
+        },
+        {
+          type: "list",
+          items: [
+            "Requires a cloud API token or session bearer with databases:read.",
+            "Optional minScore query param (default 70).",
+            "200 + { allowed: true } — pipeline may proceed.",
+            "412 + { allowed: false, blockers: [...] } — fail the job step.",
+          ],
+        },
+        {
+          type: "heading",
+          level: 2,
+          text: "GitHub Actions example",
+        },
+        {
+          type: "code",
+          language: "yaml",
+          code: `- name: Recovery gate
+  run: |
+    curl -fsS -H "Authorization: Bearer \${{ secrets.REVENANT_TOKEN }}" \\
+      "https://api…/api/v1/databases/\${{ vars.REVENANT_DATABASE_ID }}/recovery-gate?minScore=75"`,
+        },
+        {
+          type: "callout",
+          tone: "tip",
+          text:
+            "The workflow page in Revenant Cloud copies a ready-made curl command. Pair this with the Revenant CLI or GitHub Action for post-deploy drills.",
+        },
+      ],
+    },
+    {
       slug: "schedules",
       title: "Schedules & cron drills",
       summary: "Automated restore proof on a timetable — cloud control plane.",

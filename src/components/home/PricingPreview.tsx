@@ -1,13 +1,18 @@
+import { useMemo } from "react";
 import { Check } from "lucide-react";
 import { Link } from "react-router-dom";
+import { applyCatalogToPlans } from "../../lib/catalog";
 import { PLANS } from "../../lib/plans";
 import { Button } from "../ui/Button";
+import { usePublicCatalog } from "../../hooks/usePublicCatalog";
 import { useWebsiteSession } from "../../hooks/useWebsiteSession";
 import { planCheckoutTarget } from "../../lib/session";
 
 export function PricingPreview() {
   const { user } = useWebsiteSession();
-  const preview = PLANS.filter((p) => p.id !== "enterprise");
+  const { catalog } = usePublicCatalog();
+  const plans = useMemo(() => applyCatalogToPlans(PLANS, catalog), [catalog]);
+  const preview = plans.filter((p) => p.id !== "enterprise");
 
   return (
     <section className="px-4 py-16 sm:px-6">

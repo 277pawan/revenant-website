@@ -73,6 +73,84 @@ export const cloudSection: DocSection = {
           text:
             "Each drill stores signed artifacts: drill reports (JSON + branded PDF) and recovery passports (signed JSON). Starter retains 30 days; Pro retains 365 days. Evidence Vault lists both types with integrity verification on download.",
         },
+        {
+          type: "list",
+          items: [
+            "Share with manager — copies a Slack-ready summary and downloads the PDF in one click from a run page.",
+            "Recovery passport PDF — audit-oriented summary when a drill passes.",
+          ],
+        },
+      ],
+    },
+    {
+      slug: "application-health",
+      title: "Database + API health checks",
+      summary: "Prove your app answers after restore — not just the database.",
+      keywords: ["http", "healthcheck", "api", "application", "http_health"],
+      blocks: [
+        {
+          type: "paragraph",
+          text:
+            "After database validation checks pass, Revenant can ping your application's HTTP health endpoint. This closes the loop: backup restored AND the API responds.",
+        },
+        {
+          type: "heading",
+          level: 2,
+          text: "Option A — recovery contract",
+        },
+        {
+          type: "code",
+          language: "yaml",
+          code: `recovery:
+  required:
+    healthcheck: true
+  application:
+    healthcheck: https://api.example.com
+    endpoints:
+      - name: health
+        method: GET
+        path: /health
+        expect_status: 200`,
+        },
+        {
+          type: "paragraph",
+          text:
+            "Set this on a workflow's recovery contract in the cloud dashboard. On the next drill, HTTP checks run automatically after DB verification.",
+        },
+        {
+          type: "heading",
+          level: 2,
+          text: "Option B — validation plan",
+        },
+        {
+          type: "code",
+          language: "yaml",
+          code: `checks:
+  - type: connect
+  - type: schema
+  - type: http_health
+    url: https://api.example.com/health
+    name: application_health
+    expect_status: 200`,
+        },
+        {
+          type: "callout",
+          tone: "info",
+          text:
+            "Use the “Database + API health” template in Validation plans. Contract breach alerts fire when RTO/RPO targets are missed even if checks pass.",
+        },
+      ],
+    },
+    {
+      slug: "product-guide",
+      title: "Product guide (in-app)",
+      summary: "Step-by-step tour of the cloud dashboard.",
+      blocks: [
+        {
+          type: "paragraph",
+          text:
+            "Open Product guide from the sidebar in Revenant Cloud. Nine cards walk through dashboard → database → validation plan → restore drill → API health → evidence → schedules → integrations. The guide is always available — use Previous/Next to revisit any step.",
+        },
       ],
     },
     {

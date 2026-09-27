@@ -10,7 +10,7 @@ import {
   CreditCard,
 } from "lucide-react";
 import { createFundingOrder, verifyFundingPayment } from "../lib/api";
-import { loadRazorpayCheckout } from "../lib/razorpay";
+import { loadRazorpayCheckout, resolveRazorpayKeyId } from "../lib/razorpay";
 import { PageMeta } from "../components/seo/PageMeta";
 import { coffeeSeo } from "../lib/seo-pages";
 import { site } from "../lib/site";
@@ -71,7 +71,7 @@ export function CoffeePage() {
       const Razorpay = window.Razorpay;
       if (!Razorpay) throw new Error("Razorpay failed to load");
 
-      const keyId = import.meta.env.VITE_RAZORPAY_KEY_ID?.trim() || order.keyId;
+      const keyId = resolveRazorpayKeyId(order.keyId);
 
       await new Promise<void>((resolve, reject) => {
         const rzp = new Razorpay({

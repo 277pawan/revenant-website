@@ -21,6 +21,21 @@ export function loadRazorpayCheckout(): Promise<void> {
   return scriptPromise;
 }
 
+/**
+ * Checkout must use the same key that created the order/subscription on the API.
+ * VITE_RAZORPAY_KEY_ID is optional fallback only — never override a mismatched env key.
+ */
+export function resolveRazorpayKeyId(apiKeyId: string): string {
+  const envKey = import.meta.env.VITE_RAZORPAY_KEY_ID?.trim();
+  if (!envKey || envKey === apiKeyId) return apiKeyId;
+  if (import.meta.env.DEV) {
+    console.warn(
+      "[razorpay] VITE_RAZORPAY_KEY_ID does not match API keyId — using API key (live/test must match backend)"
+    );
+  }
+  return apiKeyId;
+}
+
 declare global {
   interface Window {
     Razorpay?: new (options: Record<string, unknown>) => {

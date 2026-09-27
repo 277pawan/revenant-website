@@ -1,3 +1,4 @@
+import type { PublicCatalogResponse } from "./catalog";
 import { site } from "./site";
 import { TOKEN_KEY, clearSessionToken } from "./session";
 import { openCloudDashboard } from "./cloud-navigation";
@@ -63,6 +64,10 @@ async function request<T>(
   return data as T;
 }
 
+export async function fetchPublicCatalog(): Promise<PublicCatalogResponse> {
+  return request<PublicCatalogResponse>("/api/v1/public/catalog");
+}
+
 export async function submitContact(payload: ContactPayload): Promise<void> {
   await request("/api/v1/public/contact", {
     method: "POST",
@@ -125,6 +130,8 @@ export type BillingCreateOrderResponse = {
   currency: string;
   keyId: string;
   description: string;
+  plan?: "starter" | "pro";
+  purpose?: "autopay_setup" | "pro_upgrade";
   trialEndsAt?: string | null;
   recurringAmountInr?: number;
 };
@@ -200,6 +207,7 @@ export async function register(body: {
   email: string;
   password: string;
   organizationName: string;
+  plan?: "starter" | "pro";
 }) {
   return request<LoginResponse>("/api/v1/auth/register", {
     method: "POST",
@@ -217,12 +225,34 @@ export function goToAppWithSession(token: string, user?: AuthUser) {
   window.location.href = "/billing";
 }
 
-export async function createBillingOrder(): Promise<{ order: BillingCreateOrderResponse }> {
+export async function selectBillingPlan(plan: "starter" | "pro"): Promise<{ plan: "starter" | "pro" }> {
+  const token = localStorage.getItem(TOKEN_KEY);
+  return request("/api/v1/billing/select-plan", {
+    method: "POST",
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
+    body: JSON.stringify({ plan }),
+  });
+}
+
+export async function createProUpgradeCheckout(): Promise<{
+  order: BillingCreateOrderResponse;
+}> {
+  const token = localStorage.getItem(TOKEN_KEY);
+  return request("/api/v1/billing/upgrade-pro", {
+    method: "POST",
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
+    body: JSON.stringify({}),
+  });
+}
+
+export async function createBillingOrder(
+  plan?: "starter" | "pro",
+): Promise<{ order: BillingCreateOrderResponse }> {
   const token = localStorage.getItem(TOKEN_KEY);
   return request("/api/v1/billing/create-order", {
     method: "POST",
     headers: token ? { Authorization: `Bearer ${token}` } : {},
-    body: JSON.stringify({}),
+    body: JSON.stringify(plan ? { plan } : {}),
   });
 }
 

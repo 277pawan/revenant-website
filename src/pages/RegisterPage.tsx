@@ -1,5 +1,5 @@
 import { useEffect, useState, type FormEvent } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import {
   getAuthProviders,
@@ -19,6 +19,8 @@ import { canAccessCloudDashboard } from "../lib/subscription-access";
 
 export function RegisterPage() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const signupPlan = searchParams.get("plan") === "pro" ? "pro" : "starter";
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [organizationName, setOrganizationName] = useState("");
@@ -75,6 +77,7 @@ export function RegisterPage() {
         email: email.trim(),
         password,
         organizationName: organizationName.trim(),
+        plan: signupPlan,
       });
       await trackEngagement("marketing", {
         eventType: "register",
