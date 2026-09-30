@@ -39,7 +39,29 @@ function applyPageSeo(html: string, page: SeoBuildPage, siteUrl: string): string
   next = replaceNamed(next, "property", "og:url", url);
   next = replaceNamed(next, "name", "twitter:title", page.title);
   next = replaceNamed(next, "name", "twitter:description", page.description);
-  return next;
+
+  const structuredData = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": page.path.startsWith("/docs/") ? "TechArticle" : "WebPage",
+    name: page.title,
+    description: page.description,
+    url,
+    isPartOf: {
+      "@type": "WebSite",
+      name: "Revenant",
+      url: siteUrl,
+    },
+  }).replace(/</g, "\\u003c");
+  next = next.replace(
+    "</head>",
+    `<script type="application/ld+json">${structuredData}</script></head>`
+  );
+
+  const rootShell = '<div id="root"></div>';
+  if (!next.includes(rootShell)) {
+    throw new Error(`Expected empty React root while prerendering ${page.path}`);
+  }
+  return next.replace(rootShell, `<div id="root">${page.bodyHtml}</div>`);
 }
 
 /** Pre-render per-route index.html with correct meta (same pattern as react-form-toaster). */
