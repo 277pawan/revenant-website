@@ -13,13 +13,6 @@
     color-scheme: light;
   }
 
-  html[data-theme="light"] body,
-  html[data-theme="light"] .ui-shell {
-    background-color: var(--rv-background);
-    background-image: var(--rv-page-wash);
-    background-attachment: fixed;
-  }
-
   body {
     background-color: var(--rv-background);
     color: var(--rv-foreground);
@@ -112,7 +105,7 @@
   .ui-input {
     width: 100%;
     border-radius: 0.5rem;
-    border: 1px solid var(--rv-border);
+    border: 0.5px solid var(--rv-border);
     background-color: var(--rv-surface-sunken);
     padding: 0.625rem 1rem;
     font-size: 0.875rem;
@@ -129,7 +122,7 @@
   }
 
   .ui-input:focus {
-    border-color: var(--rv-accent);
+    /* border-color: var(--rv-accent); */
     box-shadow: 0 0 0 2px color-mix(in srgb, var(--rv-accent) 15%, transparent);
   }
 
@@ -167,20 +160,8 @@
     color: var(--rv-foreground);
   }
 
-  .hero-bg-mesh {
-    opacity: var(--rv-hero-mesh-opacity);
-  }
-
   .hero-bg-grid {
     opacity: var(--rv-hero-grid-opacity);
-  }
-
-  .hero-bg-scrim {
-    background: var(--rv-hero-scrim);
-  }
-
-  .hero-atmosphere-img {
-    opacity: var(--rv-hero-photo-opacity);
   }
 
   html[data-theme="light"] .hero-inline-code {
@@ -231,11 +212,340 @@ html[data-theme="light"] body {
   color: var(--rv-foreground);
 }
 
+.ambient-motion {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.ambient-motion>span {
+  position: absolute;
+  display: block;
+  opacity: 0.32;
+}
+
+.ambient-dot,
+.ambient-node,
+.ambient-recovery-node,
+.ambient-cta-signal {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: var(--rv-accent-bright);
+}
+
+.ambient-line,
+.ambient-connector,
+.ambient-recovery-line,
+.ambient-cta-line {
+  height: 1px;
+  background-color: var(--rv-border-strong);
+}
+
+.ambient-motion-hero .ambient-drift-one {
+  top: 22%;
+  right: 17%;
+  animation: ambient-drift-one 15s ease-in-out infinite;
+}
+
+.ambient-motion-hero .ambient-grid-line {
+  position: absolute;
+  background-color: var(--rv-border-strong);
+  opacity: 0.8;
+}
+
+.ambient-motion-hero .ambient-grid-v1,
+.ambient-motion-hero .ambient-grid-v2,
+.ambient-motion-hero .ambient-grid-v3,
+.ambient-motion-hero .ambient-grid-v4,
+.ambient-motion-hero .ambient-grid-v5 {
+  top: 16%;
+  width: 1px;
+  height: 66%;
+}
+
+.ambient-motion-hero .ambient-grid-v1 {
+  right: 5%;
+}
+
+.ambient-motion-hero .ambient-grid-v2 {
+  right: 7%;
+}
+
+.ambient-motion-hero .ambient-grid-v3 {
+  right: 9%;
+}
+
+.ambient-motion-hero .ambient-grid-v4 {
+  right: 11%;
+}
+
+.ambient-motion-hero .ambient-grid-v5 {
+  right: 13%;
+}
+
+.ambient-motion-hero .ambient-grid-h1,
+.ambient-motion-hero .ambient-grid-h2,
+.ambient-motion-hero .ambient-grid-h3,
+.ambient-motion-hero .ambient-grid-h4 {
+  left: 87%;
+  width: 12%;
+  height: 1px;
+}
+
+.ambient-motion-hero .ambient-grid-h1 {
+  top: 24%;
+}
+
+.ambient-motion-hero .ambient-grid-h2 {
+  top: 40%;
+}
+
+.ambient-motion-hero .ambient-grid-h3 {
+  top: 56%;
+}
+
+.ambient-motion-hero .ambient-grid-h4 {
+  top: 72%;
+}
+
+.ambient-motion-hero .ambient-grid-signal {
+  top: calc(40% - 3px);
+  right: 8.5%;
+  width: 7px;
+  height: 7px;
+  opacity: 1;
+  background-color: var(--rv-success);
+  animation: ambient-soft-pulse 6s ease-in-out infinite;
+}
+
+.ambient-motion-hero .ambient-drift-two {
+  right: 31%;
+  bottom: 21%;
+  width: 3px;
+  height: 3px;
+  background-color: var(--rv-success);
+  animation: ambient-drift-two 18s ease-in-out infinite;
+}
+
+.ambient-motion-hero .ambient-line {
+  top: 59%;
+  right: 3%;
+  width: 42px;
+  animation: ambient-line-shift 20s ease-in-out infinite;
+}
+
+.ambient-motion-features .ambient-dot {
+  top: 15%;
+  right: 9%;
+  width: 4px;
+  height: 4px;
+  animation: ambient-soft-pulse 7s ease-in-out infinite;
+}
+
+.ambient-motion-features .ambient-line {
+  right: 4%;
+  bottom: 20%;
+  width: 32px;
+  opacity: 0.2;
+  animation: ambient-line-shift 24s ease-in-out infinite reverse;
+}
+
+.ambient-motion-architecture .ambient-connector {
+  width: 64px;
+  opacity: 0.25;
+}
+
+.ambient-motion-architecture .ambient-connector-one {
+  top: 17%;
+  right: 4%;
+  transform: rotate(22deg);
+}
+
+.ambient-motion-architecture .ambient-connector-two {
+  right: 3%;
+  bottom: 16%;
+  transform: rotate(-18deg);
+}
+
+.ambient-motion-architecture .ambient-node:nth-of-type(3) {
+  top: 13%;
+  right: 15%;
+}
+
+.ambient-motion-architecture .ambient-node:nth-of-type(4) {
+  top: 20%;
+  right: 7%;
+}
+
+.ambient-motion-architecture .ambient-node:nth-of-type(5) {
+  right: 15%;
+  bottom: 19%;
+}
+
+.ambient-motion-architecture .ambient-node:nth-of-type(6) {
+  right: 6%;
+  bottom: 13%;
+}
+
+.ambient-soft-pulse {
+  animation: ambient-soft-pulse 8s ease-in-out infinite;
+}
+
+.ambient-delay-one {
+  animation-delay: 1.2s;
+}
+
+.ambient-delay-two {
+  animation-delay: 2.4s;
+}
+
+.ambient-delay-three {
+  animation-delay: 3.6s;
+}
+
+.ambient-motion-recovery .ambient-recovery-line {
+  top: 12%;
+  left: 2%;
+  width: 1px;
+  height: 76%;
+  opacity: 0.22;
+}
+
+.ambient-motion-recovery .ambient-recovery-node {
+  left: calc(2% - 2px);
+}
+
+.ambient-motion-recovery .ambient-recovery-node:nth-of-type(2) {
+  top: 13%;
+}
+
+.ambient-motion-recovery .ambient-recovery-node:nth-of-type(3) {
+  top: 37%;
+}
+
+.ambient-motion-recovery .ambient-recovery-node:nth-of-type(4) {
+  top: 61%;
+}
+
+.ambient-motion-recovery .ambient-recovery-node:nth-of-type(5) {
+  top: 85%;
+}
+
+.ambient-motion-cta .ambient-cta-line {
+  top: 52%;
+  right: 5%;
+  width: 124px;
+  opacity: 0.2;
+}
+
+.ambient-motion-cta .ambient-cta-signal {
+  top: calc(52% - 2px);
+  right: calc(5% + 120px);
+  width: 4px;
+  height: 4px;
+  animation: ambient-travel 12s linear infinite;
+}
+
+@keyframes ambient-drift-one {
+
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(-4px, 5px, 0);
+  }
+}
+
+@keyframes ambient-drift-two {
+
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(5px, -3px, 0);
+  }
+}
+
+@keyframes ambient-line-shift {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  50% {
+    transform: translateX(-5px);
+  }
+}
+
+@keyframes ambient-soft-pulse {
+
+  0%,
+  100% {
+    opacity: 0.18;
+    transform: scale(0.85);
+  }
+
+  50% {
+    opacity: 0.48;
+    transform: scale(1);
+  }
+}
+
+@keyframes ambient-travel {
+
+  0%,
+  12%,
+  88%,
+  100% {
+    opacity: 0.2;
+    transform: translateX(0);
+  }
+
+  45%,
+  58% {
+    opacity: 0.55;
+    transform: translateX(116px);
+  }
+}
+
+@media (max-width: 640px) {
+
+  .ambient-motion-hero .ambient-grid-line,
+  .ambient-motion-hero .ambient-grid-signal {
+    display: none;
+  }
+
+
+  .ambient-motion-hero .ambient-line,
+  .ambient-motion-features .ambient-line,
+  .ambient-motion-architecture .ambient-connector-two {
+    display: none;
+  }
+
+  .ambient-motion-hero .ambient-dot,
+  .ambient-motion-features .ambient-dot,
+  .ambient-node,
+  .ambient-recovery-node,
+  .ambient-cta-signal {
+    animation-duration: 24s;
+  }
+}
+
 @keyframes logo-float-tilt {
+
   0%,
   100% {
     transform: rotateY(-6deg) rotateX(4deg) translateY(0);
   }
+
   50% {
     transform: rotateY(6deg) rotateX(-3deg) translateY(-8px);
   }
@@ -251,10 +561,12 @@ html[data-theme="light"] body {
 }
 
 @keyframes blink {
+
   0%,
   100% {
     opacity: 1;
   }
+
   50% {
     opacity: 0;
   }
@@ -271,6 +583,7 @@ html[data-theme="light"] body {
   0% {
     transform: translateY(-100%);
   }
+
   100% {
     transform: translateY(220%);
   }
@@ -281,22 +594,20 @@ html[data-theme="light"] body {
   position: absolute;
   inset-inline: 0;
   height: 42%;
-  background: linear-gradient(
-    to bottom,
-    transparent,
-    var(--rv-chamber-scan),
-    transparent
-  );
+  background-color: var(--rv-chamber-scan);
+  opacity: 0.35;
   animation: chamber-scan 4.8s ease-in-out infinite;
   pointer-events: none;
 }
 
 @keyframes restore-pulse {
+
   0%,
   100% {
     opacity: 0.35;
     transform: scaleX(0.4);
   }
+
   50% {
     opacity: 1;
     transform: scaleX(1);
@@ -309,11 +620,13 @@ html[data-theme="light"] body {
 }
 
 @keyframes proof-dot {
+
   0%,
   100% {
     transform: scale(1);
     opacity: 0.45;
   }
+
   50% {
     transform: scale(1.35);
     opacity: 1;
@@ -325,12 +638,15 @@ html[data-theme="light"] body {
     left: 0;
     opacity: 0;
   }
+
   15% {
     opacity: 1;
   }
+
   85% {
     opacity: 1;
   }
+
   100% {
     left: calc(100% - 4px);
     opacity: 0;
@@ -388,11 +704,7 @@ html[data-theme="light"] body {
   height: 2.75rem;
   border-radius: 0.85rem;
   border: 1px solid var(--rv-border-strong);
-  background: linear-gradient(
-    165deg,
-    var(--rv-surface-elevated),
-    var(--rv-surface)
-  );
+  background-color: var(--rv-surface-elevated);
   box-shadow: var(--rv-shadow-card);
   position: relative;
 }
@@ -411,24 +723,18 @@ html[data-theme="light"] .rv-glyph {
   border: 2px solid var(--rv-accent);
   border-radius: 50%;
 }
+
 .rv-glyph-cyl::before {
   top: 18%;
 }
+
 .rv-glyph-cyl::after {
   bottom: 18%;
   border-color: color-mix(in srgb, var(--rv-accent) 55%, transparent);
 }
 
 .rv-glyph-doc {
-  background:
-    repeating-linear-gradient(
-      transparent 0 5px,
-      color-mix(in srgb, var(--rv-accent) 55%, transparent) 5px 6px
-    ),
-    linear-gradient(165deg, var(--rv-surface-elevated), var(--rv-surface));
-  background-size: 54% 40%, auto;
-  background-position: 50% 58%, 0 0;
-  background-repeat: no-repeat;
+  background-color: var(--rv-surface-elevated);
 }
 
 .rv-glyph-bolt::after {
@@ -506,9 +812,11 @@ html[data-theme="light"] .rv-glyph {
     opacity: 0;
     transform: translateY(10px) scaleX(1);
   }
+
   35% {
     opacity: 0.55;
   }
+
   100% {
     opacity: 0;
     transform: translateY(-34px) scaleX(1.35);
@@ -520,6 +828,7 @@ html[data-theme="light"] .rv-glyph {
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {
@@ -538,12 +847,11 @@ html[data-theme="light"] .rv-glyph {
 /* Razorpay Standard Checkout: dark translucent backdrop (site header/footer show through) */
 .razorpay-container,
 .razorpay-backdrop,
-body > .razorpay-checkout-frame,
-body > div[id^="razorpay"] {
+body>.razorpay-checkout-frame,
+body>div[id^="razorpay"] {
   background: rgba(7, 8, 11, 0.78) !important;
 }
 
 .razorpay-container .razorpay-backdrop {
   opacity: 1 !important;
 }
-

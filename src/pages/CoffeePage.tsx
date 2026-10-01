@@ -161,16 +161,14 @@ export function CoffeePage() {
                             setAmount(a.inr);
                             setCustom("");
                           }}
-                          className={`relative overflow-hidden rounded-lg border px-3 py-3 text-left transition ${
-                            on
+                          className={`relative overflow-hidden rounded-lg border px-3 py-3 text-left transition ${on
                               ? "border-accent ring-2 ring-accent/20"
                               : "border-border hover:border-border-strong"
-                          }`}
+                            }`}
                         >
                           <span
-                            className={`absolute inset-x-0 bottom-0 bg-accent-muted transition-[height] duration-300 ${
-                              on ? "h-full" : "h-0"
-                            }`}
+                            className={`absolute inset-x-0 bottom-0 bg-accent-muted transition-[height] duration-300 ${on ? "h-full" : "h-0"
+                              }`}
                           />
                           <div className="relative font-semibold text-foreground">
                             {a.label}

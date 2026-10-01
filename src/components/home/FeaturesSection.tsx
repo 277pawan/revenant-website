@@ -1,4 +1,5 @@
 import { Database, FileCheck, Zap, Lock, GitBranch, BarChart3 } from "lucide-react";
+import { AmbientMotion } from "../ui/AmbientMotion";
 
 const FEATURES = [
   {
@@ -41,8 +42,9 @@ const FEATURES = [
 
 export function FeaturesSection() {
   return (
-    <section className="px-4 py-16 sm:px-6">
-      <div className="mx-auto max-w-6xl">
+    <section className="relative isolate overflow-hidden px-4 py-16 sm:px-6">
+      <AmbientMotion variant="features" />
+      <div className="relative z-10 mx-auto max-w-6xl">
         <div className="max-w-2xl">
           <h2 className="ui-heading text-3xl sm:text-4xl">Built for restore proof</h2>
           <p className="mt-4 ui-body">

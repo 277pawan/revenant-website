@@ -499,10 +499,9 @@ export function HeroLogo3D() {
               text-center
               transition-all
               duration-300
-              ${
-                visible
-                  ? "translate-y-0 opacity-100"
-                  : "translate-y-2 opacity-0"
+              ${visible
+                ? "translate-y-0 opacity-100"
+                : "translate-y-2 opacity-0"
               }
             `}
           >
@@ -515,10 +514,7 @@ export function HeroLogo3D() {
                 inset-x-8
                 top-0
                 h-px
-                bg-gradient-to-r
-                from-transparent
-                via-cyan-300/50
-                to-transparent
+                bg-cyan-300/40
               "
             />
 

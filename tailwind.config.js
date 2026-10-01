@@ -82,24 +82,6 @@ export default {
         button: "var(--rv-shadow-button)",
       },
 
-      backgroundImage: {
-        "hero-glow":
-          "radial-gradient(ellipse 70% 45% at 50% -5%, var(--rv-glow-teal), transparent 70%)",
-
-        "hero-mesh":
-          "radial-gradient(circle 420px at 5% 32%, var(--rv-glow-violet), transparent 70%), radial-gradient(circle 460px at 52% 5%, var(--rv-glow-teal), transparent 70%), radial-gradient(circle 420px at 95% 30%, var(--rv-glow-blue), transparent 70%)",
-
-        "grid-fade":
-          "linear-gradient(to bottom, transparent 0%, var(--rv-background) 100%), linear-gradient(var(--rv-grid-line) 1px, transparent 1px), linear-gradient(90deg, var(--rv-grid-line) 1px, transparent 1px)",
-
-        "cta-glow":
-          "linear-gradient(145deg, var(--rv-glow-teal), transparent 60%)",
-      },
-
-      backgroundSize: {
-        grid: "1220px 1220px",
-      },
-
       animation: {
         "orbit-slow": "orbit 24s linear infinite",
         float: "float 6s ease-in-out infinite",

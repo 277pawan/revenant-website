@@ -373,7 +373,7 @@ export function RestoreStory() {
 
   return (
     <section ref={root} className="relative overflow-x-clip bg-background py-12 sm:py-20">
-      <header className="mx-auto max-w-7xl px-4 sm:px-6">
+      <header className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6">
         <p className="ui-section-label">How a drill runs</p>
         <h2 className="ui-heading mt-2 max-w-3xl text-2xl sm:text-4xl">
           From snapshot to signed proof.
@@ -381,7 +381,7 @@ export function RestoreStory() {
       </header>
 
       {!desktop && (
-        <ol className="relative mx-auto mt-8 max-w-lg space-y-5 px-4">
+        <ol className="relative z-10 mx-auto mt-8 max-w-lg space-y-5 px-4">
           <span
             className="pointer-events-none absolute bottom-4 left-[1.15rem] top-4 w-px bg-accent/45"
             aria-hidden
@@ -412,7 +412,7 @@ export function RestoreStory() {
       )}
 
       {desktop && (
-        <div className="relative mx-auto mt-8 h-[2200px] w-full max-w-6xl px-4">
+        <div className="relative z-10 mx-auto mt-8 h-[2200px] w-full max-w-6xl px-4">
           <svg
             className="pointer-events-none absolute inset-0 h-full w-full text-accent"
             viewBox="0 0 1000 2200"
@@ -467,11 +467,10 @@ export function RestoreStory() {
                 data-note
                 data-step={s.step}
                 data-side={s.side === "left" ? "right" : "left"}
-                className={`absolute w-[min(280px,34%)] ${
-                  s.side === "left"
-                    ? "right-[8%] text-right"
-                    : "left-[8%] text-left"
-                }`}
+                className={`absolute w-[min(280px,34%)] ${s.side === "left"
+                  ? "right-[8%] text-right"
+                  : "left-[8%] text-left"
+                  }`}
                 style={{ top: s.noteTop }}
               >
                 <p className="text-xs font-semibold text-accent-bright">

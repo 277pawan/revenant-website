@@ -31,14 +31,11 @@ export function renderSitemapXml(
   baseUrl = "https://revenant-verify-933e4.web.app"
 ): string {
   const entries = getSitemapEntries();
-  const today = new Date().toISOString().slice(0, 10);
-
   const urls = entries
     .map((entry) => {
       const loc = `${baseUrl.replace(/\/$/, "")}${entry.loc === "/" ? "/" : entry.loc}`;
       return `  <url>
     <loc>${loc}</loc>
-    <lastmod>${today}</lastmod>
     <changefreq>${entry.changefreq}</changefreq>
     <priority>${entry.priority.toFixed(1)}</priority>
   </url>`;

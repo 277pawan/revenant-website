@@ -36,9 +36,8 @@ export function PricingPreview() {
             return (
               <article
                 key={plan.id}
-                className={`ui-card flex flex-col p-6 ${
-                  plan.featured ? "border-t-2 border-t-accent" : ""
-                }`}
+                className={`ui-card flex flex-col p-6 ${plan.featured ? "border-t-2 border-t-accent" : ""
+                  }`}
               >
                 <h3 className="text-lg font-semibold text-foreground">{plan.name}</h3>
                 <div className="mt-2">

@@ -1,4 +1,3 @@
-import { site } from "./site";
 import {
   faqPageJsonLd,
   organizationJsonLd,
@@ -8,8 +7,9 @@ import {
 } from "./seo";
 
 export const homeSeo: PageMetaInput = {
-  title: site.name,
-  description: site.description,
+  title: "PostgreSQL Backup Recovery Testing",
+  description:
+    "Test PostgreSQL backup recovery with real restore drills, recovered-data validation, measured recovery time, and signed evidence. Free CLI and managed cloud plans.",
   path: "/",
   keywords: [
     "PostgreSQL backup verification",

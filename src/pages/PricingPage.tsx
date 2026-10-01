@@ -22,13 +22,13 @@ export function PricingPage() {
       <section className="px-4 pb-8 pt-12 sm:px-6 sm:pt-16">
         <div className="mx-auto max-w-6xl">
           <div className="max-w-3xl">
-          <h1 className="ui-heading text-4xl sm:text-5xl">
-            Simple pricing. Serious protection.
-          </h1>
-          <p className="mt-4 max-w-2xl text-lg leading-relaxed text-foreground-muted">
-            Free CLI forever. Cloud plans billed monthly in INR. Starter includes
-            a 30-day trial with no card at signup.
-          </p>
+            <h1 className="ui-heading text-4xl sm:text-5xl">
+              Simple pricing. Serious protection.
+            </h1>
+            <p className="mt-4 max-w-2xl text-lg leading-relaxed text-foreground-muted">
+              Free CLI forever. Cloud plans billed monthly in INR. Starter includes
+              a 30-day trial with no card at signup.
+            </p>
           </div>
         </div>
 
@@ -45,9 +45,8 @@ export function PricingPage() {
             return (
               <article
                 key={plan.id}
-                className={`ui-card flex flex-col p-6 ${
-                  plan.featured ? "border-t-2 border-t-accent" : ""
-                }`}
+                className={`ui-card flex flex-col p-6 ${plan.featured ? "border-t-2 border-t-accent" : ""
+                  }`}
               >
                 {plan.featured && (
                   <>

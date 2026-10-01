@@ -76,10 +76,10 @@ function renderDocsIndex(): string {
 function renderStaticPage(path: string, description: string): string {
   const copy: Record<string, { heading: string; sections: string[] }> = {
     "/": {
-      heading: "Prove your backups actually recover",
+      heading: "Know your restore works before an outage",
       sections: [
-        "Revenant restores a real database snapshot into an isolated sandbox, runs your validation checks, measures recovery time, and records evidence.",
-        "Use the free CLI in your terminal or CI, or use Revenant Cloud for scheduled AWS RDS drills, workflow history, alerts, and an evidence vault.",
+        "Revenant tests PostgreSQL backup recovery with real restore drills. It validates recovered data, measures recovery time, and creates signed evidence before an outage tests your recovery plan.",
+        "Use the free PostgreSQL CLI in your terminal or CI, or choose Revenant Cloud for scheduled AWS RDS restore drills, workflow history, team alerts, and an evidence vault.",
       ],
     },
     "/pricing": {
@@ -120,12 +120,12 @@ function renderStaticPage(path: string, description: string): string {
 const STATIC_PAGES: SeoBuildPage[] = [
   page({
     path: "/",
-    title: SITE,
+    title: "PostgreSQL Backup Recovery Testing",
     description:
-      "Disaster recovery proof for PostgreSQL. Free CLI, managed AWS restore drills, signed evidence vault.",
+      "Test PostgreSQL backup recovery with real restore drills, recovered-data validation, measured recovery time, and signed evidence. Free CLI and managed cloud plans.",
     bodyHtml: renderStaticPage(
       "/",
-      "Disaster recovery proof for PostgreSQL. Free CLI, managed AWS restore drills, signed evidence vault."
+      "Test PostgreSQL backup recovery with real restore drills, recovered-data validation, measured recovery time, and signed evidence. Free CLI and managed cloud plans."
     ),
   }),
   page({
