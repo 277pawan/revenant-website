@@ -4,11 +4,21 @@ import gsap from "gsap";
 import { MotionPathPlugin } from "gsap/MotionPathPlugin";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useReducedMotion } from "motion/react";
+import {
+  CheckCircle2,
+  ClipboardList,
+  Database,
+  FileText,
+  Laptop,
+  Mail,
+  MessageSquare,
+  Package,
+  Radio,
+  Wrench,
+  type LucideIcon,
+} from "lucide-react";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger, MotionPathPlugin);
-
-const tw = (hex: string) =>
-  `https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/${hex}.svg`;
 
 const CURVE =
   "M 200 114 C 200 220, 800 270, 800 378 C 800 484, 200 534, 200 642 C 200 748, 800 798, 800 906 C 800 1012, 200 1062, 200 1170 C 200 1276, 800 1326, 800 1434 C 800 1540, 200 1590, 200 1698 C 200 1854, 520 1948, 520 2086";
@@ -24,21 +34,34 @@ const NODES = [
   { cx: 520, cy: 2086 },
 ] as const;
 
-function Emoji({
-  hex,
+const STORY_ICONS: Record<string, LucideIcon> = {
+  clipboard: ClipboardList,
+  toolbox: Wrench,
+  package: Package,
+  "postgres elephant": Database,
+  laptop: Laptop,
+  check: CheckCircle2,
+  page: FileText,
+  memo: FileText,
+  scroll: FileText,
+  speech: MessageSquare,
+  satellite: Radio,
+  email: Mail,
+};
+
+function StoryIcon({
   label,
   className = "h-6 w-6",
 }: {
-  hex: string;
   label: string;
   className?: string;
 }) {
+  const Icon = STORY_ICONS[label] ?? FileText;
   return (
-    <img
-      src={tw(hex)}
-      alt={label}
-      className={`inline-block shrink-0 ${className}`}
-      draggable={false}
+    <Icon
+      aria-hidden="true"
+      className={`inline-block shrink-0 text-accent-bright ${className}`}
+      strokeWidth={1.7}
     />
   );
 }
@@ -61,13 +84,13 @@ const STEPS: Step[] = [
     top: "1%",
     noteTop: "2%",
     cardClass:
-      "left-[2%] top-[1%] w-[min(240px,72%)] -rotate-2 bg-terminal-bg sm:left-[5%] sm:w-[min(240px,32%)]",
-    kicker: "01 · plan",
+      "left-[2%] top-[1%] w-[min(240px,72%)] bg-terminal-bg sm:left-[5%] sm:w-[min(240px,32%)]",
+    kicker: "Plan",
     note: "The YAML lives in git. Revenant never reads app source — only live Postgres.",
     scrap: (
       <>
         <div className="flex items-center gap-2">
-          <Emoji hex="1f4cb" label="clipboard" />
+          <StoryIcon label="clipboard" />
           <span className="font-mono text-xs text-terminal-prompt">
             revenant.yaml
           </span>
@@ -84,8 +107,8 @@ const STEPS: Step[] = [
     top: "14%",
     noteTop: "15%",
     cardClass:
-      "right-[2%] top-[14%] w-[min(200px,70%)] rotate-2 overflow-hidden bg-surface sm:right-[5%] sm:w-[min(200px,28%)]",
-    kicker: "02 · snapshot",
+      "right-[2%] top-[14%] w-[min(200px,70%)] overflow-hidden bg-surface sm:right-[5%] sm:w-[min(200px,28%)]",
+    kicker: "Snapshot",
     note: "Restore from the real snapshot — not a mock, not a dump you hope still works.",
     scrap: (
       <>
@@ -95,7 +118,7 @@ const STEPS: Step[] = [
           className="h-24 w-full object-cover lg:h-24"
         />
         <p className="flex items-center gap-1 px-2 py-1 text-[11px] text-foreground">
-          <Emoji hex="1f9f0" label="toolbox" className="h-4 w-4" />
+          <StoryIcon label="toolbox" className="h-4 w-4" />
           snapshot kit
         </p>
       </>
@@ -107,14 +130,14 @@ const STEPS: Step[] = [
     top: "27%",
     noteTop: "28%",
     cardClass:
-      "left-[2%] top-[27%] w-[min(230px,72%)] -rotate-1 border-accent/40 bg-accent-muted sm:left-[5%] sm:w-[min(230px,30%)]",
-    kicker: "03 · sandbox",
+      "left-[2%] top-[27%] w-[min(230px,72%)] border-accent/40 bg-accent-muted sm:left-[5%] sm:w-[min(230px,30%)]",
+    kicker: "Sandbox",
     note: "Temporary RDS in your account. Isolated from prod. Auto-reaped when the drill ends.",
     scrap: (
       <>
         <div className="flex items-center gap-2">
-          <Emoji hex="1f4e6" label="package" />
-          <Emoji hex="1f418" label="postgres elephant" />
+          <StoryIcon label="package" />
+          <StoryIcon label="postgres elephant" />
           <span className="font-mono text-xs text-foreground">sandbox</span>
         </div>
         <p className="mt-1 text-[11px] text-foreground-muted">
@@ -129,13 +152,13 @@ const STEPS: Step[] = [
     top: "38%",
     noteTop: "40%",
     cardClass:
-      "right-[2%] top-[38%] w-[min(280px,78%)] rotate-1 border-terminal-border bg-terminal-bg sm:right-[4%] sm:w-[min(300px,40%)]",
-    kicker: "04 · verify",
+      "right-[2%] top-[38%] w-[min(280px,78%)] border-terminal-border bg-terminal-bg sm:right-[4%] sm:w-[min(300px,40%)]",
+    kicker: "Verify",
     note: "Checks run on recovered data. RTO is measured, not estimated.",
     scrap: (
       <>
         <div className="mb-1 flex items-center gap-2">
-          <Emoji hex="1f4bb" label="laptop" />
+          <StoryIcon label="laptop" />
           <span className="font-mono text-[11px] text-terminal-muted">
             $ revenant verify
           </span>
@@ -156,13 +179,13 @@ const STEPS: Step[] = [
     top: "51%",
     noteTop: "52%",
     cardClass:
-      "left-[2%] top-[51%] w-[min(240px,72%)] -rotate-1 bg-surface sm:left-[6%] sm:w-[min(250px,32%)]",
-    kicker: "05 · checks",
+      "left-[2%] top-[51%] w-[min(240px,72%)] bg-surface sm:left-[6%] sm:w-[min(250px,32%)]",
+    kicker: "Checks",
     note: "Schema, row counts, foreign keys, golden queries. Fail the drill if any drift.",
     scrap: (
       <>
         <p className="mb-1.5 flex items-center gap-1.5 text-xs text-foreground">
-          <Emoji hex="2705" label="check" className="h-4 w-4" /> YAML checks
+          <StoryIcon label="check" className="h-4 w-4" /> YAML checks
         </p>
         <div className="flex flex-wrap gap-1">
           {["schema", "rows", "fk", "golden"].map((c) => (
@@ -183,19 +206,19 @@ const STEPS: Step[] = [
     top: "63%",
     noteTop: "64%",
     cardClass:
-      "right-[2%] top-[63%] w-[min(210px,70%)] rotate-2 bg-surface sm:right-[6%] sm:w-[min(220px,28%)]",
-    kicker: "06 · evidence",
+      "right-[2%] top-[63%] w-[min(210px,70%)] bg-surface sm:right-[6%] sm:w-[min(220px,28%)]",
+    kicker: "Evidence",
     note: "Signed JSON, Markdown, and PDF. Hand it to an auditor or drop it in the vault.",
     scrap: (
       <ul className="space-y-0.5 font-mono text-[11px] text-foreground-muted">
         <li className="flex items-center gap-1.5">
-          <Emoji hex="1f4c4" label="page" className="h-4 w-4" /> report.json
+          <StoryIcon label="page" className="h-4 w-4" /> report.json
         </li>
         <li className="flex items-center gap-1.5">
-          <Emoji hex="1f4dd" label="memo" className="h-4 w-4" /> report.md
+          <StoryIcon label="memo" className="h-4 w-4" /> report.md
         </li>
         <li className="flex items-center gap-1.5">
-          <Emoji hex="1f4c3" label="scroll" className="h-4 w-4" /> report.pdf
+          <StoryIcon label="scroll" className="h-4 w-4" /> report.pdf
         </li>
       </ul>
     ),
@@ -206,13 +229,13 @@ const STEPS: Step[] = [
     top: "76%",
     noteTop: "76%",
     cardClass:
-      "left-[2%] top-[76%] w-[min(230px,72%)] -rotate-2 bg-surface sm:left-[5%] sm:w-[min(240px,30%)]",
-    kicker: "07 · notify",
+      "left-[2%] top-[76%] w-[min(230px,72%)] bg-surface sm:left-[5%] sm:w-[min(240px,30%)]",
+    kicker: "Notify",
     note: "Slack the channel, then reap. The sandbox does not linger on your bill.",
     scrap: (
       <>
         <div className="flex items-center gap-2">
-          <Emoji hex="1f4ac" label="speech" />
+          <StoryIcon label="speech" />
           <span className="text-[11px] text-foreground-subtle">#dr-proof</span>
         </div>
         <p className="mt-0.5 text-sm text-foreground">
@@ -228,17 +251,17 @@ const STEPS: Step[] = [
     top: "90%",
     noteTop: "90%",
     cardClass:
-      "right-[10%] top-[90%] w-[min(280px,80%)] rotate-1 border-terminal-border bg-terminal-bg sm:w-[min(280px,36%)]",
-    kicker: "08 · hook",
+      "right-[10%] top-[90%] w-[min(280px,80%)] border-terminal-border bg-terminal-bg sm:w-[min(280px,36%)]",
+    kicker: "Webhook",
     note: "HTTP + email so CI, PagerDuty, or a board pack can subscribe to proof.",
     scrap: (
       <>
         <div className="flex flex-wrap items-center gap-1.5">
-          <Emoji hex="1f4e1" label="satellite" />
+          <StoryIcon label="satellite" />
           <span className="font-mono text-[11px] text-terminal-info">
             POST /hooks
           </span>
-          <Emoji hex="1f4e7" label="email" className="h-4 w-4" />
+          <StoryIcon label="email" className="h-4 w-4" />
         </div>
         <pre className="mt-1 font-mono text-[10px] text-terminal-muted">
           {`{"status":"passed","rto":252}`}
@@ -307,7 +330,7 @@ function bindScrapReveal(
           y: 0,
           scale: 1,
           duration: 0.4,
-          ease: "back.out(1.4)",
+          ease: "power2.out",
           stagger: 0.05,
           overwrite: true,
         }),
@@ -353,7 +376,7 @@ export function RestoreStory() {
       <header className="mx-auto max-w-7xl px-4 sm:px-6">
         <p className="ui-section-label">How a drill runs</p>
         <h2 className="ui-heading mt-2 max-w-3xl text-2xl sm:text-4xl">
-          Follow the curve. Each scrap is a real step.
+          From snapshot to signed proof.
         </h2>
       </header>
 
@@ -369,10 +392,10 @@ export function RestoreStory() {
               <article
                 data-scrap
                 data-step={s.step}
-                className="overflow-hidden rounded-xl border border-border bg-surface p-2.5 shadow-card"
+                className="overflow-hidden rounded-xl border border-border bg-surface p-2.5"
               >
-                <p className="mb-2 font-mono text-[10px] uppercase tracking-wider text-accent">
-                  {s.kicker}
+                <p className="mb-2 text-xs font-semibold text-accent-bright">
+                  {String(s.step).padStart(2, "0")} {s.kicker}
                 </p>
                 {s.scrap}
               </article>
@@ -436,7 +459,7 @@ export function RestoreStory() {
                 data-scrap
                 data-step={s.step}
                 data-side={s.side}
-                className={`absolute rounded-xl border border-border p-2.5 shadow-card ${s.cardClass}`}
+                className={`absolute rounded-xl border border-border bg-surface p-2.5 ${s.cardClass}`}
               >
                 {s.scrap}
               </article>
@@ -451,8 +474,8 @@ export function RestoreStory() {
                 }`}
                 style={{ top: s.noteTop }}
               >
-                <p className="font-mono text-[10px] uppercase tracking-wider text-accent">
-                  {s.kicker}
+                <p className="text-xs font-semibold text-accent-bright">
+                  {String(s.step).padStart(2, "0")} {s.kicker}
                 </p>
                 <p className="mt-1 text-sm leading-snug text-foreground-muted">
                   {s.note}

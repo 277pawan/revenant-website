@@ -24,8 +24,8 @@ export function CliPage() {
           terminal or GitHub Actions. No cloud account required.
         </p>
 
-        <div className="mt-10 space-y-8">
-          <section className="ui-card p-6">
+        <div className="mt-10 divide-y divide-border-subtle">
+          <section className="py-7 first:pt-0">
             <h2 className="text-lg font-semibold text-foreground">Install</h2>
             <div className="mt-4">
               <CodeBlock
@@ -52,7 +52,7 @@ export function CliPage() {
             </div>
           </section>
 
-          <section className="ui-card p-6">
+          <section className="py-7">
             <h2 className="text-lg font-semibold text-foreground">Quick start</h2>
             <div className="mt-4">
               <CodeBlock
@@ -64,7 +64,7 @@ revenant verify --config revenant.yaml`}
             </div>
           </section>
 
-          <section className="ui-card p-6">
+          <section className="py-7">
             <h2 className="text-lg font-semibold text-foreground">Commands</h2>
             <ul className="mt-4 divide-y divide-border">
               {COMMANDS.map((c) => (
@@ -79,7 +79,7 @@ revenant verify --config revenant.yaml`}
             </ul>
           </section>
 
-          <section className="ui-card p-6">
+          <section className="py-7 last:pb-0">
             <h2 className="text-lg font-semibold text-foreground">
               AWS restore drill
             </h2>

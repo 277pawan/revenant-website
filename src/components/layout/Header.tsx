@@ -189,13 +189,13 @@ export function Header() {
   );
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border-subtle bg-background/90 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-border-subtle bg-background">
       <div className="mx-auto flex h-14 max-w-full items-center justify-between gap-2 px-3 sm:h-16 sm:px-6 md:grid md:grid-cols-[1fr_auto_1fr]">
         <Link to="/" className="min-w-0 shrink md:justify-self-start">
           <img
             src="/Revenant_verify_logo.png"
             alt="Revenant"
-            className="h-8 w-auto max-w-[min(148px,calc(100vw-9.5rem))] object-contain object-left sm:h-11 sm:max-w-[200px] md:h-12 md:max-w-[240px]"
+            className="h-24 w-auto max-w-[min(208px,calc(100vw-9.5rem))] object-contain object-left sm:h-11 sm:max-w-[200px] md:h-16 md:max-w-[240px]"
           />
         </Link>
 

@@ -21,7 +21,7 @@ export function RestoreProofRail() {
                 className="restore-proof-dot h-2 w-2 rounded-full bg-accent"
                 style={{ animationDelay: `${i * 0.55}s` }}
               />
-              <span className="max-w-[4.5rem] truncate text-center text-[10px] font-medium uppercase tracking-wide text-foreground-subtle">
+              <span className="max-w-[4.5rem] truncate text-center text-[10px] font-medium text-foreground-subtle">
                 {node.label}
               </span>
             </div>
@@ -36,8 +36,8 @@ export function RestoreProofRail() {
           </div>
         ))}
       </div>
-      <p className="mt-2 font-mono text-[10px] text-foreground-subtle">
-        Live path: snapshot → restore → verify → signed report → teardown
+      <p className="mt-2 text-[11px] text-foreground-subtle">
+        Snapshot → restore → verify → signed report → teardown
       </p>
     </div>
   );

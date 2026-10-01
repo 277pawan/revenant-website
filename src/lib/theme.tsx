@@ -39,7 +39,7 @@ function applyTheme(theme: Theme) {
   document.documentElement.setAttribute("data-theme", theme);
   document.documentElement.style.colorScheme = theme;
   const meta = document.querySelector('meta[name="theme-color"]');
-  if (meta) meta.setAttribute("content", theme === "light" ? "#e8f0f4" : "#07080b");
+  if (meta) meta.setAttribute("content", theme === "light" ? "#f1f4f6" : "#07080b");
   const scheme = document.querySelector('meta[name="color-scheme"]');
   if (scheme) scheme.setAttribute("content", theme);
 }

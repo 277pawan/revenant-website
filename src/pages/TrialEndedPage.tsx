@@ -5,38 +5,43 @@ import { site } from "../lib/site";
 
 export function TrialEndedPage() {
   return (
-    <div className="flex min-h-[70vh] items-center justify-center px-4 py-12">
+    <div className="mx-auto grid min-h-[70vh] max-w-5xl content-center gap-10 px-4 py-12 sm:px-6 md:grid-cols-[minmax(0,1fr)_minmax(15rem,0.7fr)] md:items-center">
       <PageMeta
         title="Starter trial required"
         description="Start or renew your Revenant Cloud Starter trial to access the dashboard."
         path="/trial-ended"
         robots="noindex,nofollow"
       />
-      <div className="ui-card w-full max-w-lg p-8 text-center">
-        <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-amber-500/15 text-amber-600">
-          <AlertTriangle size={24} />
+      <section>
+        <div className="mb-5 flex items-center gap-3 text-warning">
+          <AlertTriangle size={21} />
+          <span className="text-sm font-semibold">Revenant Cloud</span>
         </div>
-        <h1 className="text-2xl font-bold text-foreground">Cloud access paused</h1>
-        <p className="mt-3 text-sm leading-relaxed text-foreground-muted">
+        <h1 className="text-3xl font-bold text-foreground sm:text-4xl">Cloud access paused</h1>
+        <p className="mt-4 max-w-2xl leading-relaxed text-foreground-muted">
           The Revenant Cloud dashboard needs an active <strong>Starter</strong> trial
           or paid plan. Your trial may have ended, or this account never started one.
         </p>
-        <p className="mt-2 text-sm text-foreground-subtle">
-          Set up autopay with a <strong>₹1</strong> card check on this site, then open the cloud
-          dashboard with the same login.
+      </section>
+      <aside className="border-t border-border-subtle pt-6 md:border-l md:border-t-0 md:pl-8 md:pt-0">
+        <p className="text-sm leading-relaxed text-foreground-muted">
+          A ₹1 card check activates dashboard access. Your plan charge begins after the
+          30-day trial.
         </p>
-        <div className="mt-6 flex flex-col gap-2 sm:flex-row sm:justify-center">
+        <div className="mt-5 flex flex-col items-start gap-3">
           <Button href="/billing">Set up autopay — ₹1</Button>
           <Button href="/login" variant="secondary">Sign in</Button>
-          <Button href="/pricing" variant="secondary">View pricing</Button>
+          <a href="/pricing" className="text-sm font-medium text-accent-bright hover:underline">
+            View pricing
+          </a>
         </div>
-        <p className="mt-6 text-xs text-foreground-subtle">
+        <p className="mt-6 text-sm text-foreground-subtle">
           Already paid?{" "}
           <a href={`${site.appUrl}/login`} className="text-accent-bright hover:underline">
             Open cloud dashboard
           </a>
         </p>
-      </div>
+      </aside>
     </div>
   );
 }

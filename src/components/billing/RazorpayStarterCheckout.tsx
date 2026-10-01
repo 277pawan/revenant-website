@@ -87,7 +87,7 @@ export function RazorpayStarterCheckout({
         type="button"
         disabled={loading}
         onClick={() => void startCheckout()}
-        className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-accent px-4 py-3 text-sm font-semibold text-white hover:opacity-90 disabled:opacity-50 sm:w-auto"
+        className="ui-button ui-button-primary inline-flex w-full items-center justify-center gap-2 rounded-md px-4 py-3 text-sm font-semibold transition duration-150 ease-out active:scale-[0.98] disabled:pointer-events-none disabled:opacity-45 sm:w-auto"
       >
         {loading ? <Loader2 size={16} className="animate-spin" /> : <CreditCard size={16} />}
         {buttonLabel}

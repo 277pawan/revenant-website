@@ -51,11 +51,6 @@ export function RestoreChamber() {
     const controls = animate(progress, 1, {
       duration: CYCLE,
       ease: [0.45, 0.05, 0.2, 1],
-      repeat: Infinity,
-      repeatDelay: 0.9,
-      onRepeat: () => {
-        progress.set(0);
-      },
     });
     return () => controls.stop();
   }, [progress, reduceMotion]);
@@ -65,12 +60,12 @@ export function RestoreChamber() {
       <div className="overflow-hidden rounded-2xl border border-border bg-surface shadow-card">
         <div className="relative h-40 overflow-hidden sm:h-52">
           <img
-            src="/restore-kit.jpg"
-            alt="Revenant restore kit — shield, cable, and recovery core"
+            src="/film/02-sandbox.png"
+            alt="AWS server environment representing an isolated restore sandbox"
             className="h-full w-full object-cover object-center"
           />
-          <div className="absolute left-4 top-4 rounded-full border border-white/15 bg-black/45 px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-cyan-200 backdrop-blur-md">
-            Restore kit · field issue
+          <div className="absolute left-4 top-4 rounded-md border border-white/20 bg-black/70 px-3 py-1 text-xs font-medium text-white">
+            Example recovery run
           </div>
         </div>
 

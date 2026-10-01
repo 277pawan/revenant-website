@@ -36,15 +36,10 @@ export function PricingPreview() {
             return (
               <article
                 key={plan.id}
-                className={`ui-card relative flex flex-col p-6 ${
-                  plan.featured ? "border-accent/40" : ""
+                className={`ui-card flex flex-col p-6 ${
+                  plan.featured ? "border-t-2 border-t-accent" : ""
                 }`}
               >
-                {plan.featured && (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-accent px-3 py-0.5 text-xs font-semibold text-accent-foreground">
-                    Most popular
-                  </span>
-                )}
                 <h3 className="text-lg font-semibold text-foreground">{plan.name}</h3>
                 <div className="mt-2">
                   <span className="text-3xl font-bold text-foreground">{plan.price}</span>
@@ -75,7 +70,7 @@ export function PricingPreview() {
 
         <p className="mt-8 text-center text-sm text-foreground-subtle">
           <Link to="/pricing" className="text-accent-bright hover:underline">
-            Compare all plans including Enterprise →
+            Compare all plans including Enterprise
           </Link>
         </p>
       </div>

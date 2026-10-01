@@ -70,6 +70,10 @@ export default {
 
       borderRadius: {
         card: "var(--rv-radius-card)",
+        lg: "0.5rem",
+        xl: "0.625rem",
+        "2xl": "0.75rem",
+        "3xl": "0.875rem",
       },
 
       boxShadow: {

@@ -80,7 +80,7 @@ export function OAuthButtons({ providers, onUnavailable, onSuccess, onError }: P
               type="button"
               disabled={busyProvider != null}
               onClick={() => void handleClick(provider)}
-              className="flex items-center justify-center gap-2 rounded-xl border border-border bg-surface px-3 py-2.5 text-sm font-medium text-foreground-muted transition hover:border-border-strong hover:bg-surface-elevated"
+              className="ui-button ui-button-secondary inline-flex items-center justify-center gap-2 rounded-md px-3 py-2.5 text-sm font-semibold transition duration-150 ease-out active:scale-[0.98] disabled:pointer-events-none disabled:opacity-45"
             >
               {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <ProviderIcon id={provider.id} />}
               <span>{provider.label}</span>

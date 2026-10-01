@@ -16,14 +16,23 @@
   --rv-surface-elevated: #151920;
   --rv-surface-sunken: #08090c;
 
-  --rv-border: #232830;
-  --rv-border-subtle: #1a1e24;
-  --rv-border-strong: #343b46;
+  --rv-border: #302e2a;
+  --rv-border-subtle: #211f1d;
+  --rv-border-strong: #49443d;
 
-  --rv-accent: #22d3ee;
-  --rv-accent-bright: #67e8f9;
-  --rv-accent-muted: rgba(34, 211, 238, 0.12);
-  --rv-accent-foreground: #041014;
+  --rv-accent: #b5a58f;
+  --rv-accent-bright: #d0c2ae;
+  --rv-accent-muted: rgba(181, 165, 143, 0.14);
+  --rv-accent-foreground: #17283a;
+
+  --rv-button-primary-bg: #e9edf0;
+  --rv-button-primary-text: #111820;
+  --rv-button-primary-hover: #ffffff;
+  --rv-button-secondary-bg: transparent;
+  --rv-button-secondary-text: #e5e9ec;
+  --rv-button-secondary-border: #56616a;
+  --rv-button-secondary-hover: #171b20;
+  --rv-button-ghost-hover: #1a1e23;
 
   --rv-success: #4ade80;
   --rv-success-muted: rgba(74, 222, 128, 0.12);
@@ -34,101 +43,98 @@
 
   --rv-terminal-bg: #07090c;
   --rv-terminal-border: #1c2129;
-  --rv-terminal-prompt: #67e8f9;
+  --rv-terminal-prompt: #d0c2ae;
   --rv-terminal-success: #4ade80;
   --rv-terminal-info: #38bdf8;
   --rv-terminal-muted: #69717d;
 
   --rv-shadow-card: 0 1px 2px rgba(0, 0, 0, 0.35);
-  --rv-shadow-glow: 0 0 32px -12px rgba(34, 211, 238, 0.22);
+  --rv-shadow-glow: 0 0 24px -14px rgba(181, 165, 143, 0.2);
   --rv-shadow-button: 0 1px 2px rgba(0, 0, 0, 0.25);
 
-  --rv-glow-teal: rgba(20, 184, 166, 0.18);
-  --rv-glow-violet: rgba(139, 92, 246, 0.14);
-  --rv-glow-blue: rgba(37, 99, 235, 0.14);
+  --rv-glow-teal: rgba(181, 165, 143, 0.1);
+  --rv-glow-violet: rgba(181, 165, 143, 0.06);
+  --rv-glow-blue: rgba(181, 165, 143, 0.05);
   --rv-grid-line: rgba(255, 255, 255, 0.035);
-  --rv-hero-photo-opacity: 0.55;
-  --rv-hero-mesh-opacity: 1;
-  --rv-hero-grid-opacity: 0.35;
+  --rv-hero-photo-opacity: 0.82;
+  --rv-hero-mesh-opacity: 0;
+  --rv-hero-grid-opacity: 0.08;
   --rv-hero-scrim: linear-gradient(
-    95deg,
+    90deg,
     var(--rv-background) 0%,
-    color-mix(in srgb, var(--rv-background) 92%, transparent) 38%,
-    color-mix(in srgb, var(--rv-background) 45%, transparent) 58%,
-    transparent 78%
+    color-mix(in srgb, var(--rv-background) 92%, transparent) 42%,
+    color-mix(in srgb, var(--rv-background) 38%, transparent) 64%,
+    transparent 88%
   );
-  --rv-chamber-scan: rgba(103, 232, 249, 0.07);
+  --rv-chamber-scan: rgba(208, 194, 174, 0.08);
 
-  --rv-radius-card: 1rem;
+  --rv-radius-card: 0.75rem;
 }
 
 [data-theme="light"] {
   color-scheme: light;
 
-  /* Cool paper + teal ink — distinct from generic gray SaaS */
-  --rv-background: #e8f0f4;
-  --rv-foreground: #0b1220;
-  --rv-foreground-muted: #334155;
-  --rv-foreground-subtle: #475569;
+  --rv-background: #f1f4f6;
+  --rv-foreground: #172a3b;
+  --rv-foreground-muted: #455a6a;
+  --rv-foreground-subtle: #5d7180;
 
-  --rv-surface: #fafcfd;
+  --rv-surface: #fbfcfd;
   --rv-surface-elevated: #ffffff;
-  --rv-surface-sunken: #dce8ee;
+  --rv-surface-sunken: #e5ebef;
 
-  --rv-border: #a8c4d4;
-  --rv-border-subtle: #c5d9e4;
-  --rv-border-strong: #6b9aad;
+  --rv-border: #c8d3dc;
+  --rv-border-subtle: #d9e1e7;
+  --rv-border-strong: #9eafbc;
 
-  --rv-accent: #0d9488;
-  --rv-accent-bright: #0f766e;
-  --rv-accent-muted: rgba(13, 148, 136, 0.16);
+  --rv-accent: #806b50;
+  --rv-accent-bright: #705a40;
+  --rv-accent-muted: rgba(128, 107, 80, 0.12);
   --rv-accent-foreground: #ffffff;
 
-  --rv-success: #047857;
-  --rv-success-muted: rgba(4, 120, 87, 0.12);
-  --rv-warning: #b45309;
-  --rv-warning-muted: rgba(180, 83, 9, 0.12);
-  --rv-error: #be123c;
-  --rv-error-muted: rgba(190, 18, 60, 0.1);
+  --rv-button-primary-bg: #172a3b;
+  --rv-button-primary-text: #ffffff;
+  --rv-button-primary-hover: #243d52;
+  --rv-button-secondary-bg: transparent;
+  --rv-button-secondary-text: #24394b;
+  --rv-button-secondary-border: #9eafbc;
+  --rv-button-secondary-hover: #e4ebf0;
+  --rv-button-ghost-hover: #e6edf1;
 
-  --rv-terminal-bg: #0f1419;
-  --rv-terminal-border: #1c2129;
-  --rv-terminal-prompt: #5eead4;
-  --rv-terminal-success: #4ade80;
-  --rv-terminal-info: #38bdf8;
-  --rv-terminal-muted: #8b95a1;
+  --rv-success: #176343;
+  --rv-success-muted: rgba(23, 99, 67, 0.1);
+  --rv-warning: #885719;
+  --rv-warning-muted: rgba(136, 87, 25, 0.1);
+  --rv-error: #a83c36;
+  --rv-error-muted: rgba(168, 60, 54, 0.1);
 
-  --rv-shadow-card: 0 1px 0 rgba(255, 255, 255, 0.9) inset,
-    0 1px 3px rgba(11, 45, 62, 0.08);
-  --rv-shadow-glow: 0 8px 28px -8px rgba(13, 148, 136, 0.25);
-  --rv-shadow-button: 0 1px 2px rgba(11, 45, 62, 0.12);
+  --rv-terminal-bg: #11283b;
+  --rv-terminal-border: #344b60;
+  --rv-terminal-prompt: #dfcdb0;
+  --rv-terminal-success: #71d6a5;
+  --rv-terminal-info: #8cc7d5;
+  --rv-terminal-muted: #afbdc8;
 
-  --rv-glow-teal: rgba(13, 148, 136, 0.22);
-  --rv-glow-violet: rgba(79, 70, 229, 0.07);
-  --rv-glow-blue: rgba(2, 132, 199, 0.1);
-  --rv-grid-line: rgba(13, 148, 136, 0.09);
+  --rv-shadow-card: 0 1px 2px rgba(23, 42, 59, 0.06);
+  --rv-shadow-glow: 0 6px 18px -12px rgba(128, 107, 80, 0.2);
+  --rv-shadow-button: 0 1px 2px rgba(23, 42, 59, 0.1);
 
-  --rv-page-wash: radial-gradient(
-      ellipse 120% 80% at 50% -30%,
-      rgba(167, 243, 232, 0.45),
-      transparent 55%
-    ),
-    radial-gradient(
-      ellipse 60% 50% at 100% 0%,
-      rgba(186, 230, 253, 0.35),
-      transparent 50%
-    ),
-    linear-gradient(180deg, #eef6f9 0%, var(--rv-background) 42%, #e2ecf2 100%);
+  --rv-glow-teal: rgba(128, 107, 80, 0.08);
+  --rv-glow-violet: rgba(128, 107, 80, 0.05);
+  --rv-glow-blue: rgba(128, 107, 80, 0.04);
+  --rv-grid-line: rgba(23, 42, 59, 0.035);
 
-  --rv-hero-photo-opacity: 0.42;
-  --rv-hero-mesh-opacity: 0.45;
-  --rv-hero-grid-opacity: 0.22;
+  --rv-page-wash: linear-gradient(180deg, #f8fafb 0%, var(--rv-background) 100%);
+
+  --rv-hero-photo-opacity: 0.78;
+  --rv-hero-mesh-opacity: 0;
+  --rv-hero-grid-opacity: 0.05;
   --rv-hero-scrim: linear-gradient(
-    95deg,
-    #eef6f9 0%,
-    color-mix(in srgb, #eef6f9 90%, transparent) 34%,
-    color-mix(in srgb, #e8f0f4 50%, transparent) 55%,
-    transparent 76%
+    90deg,
+    var(--rv-background) 0%,
+    color-mix(in srgb, var(--rv-background) 96%, transparent) 38%,
+    color-mix(in srgb, var(--rv-background) 72%, transparent) 58%,
+    transparent 88%
   );
-  --rv-chamber-scan: rgba(13, 148, 136, 0.1);
+  --rv-chamber-scan: rgba(128, 107, 80, 0.1);
 }

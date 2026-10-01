@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from "react";
-import { motion } from "motion/react";
 import {
+  Coffee,
   Loader2,
   Mail,
   Phone,
@@ -22,20 +22,6 @@ const AMOUNTS = [
   { inr: 999, label: "₹999", note: "Serious support" },
   { inr: 2499, label: "₹2,499", note: "Fuel a sprint" },
 ];
-
-function Steam() {
-  return (
-    <div className="pointer-events-none absolute -top-7 left-1/2 flex -translate-x-1/2 gap-1.5">
-      {[0, 1, 2].map((i) => (
-        <span
-          key={i}
-          className="steam-wisp h-8 w-1 rounded-full bg-accent/50"
-          style={{ animationDelay: `${i * 0.45}s` }}
-        />
-      ))}
-    </div>
-  );
-}
 
 export function CoffeePage() {
   const [amount, setAmount] = useState(299);
@@ -120,26 +106,21 @@ export function CoffeePage() {
     <div className="px-4 py-16 sm:px-6 sm:py-20">
       <PageMeta {...coffeeSeo} />
       <div className="mx-auto max-w-5xl">
-        <div className="text-center">
-          <div className="relative mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl border border-border-strong bg-accent-muted">
-            <Steam />
-            <span className="text-3xl" aria-hidden>
-              ☕
+        <div className="max-w-xl">
+          <h1 className="ui-heading flex items-center gap-3 text-4xl">
+            <span className="relative inline-flex h-9 w-8 shrink-0 -translate-y-1 items-center justify-center text-accent-bright">
+              <Coffee className="absolute bottom-0" size={25} strokeWidth={1.8} aria-hidden="true" />
             </span>
-          </div>
-          <h1 className="ui-heading text-4xl">Fund Revenant</h1>
-          <p className="mx-auto mt-4 max-w-xl text-foreground-muted leading-relaxed">
+            <span>Fund Revenant</span>
+          </h1>
+          <p className="mt-4 text-foreground-muted leading-relaxed">
             One-time support via Razorpay — card, UPI, or netbanking. Not a
             subscription. Helps us ship open-source DR tooling faster.
           </p>
         </div>
 
         <div className="mt-12 grid gap-8 lg:grid-cols-2">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="ui-card p-6"
-          >
+          <div className="ui-card p-6">
             {done ? (
               <div className="py-8 text-center">
                 <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-success-muted text-success">
@@ -180,17 +161,16 @@ export function CoffeePage() {
                             setAmount(a.inr);
                             setCustom("");
                           }}
-                          className={`relative overflow-hidden rounded-xl border px-3 py-3 text-left transition ${
+                          className={`relative overflow-hidden rounded-lg border px-3 py-3 text-left transition ${
                             on
                               ? "border-accent ring-2 ring-accent/20"
                               : "border-border hover:border-border-strong"
                           }`}
                         >
-                          <motion.span
-                            className="absolute inset-x-0 bottom-0 bg-accent-muted"
-                            initial={false}
-                            animate={{ height: on ? "100%" : "0%" }}
-                            transition={{ duration: 0.35 }}
+                          <span
+                            className={`absolute inset-x-0 bottom-0 bg-accent-muted transition-[height] duration-300 ${
+                              on ? "h-full" : "h-0"
+                            }`}
                           />
                           <div className="relative font-semibold text-foreground">
                             {a.label}
@@ -268,11 +248,11 @@ export function CoffeePage() {
                   Pay ₹{selected.toLocaleString("en-IN")} with Razorpay
                 </Button>
                 <p className="text-center text-xs text-foreground-subtle">
-                  Secure checkout · one-time payment · no subscription
+                  One-time payment. No subscription.
                 </p>
               </form>
             )}
-          </motion.div>
+          </div>
 
           <div className="space-y-4">
             <div className="ui-card p-6">

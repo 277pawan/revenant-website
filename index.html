@@ -1,83 +1,79 @@
 <!doctype html>
 <html lang="en" data-theme="dark">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="color-scheme" content="dark light" />
-    <meta name="theme-color" content="#07080b" />
-    <meta name="referrer" content="strict-origin-when-cross-origin" />
-    <script>
-      (function () {
-        try {
-          var stored = localStorage.getItem("revenant-theme");
-          var theme =
-            stored === "light" || stored === "dark"
-              ? stored
-              : window.matchMedia("(prefers-color-scheme: light)").matches
-                ? "light"
-                : "dark";
-          document.documentElement.setAttribute("data-theme", theme);
-          document.documentElement.style.colorScheme = theme;
-        } catch (e) {
-          document.documentElement.setAttribute("data-theme", "dark");
-        }
-      })();
-    </script>
-    <title>Revenant — Prove your backups actually recover</title>
-    <meta
-      name="description"
-      content="Disaster recovery proof for PostgreSQL. Free CLI, managed AWS restore drills, signed evidence vault."
-    />
-    <meta name="robots" content="index,follow,max-image-preview:large" />
-    <meta name="google-site-verification" content="8826d86bce455743" />
-    <meta name="author" content="Revenant" />
 
-    <link rel="canonical" href="https://revenant-verify-933e4.web.app/" />
-    <link rel="icon" type="image/svg+xml" href="/revenant_logo.svg" />
-    <link rel="apple-touch-icon" href="/revenant_logo.png" />
-    <link rel="manifest" href="/manifest.webmanifest" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="dark light" />
+  <meta name="theme-color" content="#07080b" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <script>
+    (function () {
+      try {
+        var stored = localStorage.getItem("revenant-theme");
+        var theme =
+          stored === "light" || stored === "dark"
+            ? stored
+            : window.matchMedia("(prefers-color-scheme: light)").matches
+              ? "light"
+              : "dark";
+        document.documentElement.setAttribute("data-theme", theme);
+        document.documentElement.style.colorScheme = theme;
+      } catch (e) {
+        document.documentElement.setAttribute("data-theme", "dark");
+      }
+    })();
+  </script>
+  <title>Revenant — Prove your backups actually recover</title>
+  <meta name="description"
+    content="Disaster recovery proof for PostgreSQL. Free CLI, managed AWS restore drills, signed evidence vault." />
+  <meta name="robots" content="index,follow,max-image-preview:large" />
+  <meta name="google-site-verification" content="8826d86bce455743" />
+  <meta name="author" content="Revenant" />
 
-    <meta property="og:site_name" content="Revenant" />
-    <meta property="og:title" content="Revenant — Prove your backups actually recover" />
-    <meta
-      property="og:description"
-      content="Disaster recovery proof for PostgreSQL. Free CLI, managed AWS restore drills, signed evidence vault."
-    />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://revenant-verify-933e4.web.app/" />
-    <meta property="og:image" content="https://revenant-verify-933e4.web.app/og-image.png" />
-    <meta property="og:image:alt" content="Revenant — PostgreSQL disaster recovery proof" />
-    <meta property="og:locale" content="en_IN" />
+  <link rel="canonical" href="https://revenant-verify-933e4.web.app/" />
+  <link rel="icon" type="image/svg+xml" href="/revenant_logo.svg" />
+  <link rel="apple-touch-icon" href="/revenant_logo.png" />
+  <link rel="manifest" href="/manifest.webmanifest" />
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Revenant — Prove your backups actually recover" />
-    <meta
-      name="twitter:description"
-      content="Disaster recovery proof for PostgreSQL. Free CLI, managed AWS restore drills, signed evidence vault."
-    />
-    <meta name="twitter:image" content="https://revenant-verify-933e4.web.app/og-image.png" />
+  <meta property="og:site_name" content="Revenant" />
+  <meta property="og:title" content="Revenant — Prove your backups actually recover" />
+  <meta property="og:description"
+    content="Disaster recovery proof for PostgreSQL. Free CLI, managed AWS restore drills, signed evidence vault." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://revenant-verify-933e4.web.app/" />
+  <meta property="og:image" content="https://revenant-verify-933e4.web.app/og-image.png" />
+  <meta property="og:image:alt" content="Revenant — PostgreSQL disaster recovery proof" />
+  <meta property="og:locale" content="en_IN" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
-      rel="stylesheet"
-    />
-  </head>
-  <body class="bg-background text-foreground antialiased">
-    <div id="root"></div>
-    <noscript>
-      <main style="max-width:42rem;margin:2rem auto;padding:0 1rem;font-family:system-ui,sans-serif;line-height:1.6">
-        <h1>Revenant — Prove your backups actually recover</h1>
-        <p>Disaster recovery proof for PostgreSQL. Free CLI, managed AWS restore drills, signed evidence vault.</p>
-        <ul>
-          <li><a href="/docs">Documentation</a></li>
-          <li><a href="/cli">revenant CLI</a></li>
-          <li><a href="/pricing">Pricing</a></li>
-          <li><a href="/talk">Talk to us</a></li>
-        </ul>
-      </main>
-    </noscript>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Revenant — Prove your backups actually recover" />
+  <meta name="twitter:description"
+    content="Disaster recovery proof for PostgreSQL. Free CLI, managed AWS restore drills, signed evidence vault." />
+  <meta name="twitter:image" content="https://revenant-verify-933e4.web.app/og-image.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet" />
+</head>
+
+<body class="bg-background text-foreground antialiased">
+  <div id="root"></div>
+  <noscript>
+    <main style="max-width:42rem;margin:2rem auto;padding:0 1rem;font-family:system-ui,sans-serif;line-height:1.6">
+      <h1>Revenant — Prove your backups actually recover</h1>
+      <p>Disaster recovery proof for PostgreSQL. Free CLI, managed AWS restore drills, signed evidence vault.</p>
+      <ul>
+        <li><a href="/docs">Documentation</a></li>
+        <li><a href="/cli">revenant CLI</a></li>
+        <li><a href="/pricing">Pricing</a></li>
+        <li><a href="/talk">Talk to us</a></li>
+      </ul>
+    </main>
+  </noscript>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
 </html>

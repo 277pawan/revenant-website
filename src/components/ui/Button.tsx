@@ -6,14 +6,10 @@ type Variant = "primary" | "secondary" | "ghost" | "surface";
 type Size = "sm" | "md" | "lg";
 
 const variantStyles: Record<Variant, string> = {
-  primary:
-    "bg-accent text-accent-foreground font-semibold shadow-button hover:brightness-110",
-  secondary:
-    "border border-border bg-surface-elevated text-foreground hover:border-border-strong hover:bg-surface",
-  surface:
-    "border border-border bg-surface text-foreground-muted hover:border-border-strong hover:bg-surface-elevated hover:text-foreground",
-  ghost:
-    "text-foreground-muted hover:bg-surface-elevated hover:text-foreground",
+  primary: "ui-button-primary",
+  secondary: "ui-button-secondary",
+  surface: "ui-button-surface",
+  ghost: "ui-button-ghost",
 };
 
 const sizeStyles: Record<Size, string> = {
@@ -46,7 +42,7 @@ export function Button({
   disabled,
 }: Props) {
   const classes = cn(
-    "inline-flex items-center justify-center gap-2 rounded-xl font-medium transition-all duration-200 disabled:opacity-60",
+    "ui-button inline-flex items-center justify-center gap-2 rounded-md font-semibold transition duration-150 ease-out active:scale-[0.98] disabled:pointer-events-none disabled:opacity-45",
     sizeStyles[size],
     variantStyles[variant],
     className,

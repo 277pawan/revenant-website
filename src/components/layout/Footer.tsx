@@ -5,8 +5,8 @@ import { appLink, site } from "../../lib/site";
 export function Footer() {
   return (
     <footer className="border-t border-border-subtle bg-surface">
-      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-4">
-        <div className="md:col-span-2">
+      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-[minmax(0,1.5fr)_minmax(9rem,0.65fr)_minmax(9rem,0.65fr)]">
+        <div>
           <Link to="/" className="inline-block">
             <img
               src="/Revenant_verify_logo.png"
@@ -55,7 +55,7 @@ export function Footer() {
         </div>
 
         <div>
-          <h3 className="text-xs font-semibold uppercase tracking-wider text-foreground-subtle">
+          <h3 className="text-sm font-semibold text-foreground">
             Product
           </h3>
           <ul className="mt-4 space-y-2 text-sm text-foreground-muted">
@@ -69,7 +69,7 @@ export function Footer() {
         </div>
 
         <div>
-          <h3 className="text-xs font-semibold uppercase tracking-wider text-foreground-subtle">
+          <h3 className="text-sm font-semibold text-foreground">
             Connect
           </h3>
           <ul className="mt-4 space-y-2 text-sm text-foreground-muted">
@@ -81,9 +81,8 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-border-subtle py-5 text-center text-xs text-foreground-subtle">
-        © {new Date().getFullYear()} Revenant · {site.founder.email} ·{" "}
-        {site.founder.phoneDisplay}
+      <div className="border-t border-border-subtle px-4 py-5 text-center text-xs text-foreground-subtle">
+        © {new Date().getFullYear()} Revenant
       </div>
     </footer>
   );

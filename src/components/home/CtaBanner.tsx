@@ -23,19 +23,18 @@ export function CtaBanner() {
   }
 
   return (
-    <section className="px-4 pb-24 sm:px-6">
-      <div className="mx-auto max-w-4xl">
-        <div className="relative overflow-hidden rounded-3xl border border-border bg-cta-glow bg-surface px-8 py-16 text-center shadow-card sm:px-12">
-          <div className="pointer-events-none absolute inset-0 bg-hero-glow opacity-40" />
-          <div className="relative">
-            <h2 className="ui-heading text-2xl sm:text-3xl">
+    <section className="px-4 pb-20 sm:px-6">
+      <div className="mx-auto grid max-w-6xl items-center gap-8 border-y border-border-subtle py-12 lg:grid-cols-[minmax(0,1fr)_auto] lg:py-14">
+        <div>
+            <h2 className="ui-heading max-w-2xl text-2xl sm:text-3xl">
               Don&apos;t wait for the outage to test recovery.
             </h2>
-            <p className="mx-auto mt-4 max-w-lg ui-body">
+            <p className="mt-3 max-w-2xl ui-body">
               Run your first restore drill today. Free CLI in CI, or start a
               30-day cloud trial with managed AWS sandboxes.
             </p>
-            <div className="mt-8 flex flex-wrap justify-center gap-3">
+        </div>
+        <div className="flex flex-wrap gap-3 lg:justify-end">
               <Button href={href} size="lg">
                 {label}
                 <ArrowRight size={18} />
@@ -43,8 +42,6 @@ export function CtaBanner() {
               <Button variant="secondary" href="/docs" size="lg">
                 Read docs
               </Button>
-            </div>
-          </div>
         </div>
       </div>
     </section>

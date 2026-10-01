@@ -43,22 +43,22 @@ export function FeaturesSection() {
   return (
     <section className="px-4 py-16 sm:px-6">
       <div className="mx-auto max-w-6xl">
-        <div className="text-center">
+        <div className="max-w-2xl">
           <h2 className="ui-heading text-3xl sm:text-4xl">Built for restore proof</h2>
-          <p className="mx-auto mt-4 max-w-2xl ui-body">
+          <p className="mt-4 ui-body">
             Most teams discover backup gaps during the outage. Revenant makes
             restore proof a habit — in CI and in production.
           </p>
         </div>
 
-        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-10 grid gap-x-10 sm:grid-cols-2 lg:grid-cols-3">
           {FEATURES.map((f) => (
-            <article key={f.title} className="ui-card-interactive p-6">
-              <div className="mb-4 inline-flex rounded-xl border border-border bg-accent-muted p-2.5 text-accent">
-                <f.icon size={22} strokeWidth={1.75} />
-              </div>
-              <h3 className="text-lg font-semibold text-foreground">{f.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-foreground-muted">
+            <article key={f.title} className="border-t border-border-subtle py-5">
+              <h3 className="flex items-center gap-2.5 text-base font-semibold text-foreground">
+                <f.icon size={18} strokeWidth={1.75} className="shrink-0 text-accent-bright" />
+                {f.title}
+              </h3>
+              <p className="mt-2.5 text-sm leading-relaxed text-foreground-muted">
                 {f.body}
               </p>
             </article>
