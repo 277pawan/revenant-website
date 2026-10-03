@@ -1,352 +1,398 @@
-import { useId } from "react";
+import { useEffect, useRef } from "react";
 
-/* Set to true to mirror the clouds (and glow) to the left side. */
-const MIRROR_CLOUDS = false;
+/**
+ * Hero backdrop: a living map of your fleet.
+ *
+ * - The grid is a fleet of databases. Cells quietly flip to "verified" in soft
+ *   waves, the way restore drills pass across a real fleet.
+ * - Every few seconds one cell breaks apart into particles, drifts, then
+ *   reassembles and lands as verified with a tick. That is the Revenant moment:
+ *   something that came back.
+ * - Moving the cursor verifies cells under it.
+ *
+ * Fills the whole hero section. Uses theme tokens (--rv-*), so it follows
+ * light/dark. Pauses when off-screen or the tab is hidden, stays static with
+ * prefers-reduced-motion, and ignores touch pointers.
+ */
 
-/* ------------------------------------------------------------------ */
-/*  Self-contained: animations + theme variables are injected below.   */
-/*  Dark mode = html without data-theme="light" (matches your index.css) */
-/* ------------------------------------------------------------------ */
+type Verify = {
+  c: number;
+  r: number;
+  born: number;
+  peak: number;
+  tick: boolean;
+};
+type Particle = { a: number; d: number; s: number; w: number };
+type Revive = { c: number; r: number; born: number; parts: Particle[] };
 
-const CSS = `
-.hb-root {
-  /* light theme */
-  --hb-tint: var(--rv-accent);
-  --hb-hi: var(--rv-accent-bright);
-  --hb-fill-top: .22;
-  --hb-fill-bot: .03;
-  --hb-edge: .4;
-  --hb-wire: .3;
-  --hb-node-ring: .55;
-  --hb-halo: .2;
-  --hb-cloud-filter: none;
-  --hb-wire-filter: none;
-  --hb-packet-filter: none;
-  --hb-glow-a: 18%;
-  --hb-glow-b: 10%;
+const VERIFY_LIFE = 5200;
+const BREAK = 700;
+const DRIFT = 1500;
+const RETURN = 2700;
+
+const easeOut = (t: number) => 1 - Math.pow(1 - t, 3);
+const easeInOut = (t: number) =>
+  t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+function readColors() {
+  const s = getComputedStyle(document.documentElement);
+  const get = (name: string, fallback: string) =>
+    s.getPropertyValue(name).trim() || fallback;
+  return {
+    line: get("--rv-border", "#2b3238"),
+    ok: get("--rv-success", "#3fb27f"),
+    warn: get("--rv-accent-bright", "#d9b24c"),
+  };
 }
-html:not([data-theme="light"]) .hb-root {
-  /* dark theme: cool, glowing, higher contrast */
-  --hb-tint: #7aa2ff;
-  --hb-hi: #c3d4ff;
-  --hb-fill-top: .20;
-  --hb-fill-bot: .02;
-  --hb-edge: .55;
-  --hb-wire: .5;
-  --hb-node-ring: .8;
-  --hb-halo: .4;
-  --hb-cloud-filter: drop-shadow(0 0 22px rgba(122,162,255,.22));
-  --hb-wire-filter: drop-shadow(0 0 4px rgba(122,162,255,.55));
-  --hb-packet-filter: drop-shadow(0 0 6px var(--rv-success));
-  --hb-glow-a: 24%;
-  --hb-glow-b: 14%;
-}
-
-@keyframes hb-drift-a { 0%,100% { transform: translateX(-10px); } 50% { transform: translateX(14px); } }
-@keyframes hb-drift-b { 0%,100% { transform: translateX(12px); }  50% { transform: translateX(-12px); } }
-@keyframes hb-dash    { to { stroke-dashoffset: -26; } }
-@keyframes hb-halo    { 0%,100% { opacity: .35; transform: scale(.85); } 50% { opacity: 1; transform: scale(1.1); } }
-@keyframes hb-float   { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
-
-.hb-cloud   { will-change: transform; filter: var(--hb-cloud-filter); }
-.hb-drift-a { animation: hb-drift-a 34s ease-in-out infinite; }
-.hb-drift-b { animation: hb-drift-b 46s ease-in-out infinite; }
-.hb-link    { stroke-dasharray: 5 8; animation: hb-dash 3s linear infinite; filter: var(--hb-wire-filter); }
-.hb-packet  { filter: var(--hb-packet-filter); }
-.hb-halo    { transform-box: fill-box; transform-origin: center; animation: hb-halo 4.5s ease-in-out infinite; }
-.hb-chip    { animation: hb-float 7s ease-in-out infinite; }
-
-@media (prefers-reduced-motion: reduce) {
-  .hb-cloud, .hb-link, .hb-halo, .hb-chip { animation: none !important; }
-  .hb-packet { display: none; }
-}
-`;
-
-/* ----------------------------- Cloud ------------------------------ */
-
-const CLOUD_BODY =
-  "M60 100 C28 100 10 80 20 58 C28 40 52 36 66 44 C70 20 98 6 124 16 C142 24 150 38 150 46 C170 34 200 44 204 66 C220 70 226 92 206 100 Z";
-const CLOUD_HIGHLIGHT = "M72 66 C86 46 110 40 128 50";
-
-function Cloud({
-  className,
-  strength = 1,
-}: {
-  className: string;
-  strength?: number;
-}) {
-  const id = "hb" + useId().replace(/:/g, "");
-  return (
-    <svg
-      viewBox="0 0 240 120"
-      className={`absolute overflow-visible hb-cloud ${className}`}
-    >
-      <defs>
-        <linearGradient id={id} x1="0" y1="0" x2="0" y2="1">
-          <stop
-            offset="0%"
-            style={{
-              stopColor: "var(--hb-tint)",
-              stopOpacity: `calc(var(--hb-fill-top) * ${strength})`,
-            }}
-          />
-          <stop
-            offset="100%"
-            style={{
-              stopColor: "var(--hb-tint)",
-              stopOpacity: `calc(var(--hb-fill-bot) * ${strength})`,
-            }}
-          />
-        </linearGradient>
-      </defs>
-      <g
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        fill="none"
-        strokeWidth="1.2"
-      >
-        <path
-          d={CLOUD_BODY}
-          fill={`url(#${id})`}
-          style={{
-            stroke: "var(--hb-tint)",
-            strokeOpacity: `calc(var(--hb-edge) * ${strength})`,
-          }}
-        />
-        <path
-          d={CLOUD_HIGHLIGHT}
-          style={{
-            stroke: "var(--hb-hi)",
-            strokeOpacity: `calc(var(--hb-edge) * ${strength} * .9)`,
-          }}
-        />
-      </g>
-    </svg>
-  );
-}
-
-/* ----------------------------- Network ---------------------------- */
-
-// Nodes represent the actual pipeline steps: Source -> Sandbox -> Verify -> Evidence
-const NODES = [
-  { id: "source", x: 80, y: 180, label: "AWS Snapshot", type: "source" },
-  { id: "sandbox", x: 260, y: 320, label: "Sandbox", type: "process" },
-  { id: "verify", x: 450, y: 460, label: "Verify", type: "process" },
-  { id: "evidence", x: 680, y: 580, label: "Evidence", type: "target" },
-];
-
-// Links create a structured path leading towards the UI card (bottom right)
-const LINKS = [
-  {
-    d: "M 80 180 C 150 180, 180 320, 260 320",
-    dur: 3.5,
-    delay: 0,
-  },
-  {
-    d: "M 260 320 C 330 320, 360 460, 450 460",
-    dur: 4,
-    delay: 0.8,
-  },
-  {
-    d: "M 450 460 C 530 460, 560 580, 680 580",
-    dur: 4.5,
-    delay: 1.6,
-  },
-];
-
-export default function Network() {
-  return (
-    <svg
-      viewBox="0 0 800 700"
-      preserveAspectRatio="xMaxYMid meet"
-      className="absolute right-0 top-0 hidden h-full w-[58%] lg:block"
-      style={{
-        WebkitMaskImage: "linear-gradient(to right, transparent 0%, #000 30%)",
-        maskImage: "linear-gradient(to right, transparent 0%, #000 30%)",
-      }}
-    >
-      <defs>
-        {/* Glow effect for the nodes */}
-        <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-          <feGaussianBlur stdDeviation="4" result="blur" />
-          <feComposite in="SourceGraphic" in2="blur" operator="over" />
-        </filter>
-      </defs>
-
-      {/* 1. Background Data Trails (Dashed, subtle) */}
-      {LINKS.map((l, i) => (
-        <path
-          key={`trail-${i}`}
-          d={l.d}
-          fill="none"
-          strokeWidth="1"
-          strokeDasharray="4 6"
-          className="hb-trail"
-          style={{
-            stroke: "var(--hb-tint)",
-            strokeOpacity: 0.15,
-          }}
-        />
-      ))}
-
-      {/* 2. Main Pipeline Lines */}
-      {LINKS.map((l, i) => (
-        <g key={`link-${i}`}>
-          <path
-            d={l.d}
-            fill="none"
-            strokeWidth="2"
-            className="hb-link"
-            style={{
-              stroke: "var(--hb-tint)",
-              strokeOpacity: 0.3,
-              strokeLinecap: "round",
-            }}
-          />
-          {/* Animated Packets (representing data flow) */}
-          <circle r="4" fill="var(--rv-success)" filter="url(#glow)">
-            <animateMotion
-              dur={`${l.dur}s`}
-              begin={`${l.delay}s`}
-              repeatCount="indefinite"
-              path={l.d}
-            />
-          </circle>
-        </g>
-      ))}
-
-      {/* 3. Meaningful Nodes */}
-      {NODES.map((node, i) => {
-        // Customize node appearance based on its role in the pipeline
-        const isSource = node.type === "source";
-        const isTarget = node.type === "target";
-
-        return (
-          <g key={node.id} transform={`translate(${node.x} ${node.y})`}>
-            {/* Outer Halo (pulses slowly) */}
-            <circle
-              r={isTarget ? "24" : "18"}
-              fill="none"
-              className="hb-halo"
-              style={{
-                stroke: "var(--hb-tint)",
-                strokeOpacity: isTarget ? 0.4 : 0.2,
-                animationDelay: `${i * 0.8}s`,
-              }}
-            />
-
-            {/* Node Core */}
-            <circle
-              r={isTarget ? "12" : "8"}
-              fill={isSource ? "var(--rv-surface)" : "var(--rv-surface)"}
-              style={{
-                stroke: "var(--hb-tint)",
-                strokeOpacity: isTarget ? 1 : 0.6,
-                strokeWidth: isTarget ? 2 : 1,
-              }}
-            />
-
-            {/* Center Dot (Success color for the final target) */}
-            <circle
-              r={isTarget ? "4" : "3"}
-              fill={isTarget ? "var(--rv-success)" : "var(--hb-hi)"}
-            />
-
-            {/* Optional: Tiny text label next to nodes for clarity (uncomment if desired) */}
-            {/* <text 
-              x="20" y="4" 
-              fill="var(--hb-tint)" 
-              fontSize="10" 
-              opacity="0.5"
-              fontFamily="monospace"
-            >
-              {node.label}
-            </text> */}
-          </g>
-        );
-      })}
-    </svg>
-  );
-}
-/* ----------------------------- Backdrop --------------------------- */
 
 export function HeroBackdrop() {
-  const glowX = MIRROR_CLOUDS ? "24%" : "76%";
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const wrap = wrapRef.current;
+    const canvas = canvasRef.current;
+    if (!wrap || !canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    const host = wrap.parentElement ?? wrap;
+
+    const reduce = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    let w = 0;
+    let h = 0;
+    let cell = 56;
+    let cols = 0;
+    let rows = 0;
+    let colors = readColors();
+
+    const verifies: Verify[] = [];
+    const revives: Revive[] = [];
+    let hover: { c: number; r: number } | null = null;
+    let lastTrail = "";
+    let nextAmbient = 0;
+    let nextRevive = 0;
+    let raf = 0;
+    let onScreen = true;
+
+    const rand = (min: number, max: number) =>
+      min + Math.random() * (max - min);
+
+    const resize = () => {
+      const rect = wrap.getBoundingClientRect();
+      w = rect.width;
+      h = rect.height;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.round(w * dpr);
+      canvas.height = Math.round(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      cell = w < 640 ? 44 : 56;
+      cols = Math.max(1, Math.ceil(w / cell));
+      rows = Math.max(1, Math.ceil(h / cell));
+      if (reduce) {
+        seedStatic();
+        draw(performance.now());
+      }
+    };
+
+    const seedStatic = () => {
+      verifies.length = 0;
+      const count = Math.round((cols * rows) / 9);
+      for (let i = 0; i < count; i++) {
+        verifies.push({
+          c: Math.floor(Math.random() * cols),
+          r: Math.floor(Math.random() * rows),
+          born: performance.now() - VERIFY_LIFE * rand(0.05, 0.5),
+          peak: 0.12,
+          tick: false,
+        });
+      }
+    };
+
+    const drawTick = (cx: number, cy: number, alpha: number) => {
+      ctx.globalAlpha = alpha;
+      ctx.strokeStyle = colors.ok;
+      ctx.lineWidth = 1.75;
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+      ctx.beginPath();
+      ctx.moveTo(cx - 5, cy);
+      ctx.lineTo(cx - 1.5, cy + 4);
+      ctx.lineTo(cx + 5, cy - 4);
+      ctx.stroke();
+    };
+
+    const draw = (now: number) => {
+      ctx.clearRect(0, 0, w, h);
+
+      // grid lines
+      ctx.globalAlpha = 0.5;
+      ctx.strokeStyle = colors.line;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      for (let c = 0; c <= cols; c++) {
+        const x = c * cell + 0.5;
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, h);
+      }
+      for (let r = 0; r <= rows; r++) {
+        const y = r * cell + 0.5;
+        ctx.moveTo(0, y);
+        ctx.lineTo(w, y);
+      }
+      ctx.stroke();
+
+      // cursor halo: outlines that fall off with distance
+      if (hover) {
+        ctx.strokeStyle = colors.ok;
+        ctx.lineWidth = 1;
+        for (let dc = -2; dc <= 2; dc++) {
+          for (let dr = -2; dr <= 2; dr++) {
+            const dist = Math.max(Math.abs(dc), Math.abs(dr));
+            ctx.globalAlpha = [0.55, 0.3, 0.12][dist];
+            ctx.strokeRect(
+              (hover.c + dc) * cell + 1.5,
+              (hover.r + dr) * cell + 1.5,
+              cell - 2,
+              cell - 2,
+            );
+          }
+        }
+      }
+
+      // verified cells
+      for (let i = verifies.length - 1; i >= 0; i--) {
+        const v = verifies[i];
+        const age = now - v.born;
+        if (age > VERIFY_LIFE) {
+          verifies.splice(i, 1);
+          continue;
+        }
+        const k = age / VERIFY_LIFE;
+        const a = v.peak * (1 - k) * (1 - k) * Math.min(1, age / 250);
+        const x = v.c * cell;
+        const y = v.r * cell;
+        ctx.fillStyle = colors.ok;
+        ctx.globalAlpha = a;
+        ctx.fillRect(x + 1, y + 1, cell - 1, cell - 1);
+        ctx.strokeStyle = colors.ok;
+        ctx.lineWidth = 1;
+        ctx.globalAlpha = Math.min(1, a * 3.2);
+        ctx.strokeRect(x + 1.5, y + 1.5, cell - 2, cell - 2);
+        if (v.tick) drawTick(x + cell / 2, y + cell / 2, Math.min(1, a * 4));
+      }
+
+      // cells that break apart and come back
+      for (let i = revives.length - 1; i >= 0; i--) {
+        const rv = revives[i];
+        const age = now - rv.born;
+        const x = rv.c * cell;
+        const y = rv.r * cell;
+        const cx = x + cell / 2;
+        const cy = y + cell / 2;
+
+        if (age >= RETURN) {
+          verifies.push({
+            c: rv.c,
+            r: rv.r,
+            born: now,
+            peak: 0.22,
+            tick: true,
+          });
+          revives.splice(i, 1);
+          continue;
+        }
+
+        if (age < DRIFT) {
+          const pulse = 0.5 + 0.5 * Math.sin(age / 90);
+          ctx.fillStyle = colors.warn;
+          ctx.globalAlpha = 0.07 * (1 - age / DRIFT);
+          ctx.fillRect(x + 1, y + 1, cell - 1, cell - 1);
+          ctx.strokeStyle = colors.warn;
+          ctx.globalAlpha =
+            (age < BREAK ? 0.35 + 0.35 * pulse : 0.3) * (1 - age / DRIFT);
+          ctx.lineWidth = 1;
+          ctx.strokeRect(x + 1.5, y + 1.5, cell - 2, cell - 2);
+        }
+
+        for (const p of rv.parts) {
+          let px: number;
+          let py: number;
+          let alpha = 0.9;
+          let size = p.s;
+          let color = colors.warn;
+
+          if (age < BREAK) {
+            const k = easeOut(age / BREAK);
+            px = cx + Math.cos(p.a) * p.d * k;
+            py = cy + Math.sin(p.a) * p.d * k;
+          } else if (age < DRIFT) {
+            const t = (age - BREAK) / 1000;
+            px = cx + Math.cos(p.a) * p.d + Math.sin(t * 2 + p.w) * 4;
+            py = cy + Math.sin(p.a) * p.d + Math.cos(t * 2 + p.w) * 4;
+            alpha = 0.8;
+          } else {
+            const k = easeInOut((age - DRIFT) / (RETURN - DRIFT));
+            const ox = cx + Math.cos(p.a) * p.d;
+            const oy = cy + Math.sin(p.a) * p.d;
+            px = ox + (cx - ox) * k;
+            py = oy + (cy - oy) * k;
+            size = p.s * (1 - 0.5 * k);
+            if (k > 0.55) color = colors.ok;
+            alpha = 0.9;
+          }
+          ctx.globalAlpha = alpha;
+          ctx.fillStyle = color;
+          ctx.fillRect(px - size / 2, py - size / 2, size, size);
+        }
+      }
+
+      ctx.globalAlpha = 1;
+    };
+
+    const step = (now: number) => {
+      if (now > nextAmbient) {
+        verifies.push({
+          c: Math.floor(Math.random() * cols),
+          r: Math.floor(Math.random() * rows),
+          born: now,
+          peak: 0.12,
+          tick: false,
+        });
+        nextAmbient = now + rand(380, 880);
+      }
+      if (revives.length < 2 && now > nextRevive) {
+        const parts: Particle[] = Array.from({ length: 9 }, (_, i) => ({
+          a: (i / 9) * Math.PI * 2 + rand(-0.3, 0.3),
+          d: rand(cell * 0.7, cell * 1.5),
+          s: rand(2, 3.5),
+          w: rand(0, 6),
+        }));
+        revives.push({
+          c: Math.floor(Math.random() * cols),
+          r: Math.floor(Math.random() * rows),
+          born: now,
+          parts,
+        });
+        nextRevive = now + rand(3200, 5200);
+      }
+      if (verifies.length > 220) verifies.splice(0, verifies.length - 220);
+      draw(now);
+    };
+
+    const frame = (t: number) => {
+      raf = 0;
+      if (!onScreen || document.hidden) return;
+      step(t);
+      raf = requestAnimationFrame(frame);
+    };
+
+    const start = () => {
+      if (reduce || raf) return;
+      raf = requestAnimationFrame(frame);
+    };
+    const stop = () => {
+      if (raf) cancelAnimationFrame(raf);
+      raf = 0;
+    };
+
+    const onPointerMove = (e: PointerEvent) => {
+      if (e.pointerType === "touch" || reduce) return;
+      const rect = wrap.getBoundingClientRect();
+      const c = Math.floor((e.clientX - rect.left) / cell);
+      const r = Math.floor((e.clientY - rect.top) / cell);
+      if (c < 0 || r < 0 || c >= cols || r >= rows) {
+        hover = null;
+        return;
+      }
+      hover = { c, r };
+      const key = `${c}:${r}`;
+      if (key !== lastTrail) {
+        lastTrail = key;
+        verifies.push({
+          c,
+          r,
+          born: performance.now(),
+          peak: 0.16,
+          tick: false,
+        });
+      }
+    };
+    const onPointerLeave = () => {
+      hover = null;
+      lastTrail = "";
+    };
+
+    const onVisibility = () => (document.hidden ? stop() : start());
+
+    const ro = new ResizeObserver(resize);
+    ro.observe(wrap);
+
+    const io = new IntersectionObserver(([entry]) => {
+      onScreen = entry.isIntersecting;
+      if (onScreen) start();
+      else stop();
+    });
+    io.observe(wrap);
+
+    const mo = new MutationObserver(() => {
+      colors = readColors();
+      if (reduce) draw(performance.now());
+    });
+    mo.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme", "class"],
+    });
+
+    host.addEventListener("pointermove", onPointerMove);
+    host.addEventListener("pointerleave", onPointerLeave);
+    document.addEventListener("visibilitychange", onVisibility);
+
+    resize();
+    const t0 = performance.now();
+    nextAmbient = t0;
+    nextRevive = t0 + 1200;
+    start();
+
+    return () => {
+      stop();
+      ro.disconnect();
+      io.disconnect();
+      mo.disconnect();
+      host.removeEventListener("pointermove", onPointerMove);
+      host.removeEventListener("pointerleave", onPointerLeave);
+      document.removeEventListener("visibilitychange", onVisibility);
+    };
+  }, []);
+
+  // Outer mask fades the bottom into the next section; the inner mask keeps the
+  // animation strongest behind the proof panel and calm behind the headline.
+  const bottomFade = "linear-gradient(to bottom, #000 78%, transparent)";
+  const focus =
+    "radial-gradient(75% 90% at 74% 42%, #000 0%, rgba(0,0,0,0.45) 62%, rgba(0,0,0,0.2) 100%)";
 
   return (
     <div
-      className="hb-root pointer-events-none absolute inset-0 z-0 overflow-hidden"
+      ref={wrapRef}
       aria-hidden="true"
-      style={{
-        WebkitMaskImage: "linear-gradient(to bottom, #000 82%, transparent)",
-        maskImage: "linear-gradient(to bottom, #000 82%, transparent)",
-      }}
+      className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
+      style={{ WebkitMaskImage: bottomFade, maskImage: bottomFade }}
     >
-      <style>{CSS}</style>
-
-      {/* atmosphere */}
       <div
         className="absolute inset-0"
         style={{
           background:
-            `radial-gradient(48% 60% at ${glowX} 42%, color-mix(in srgb, var(--hb-tint) var(--hb-glow-a), transparent), transparent 72%),` +
-            "radial-gradient(34% 40% at 6% 92%, color-mix(in srgb, var(--rv-success) var(--hb-glow-b), transparent), transparent 72%)",
+            "radial-gradient(38% 48% at 72% 46%, color-mix(in srgb, var(--rv-accent) 13%, transparent), transparent 72%)",
         }}
       />
-
-      {/* clouds */}
-      <div className="absolute inset-0 -scale-x-100">
-        <Cloud
-          className="hb-drift-a right-[4%] -top-[4%] hidden w-[30rem] sm:block"
-          strength={0.2}
-        />
-        <Cloud
-          className="hb-drift-b -right-[6%] top-[52%] hidden w-[26rem] md:block"
-          strength={0.3}
-        />
-        <Cloud
-          className="hb-drift-a left-[40%] -bottom-[2%] w-[15rem]"
-          strength={0.4}
-        />
-        <Cloud
-          className="hb-drift-b -left-[3%] -bottom-[3%] hidden w-[16rem] lg:block"
-          strength={0.5}
-        />
-      </div>
-
-      {/* <Network /> */}
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 h-full w-full"
+        style={{ WebkitMaskImage: focus, maskImage: focus }}
+      />
     </div>
-  );
-}
-
-/* ------------- Floating region badges, attached to the card ------------- */
-
-// function Chip({ label, className, delay }: { label: string; className: string; delay: number }) {
-//   return (
-//     <div
-//       className={`hb-chip pointer-events-none absolute z-20 hidden items-center gap-1.5 rounded-full border px-2.5 py-1 font-mono text-[11px] text-foreground-muted shadow-sm backdrop-blur md:flex ${className}`}
-//       style={{
-//         borderColor: "var(--rv-border-strong)",
-//         backgroundColor: "color-mix(in srgb, var(--rv-surface) 85%, transparent)",
-//         animationDelay: `${delay}s`,
-//       }}
-//     >
-//       <span
-//         className="h-1.5 w-1.5 rounded-full"
-//         style={{ backgroundColor: "var(--rv-success)", boxShadow: "0 0 6px var(--rv-success)" }}
-//       />
-//       {label}
-//     </div>
-//   );
-// }
-
-export function HeroRegionChips() {
-  return (
-    <>
-      {/* <Chip label="us-east-1" className="-right-3 top-28" delay={0} /> */}
-      {/* <Chip label="eu-west-1" className="-left-3 top-[58%]" delay={1.3} /> */}
-      {/* <Chip label="ap-south-1" className="-right-3 bottom-24" delay={2.6} /> */}
-    </>
   );
 }
 
