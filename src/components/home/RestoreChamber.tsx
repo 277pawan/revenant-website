@@ -8,7 +8,6 @@ import {
   useTransform,
 } from "motion/react";
 import { useState } from "react";
-import { AmbientMotion } from "../ui/AmbientMotion";
 
 const STAGES = ["Snapshot", "Sandbox", "Verify", "Evidence", "Reap"] as const;
 
@@ -29,16 +28,19 @@ export function RestoreChamber() {
   const [passed, setPassed] = useState(!!reduceMotion);
 
   useMotionValueEvent(progress, "change", (v) => {
-    const nextStage = Math.min(STAGES.length, Math.floor(v * STAGES.length + 0.02));
+    const nextStage = Math.min(
+      STAGES.length,
+      Math.floor(v * STAGES.length + 0.02),
+    );
     const checkStart = 0.42;
     const nextChecks =
       v < checkStart
         ? 0
         : Math.min(
-          CHECKS.length,
-          Math.floor(((v - checkStart) / 0.4) * CHECKS.length) +
-          (v > checkStart ? 1 : 0),
-        );
+            CHECKS.length,
+            Math.floor(((v - checkStart) / 0.4) * CHECKS.length) +
+              (v > checkStart ? 1 : 0),
+          );
     setStage(nextStage);
     setChecks(Math.min(CHECKS.length, nextChecks));
     setPassed(v >= 0.9);
@@ -102,8 +104,11 @@ export function RestoreChamber() {
                 return (
                   <li
                     key={label}
-                    className={`min-w-0 flex-1 truncate text-center text-[10px] transition-colors duration-500 sm:text-[11px] ${on ? "font-medium text-foreground" : "text-foreground-subtle"
-                      }`}
+                    className={`min-w-0 flex-1 truncate text-center text-[10px] transition-colors duration-500 sm:text-[11px] ${
+                      on
+                        ? "font-medium text-foreground"
+                        : "text-foreground-subtle"
+                    }`}
                   >
                     {label}
                   </li>
@@ -124,7 +129,9 @@ export function RestoreChamber() {
                     y: on ? 0 : 4,
                   }}
                   transition={{ duration: 0.35, ease: "easeOut" }}
-                  className={on ? "text-terminal-success" : "text-terminal-muted"}
+                  className={
+                    on ? "text-terminal-success" : "text-terminal-muted"
+                  }
                 >
                   {on ? "✓" : "·"} {line}
                 </motion.li>
@@ -137,19 +144,21 @@ export function RestoreChamber() {
             animate={
               passed
                 ? {
-                  borderColor: "color-mix(in srgb, var(--rv-success) 40%, transparent)",
-                  backgroundColor: "var(--rv-success-muted)",
-                }
+                    borderColor:
+                      "color-mix(in srgb, var(--rv-success) 40%, transparent)",
+                    backgroundColor: "var(--rv-success-muted)",
+                  }
                 : {
-                  borderColor: "var(--rv-border)",
-                  backgroundColor: "var(--rv-surface-sunken)",
-                }
+                    borderColor: "var(--rv-border)",
+                    backgroundColor: "var(--rv-surface-sunken)",
+                  }
             }
             transition={{ duration: 0.4 }}
           >
             <span
-              className={`text-sm font-semibold ${passed ? "text-success" : "text-foreground-subtle"
-                }`}
+              className={`text-sm font-semibold ${
+                passed ? "text-success" : "text-foreground-subtle"
+              }`}
             >
               {passed ? "Restore Validation: PASS" : "Waiting on checks…"}
             </span>

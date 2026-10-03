@@ -68,25 +68,57 @@ const CLOUD_BODY =
   "M60 100 C28 100 10 80 20 58 C28 40 52 36 66 44 C70 20 98 6 124 16 C142 24 150 38 150 46 C170 34 200 44 204 66 C220 70 226 92 206 100 Z";
 const CLOUD_HIGHLIGHT = "M72 66 C86 46 110 40 128 50";
 
-function Cloud({ className, strength = 1 }: { className: string; strength?: number }) {
+function Cloud({
+  className,
+  strength = 1,
+}: {
+  className: string;
+  strength?: number;
+}) {
   const id = "hb" + useId().replace(/:/g, "");
   return (
-    <svg viewBox="0 0 240 120" className={`absolute overflow-visible hb-cloud ${className}`}>
+    <svg
+      viewBox="0 0 240 120"
+      className={`absolute overflow-visible hb-cloud ${className}`}
+    >
       <defs>
         <linearGradient id={id} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" style={{ stopColor: "var(--hb-tint)", stopOpacity: `calc(var(--hb-fill-top) * ${strength})` }} />
-          <stop offset="100%" style={{ stopColor: "var(--hb-tint)", stopOpacity: `calc(var(--hb-fill-bot) * ${strength})` }} />
+          <stop
+            offset="0%"
+            style={{
+              stopColor: "var(--hb-tint)",
+              stopOpacity: `calc(var(--hb-fill-top) * ${strength})`,
+            }}
+          />
+          <stop
+            offset="100%"
+            style={{
+              stopColor: "var(--hb-tint)",
+              stopOpacity: `calc(var(--hb-fill-bot) * ${strength})`,
+            }}
+          />
         </linearGradient>
       </defs>
-      <g strokeLinecap="round" strokeLinejoin="round" fill="none" strokeWidth="1.2">
+      <g
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="none"
+        strokeWidth="1.2"
+      >
         <path
           d={CLOUD_BODY}
           fill={`url(#${id})`}
-          style={{ stroke: "var(--hb-tint)", strokeOpacity: `calc(var(--hb-edge) * ${strength})` }}
+          style={{
+            stroke: "var(--hb-tint)",
+            strokeOpacity: `calc(var(--hb-edge) * ${strength})`,
+          }}
         />
         <path
           d={CLOUD_HIGHLIGHT}
-          style={{ stroke: "var(--hb-hi)", strokeOpacity: `calc(var(--hb-edge) * ${strength} * .9)` }}
+          style={{
+            stroke: "var(--hb-hi)",
+            strokeOpacity: `calc(var(--hb-edge) * ${strength} * .9)`,
+          }}
         />
       </g>
     </svg>
@@ -97,10 +129,10 @@ function Cloud({ className, strength = 1 }: { className: string; strength?: numb
 
 // Nodes represent the actual pipeline steps: Source -> Sandbox -> Verify -> Evidence
 const NODES = [
-  { id: 'source', x: 80, y: 180, label: 'AWS Snapshot', type: 'source' },
-  { id: 'sandbox', x: 260, y: 320, label: 'Sandbox', type: 'process' },
-  { id: 'verify', x: 450, y: 460, label: 'Verify', type: 'process' },
-  { id: 'evidence', x: 680, y: 580, label: 'Evidence', type: 'target' },
+  { id: "source", x: 80, y: 180, label: "AWS Snapshot", type: "source" },
+  { id: "sandbox", x: 260, y: 320, label: "Sandbox", type: "process" },
+  { id: "verify", x: 450, y: 460, label: "Verify", type: "process" },
+  { id: "evidence", x: 680, y: 580, label: "Evidence", type: "target" },
 ];
 
 // Links create a structured path leading towards the UI card (bottom right)
@@ -108,17 +140,17 @@ const LINKS = [
   {
     d: "M 80 180 C 150 180, 180 320, 260 320",
     dur: 3.5,
-    delay: 0
+    delay: 0,
   },
   {
     d: "M 260 320 C 330 320, 360 460, 450 460",
     dur: 4,
-    delay: 0.8
+    delay: 0.8,
   },
   {
     d: "M 450 460 C 530 460, 560 580, 680 580",
     dur: 4.5,
-    delay: 1.6
+    delay: 1.6,
   },
 ];
 
@@ -152,7 +184,7 @@ export default function Network() {
           className="hb-trail"
           style={{
             stroke: "var(--hb-tint)",
-            strokeOpacity: 0.15
+            strokeOpacity: 0.15,
           }}
         />
       ))}
@@ -168,7 +200,7 @@ export default function Network() {
             style={{
               stroke: "var(--hb-tint)",
               strokeOpacity: 0.3,
-              strokeLinecap: "round"
+              strokeLinecap: "round",
             }}
           />
           {/* Animated Packets (representing data flow) */}
@@ -186,8 +218,8 @@ export default function Network() {
       {/* 3. Meaningful Nodes */}
       {NODES.map((node, i) => {
         // Customize node appearance based on its role in the pipeline
-        const isSource = node.type === 'source';
-        const isTarget = node.type === 'target';
+        const isSource = node.type === "source";
+        const isTarget = node.type === "target";
 
         return (
           <g key={node.id} transform={`translate(${node.x} ${node.y})`}>
@@ -199,7 +231,7 @@ export default function Network() {
               style={{
                 stroke: "var(--hb-tint)",
                 strokeOpacity: isTarget ? 0.4 : 0.2,
-                animationDelay: `${i * 0.8}s`
+                animationDelay: `${i * 0.8}s`,
               }}
             />
 
@@ -210,7 +242,7 @@ export default function Network() {
               style={{
                 stroke: "var(--hb-tint)",
                 strokeOpacity: isTarget ? 1 : 0.6,
-                strokeWidth: isTarget ? 2 : 1
+                strokeWidth: isTarget ? 2 : 1,
               }}
             />
 
@@ -264,10 +296,22 @@ export function HeroBackdrop() {
 
       {/* clouds */}
       <div className="absolute inset-0 -scale-x-100">
-        <Cloud className="hb-drift-a right-[4%] -top-[4%] hidden w-[30rem] sm:block" strength={0.2} />
-        <Cloud className="hb-drift-b -right-[6%] top-[52%] hidden w-[26rem] md:block" strength={0.3} />
-        <Cloud className="hb-drift-a left-[40%] -bottom-[2%] w-[15rem]" strength={0.4} />
-        <Cloud className="hb-drift-b -left-[3%] -bottom-[3%] hidden w-[16rem] lg:block" strength={0.5} />
+        <Cloud
+          className="hb-drift-a right-[4%] -top-[4%] hidden w-[30rem] sm:block"
+          strength={0.2}
+        />
+        <Cloud
+          className="hb-drift-b -right-[6%] top-[52%] hidden w-[26rem] md:block"
+          strength={0.3}
+        />
+        <Cloud
+          className="hb-drift-a left-[40%] -bottom-[2%] w-[15rem]"
+          strength={0.4}
+        />
+        <Cloud
+          className="hb-drift-b -left-[3%] -bottom-[3%] hidden w-[16rem] lg:block"
+          strength={0.5}
+        />
       </div>
 
       {/* <Network /> */}
@@ -277,24 +321,24 @@ export function HeroBackdrop() {
 
 /* ------------- Floating region badges, attached to the card ------------- */
 
-function Chip({ label, className, delay }: { label: string; className: string; delay: number }) {
-  return (
-    <div
-      className={`hb-chip pointer-events-none absolute z-20 hidden items-center gap-1.5 rounded-full border px-2.5 py-1 font-mono text-[11px] text-foreground-muted shadow-sm backdrop-blur md:flex ${className}`}
-      style={{
-        borderColor: "var(--rv-border-strong)",
-        backgroundColor: "color-mix(in srgb, var(--rv-surface) 85%, transparent)",
-        animationDelay: `${delay}s`,
-      }}
-    >
-      <span
-        className="h-1.5 w-1.5 rounded-full"
-        style={{ backgroundColor: "var(--rv-success)", boxShadow: "0 0 6px var(--rv-success)" }}
-      />
-      {label}
-    </div>
-  );
-}
+// function Chip({ label, className, delay }: { label: string; className: string; delay: number }) {
+//   return (
+//     <div
+//       className={`hb-chip pointer-events-none absolute z-20 hidden items-center gap-1.5 rounded-full border px-2.5 py-1 font-mono text-[11px] text-foreground-muted shadow-sm backdrop-blur md:flex ${className}`}
+//       style={{
+//         borderColor: "var(--rv-border-strong)",
+//         backgroundColor: "color-mix(in srgb, var(--rv-surface) 85%, transparent)",
+//         animationDelay: `${delay}s`,
+//       }}
+//     >
+//       <span
+//         className="h-1.5 w-1.5 rounded-full"
+//         style={{ backgroundColor: "var(--rv-success)", boxShadow: "0 0 6px var(--rv-success)" }}
+//       />
+//       {label}
+//     </div>
+//   );
+// }
 
 export function HeroRegionChips() {
   return (
@@ -305,3 +349,4 @@ export function HeroRegionChips() {
     </>
   );
 }
+
