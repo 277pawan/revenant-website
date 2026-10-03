@@ -2,7 +2,6 @@ import { Copy, Check } from "lucide-react";
 import { useState } from "react";
 import { Button } from "../ui/Button";
 import { site } from "../../lib/site";
-import { AmbientMotion } from "../ui/AmbientMotion";
 
 const LINES = [
   { type: "prompt", text: "$ revenant init --url $DATABASE_URL" },
