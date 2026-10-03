@@ -20,7 +20,7 @@ export const site = {
   docsUrl: `${SITE_URL}/docs`,
   cliUrl: `${SITE_URL}/cli`,
   pricingUrl: `${SITE_URL}/pricing`,
-  githubCli: "https://github.com/277pawan/revenant-cli",
+  githubCli: "https://github.com/277pawan/freerev-cli",
   githubAction: "https://github.com/277pawan/revenant-action",
   founder: {
     name: "Pawan",

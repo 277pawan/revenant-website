@@ -17,6 +17,7 @@ import {
   Wrench,
   type LucideIcon,
 } from "lucide-react";
+import { AmbientMotion } from "../ui/AmbientMotion";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger, MotionPathPlugin);
 
@@ -271,10 +272,7 @@ const STEPS: Step[] = [
   },
 ];
 
-function bindScrapReveal(
-  root: HTMLElement,
-  reduce: boolean | null,
-) {
+function bindScrapReveal(root: HTMLElement, reduce: boolean | null) {
   const q = gsap.utils.selector(root);
   const path = root.querySelector<SVGPathElement>("#drill-curve");
 
@@ -372,7 +370,13 @@ export function RestoreStory() {
   );
 
   return (
-    <section ref={root} className="relative overflow-x-clip bg-background py-12 sm:py-20">
+    <section
+      ref={root}
+      className="relative overflow-x-clip bg-background py-12 sm:py-20"
+    >
+      <div className="  ">
+        <AmbientMotion variant="recovery" />
+      </div>
       <header className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6">
         <p className="ui-section-label">How a drill runs</p>
         <h2 className="ui-heading mt-2 max-w-3xl text-2xl sm:text-4xl">
@@ -467,10 +471,11 @@ export function RestoreStory() {
                 data-note
                 data-step={s.step}
                 data-side={s.side === "left" ? "right" : "left"}
-                className={`absolute w-[min(280px,34%)] ${s.side === "left"
-                  ? "right-[8%] text-right"
-                  : "left-[8%] text-left"
-                  }`}
+                className={`absolute w-[min(280px,34%)] ${
+                  s.side === "left"
+                    ? "right-[8%] text-right"
+                    : "left-[8%] text-left"
+                }`}
                 style={{ top: s.noteTop }}
               >
                 <p className="text-xs font-semibold text-accent-bright">

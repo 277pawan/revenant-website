@@ -2,6 +2,7 @@ import { Copy, Check } from "lucide-react";
 import { useState } from "react";
 import { Button } from "../ui/Button";
 import { site } from "../../lib/site";
+import { AmbientMotion } from "../ui/AmbientMotion";
 
 const LINES = [
   { type: "prompt", text: "$ revenant init --url $DATABASE_URL" },
@@ -35,7 +36,7 @@ export function CliShowcase() {
   };
 
   return (
-    <section className="px-4 py-16 sm:px-6">
+    <section className=" relative px-4 sm:px-6">
       <div className="mx-auto max-w-6xl">
         <div className="grid items-center gap-12 lg:grid-cols-2">
           <div>
@@ -68,7 +69,10 @@ export function CliShowcase() {
             </div>
             <div className="p-5 font-mono text-[13px] leading-relaxed">
               {LINES.map((line, i) => (
-                <div key={i} className={LINE_CLASS[line.type] ?? "text-terminal-muted"}>
+                <div
+                  key={i}
+                  className={LINE_CLASS[line.type] ?? "text-terminal-muted"}
+                >
                   {line.text}
                 </div>
               ))}
