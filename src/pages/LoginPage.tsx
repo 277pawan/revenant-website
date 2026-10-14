@@ -3,6 +3,7 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import {
   getAuthProviders,
+  fetchSessionToken,
   goToAppWithSession,
   login,
   me,
@@ -80,6 +81,15 @@ export function LoginPage() {
       });
       goToAppWithSession(res.token, res.user);
     } catch (err) {
+      try {
+        const [{ user }, token] = await Promise.all([me(), fetchSessionToken()]);
+        if (token) {
+          goToAppWithSession(token, user);
+          return;
+        }
+      } catch {
+        // Keep the original login error when there is no established session to resume.
+      }
       setError(err instanceof Error ? err.message : "Sign in failed");
       setLoading(false);
     }
