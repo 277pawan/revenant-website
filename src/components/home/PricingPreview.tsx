@@ -18,7 +18,9 @@ export function PricingPreview() {
     <section className="px-4 py-16 sm:px-6">
       <div className="mx-auto max-w-6xl">
         <div className="text-center">
-          <h2 className="ui-heading text-3xl sm:text-4xl">Recovery proof for PostgreSQL and Redis.</h2>
+          <h2 className="ui-heading text-3xl sm:text-4xl">
+            Recovery proof for Database and Redis.
+          </h2>
           <p className="mx-auto mt-4 max-w-xl ui-body">
             Start with the free CLI, then add managed database drills and
             time-limited Redis snapshot storage as your team grows.
@@ -36,21 +38,36 @@ export function PricingPreview() {
             return (
               <article
                 key={plan.id}
-                className={`ui-card flex flex-col p-6 ${plan.featured ? "border-t-2 border-t-accent" : ""
-                  }`}
+                className={`ui-card flex flex-col p-6 ${
+                  plan.featured ? "border-t-2 border-t-accent" : ""
+                }`}
               >
-                <h3 className="text-lg font-semibold text-foreground">{plan.name}</h3>
+                <h3 className="text-lg font-semibold text-foreground">
+                  {plan.name}
+                </h3>
                 <div className="mt-2">
-                  <span className="text-3xl font-bold text-foreground">{plan.price}</span>
+                  <span className="text-3xl font-bold text-foreground">
+                    {plan.price}
+                  </span>
                   {plan.priceNote && (
-                    <span className="ml-1 text-sm text-foreground-subtle">{plan.priceNote}</span>
+                    <span className="ml-1 text-sm text-foreground-subtle">
+                      {plan.priceNote}
+                    </span>
                   )}
                 </div>
-                <p className="mt-3 text-sm text-foreground-muted">{plan.tagline}</p>
+                <p className="mt-3 text-sm text-foreground-muted">
+                  {plan.tagline}
+                </p>
                 <ul className="mt-6 flex-1 space-y-2.5">
                   {plan.highlights.slice(0, 6).map((h) => (
-                    <li key={h} className="flex gap-2 text-sm text-foreground-muted">
-                      <Check size={16} className="mt-0.5 shrink-0 text-accent" />
+                    <li
+                      key={h}
+                      className="flex gap-2 text-sm text-foreground-muted"
+                    >
+                      <Check
+                        size={16}
+                        className="mt-0.5 shrink-0 text-accent"
+                      />
                       {h}
                     </li>
                   ))}
