@@ -6,6 +6,7 @@ import { awsSection } from "./sections/aws";
 import { evidenceSection } from "./sections/evidence";
 import { integrationsSection } from "./sections/integrations";
 import { recoveryReadinessSection } from "./sections/recovery-readiness";
+import { redisSection } from "./sections/redis";
 
 /** Add new section files under sections/ and append here */
 export const DOC_SECTIONS: DocSection[] = [
@@ -16,6 +17,7 @@ export const DOC_SECTIONS: DocSection[] = [
   integrationsSection,
   cloudSection,
   awsSection,
+  redisSection,
 ];
 
 export function getDocSection(sectionId: string): DocSection | undefined {

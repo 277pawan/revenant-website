@@ -197,8 +197,8 @@ export const cloudSection: DocSection = {
           type: "list",
           items: [
             "Developer — free CLI + GitHub Action, no cloud account.",
-            "Starter — ₹499/mo after 30-day trial; 1 workflow; managed AWS; no agent.",
-            "Pro — ₹1,499/mo; 10 workflows; 3 parallel drills; optional agent; Slack/HTTP.",
+            "Starter — ₹499/mo after 30-day trial; 1 PostgreSQL workflow; managed AWS; 1 Redis instance, 4 Redis proofs/month, opt-in snapshots up to 24h.",
+            "Pro — ₹1,499/mo; 10 PostgreSQL workflows; 3 parallel drills; separate MongoDB read-only validation; 10 Redis instances, 30 Redis proofs/month, opt-in snapshots up to 7 days.",
             "Enterprise — contact us for SSO and custom SLAs.",
           ],
         },

@@ -15,8 +15,8 @@ export function Footer() {
             />
           </Link>
           <p className="mt-3 max-w-sm text-sm leading-relaxed text-foreground-muted">
-            Disaster recovery proof for PostgreSQL. Free CLI, managed AWS restore
-            drills, and signed evidence.
+            Disaster recovery proof for PostgreSQL and Redis. Free CLI, managed
+            AWS restore drills, and time-limited Redis snapshot storage.
           </p>
           <div className="mt-5 space-y-2 text-sm text-foreground-muted">
             <a

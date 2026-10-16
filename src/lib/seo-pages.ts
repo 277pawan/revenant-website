@@ -9,7 +9,7 @@ import {
 export const homeSeo: PageMetaInput = {
   title: "PostgreSQL Backup Recovery Testing",
   description:
-    "Test PostgreSQL backup recovery with real restore drills, recovered-data validation, measured recovery time, and signed evidence. Free CLI and managed cloud plans.",
+    "Test PostgreSQL and Redis backup recovery with real restore drills, recovered-data validation, measured recovery time, and signed evidence. Free CLI and managed cloud plans.",
   path: "/",
   keywords: [
     "PostgreSQL backup verification",
@@ -20,6 +20,7 @@ export const homeSeo: PageMetaInput = {
     "RTO",
     "evidence vault",
     "GitHub Actions DR",
+    "Redis backup restore testing",
   ],
   jsonLd: [
     organizationJsonLd(),
@@ -29,7 +30,7 @@ export const homeSeo: PageMetaInput = {
       {
         question: "What is Revenant?",
         answer:
-          "Revenant proves PostgreSQL backups actually restore by running automated restore drills and capturing signed evidence with real RTO measurements.",
+          "Revenant proves PostgreSQL and Redis backups actually restore by running isolated restore drills and capturing evidence with real recovery measurements.",
       },
       {
         question: "Do I need Revenant Cloud to use the CLI?",
@@ -48,7 +49,7 @@ export const homeSeo: PageMetaInput = {
 export const pricingSeo: PageMetaInput = {
   title: "Pricing",
   description:
-    "Simple INR pricing for Revenant Cloud. Free CLI forever. Starter trial, Pro restore drills, and Enterprise options for PostgreSQL disaster recovery.",
+    "Simple INR pricing for Revenant Cloud. Free CLI forever, managed PostgreSQL drills, and separate Redis restore proofs with opt-in, time-limited snapshot storage.",
   path: "/pricing",
   keywords: [
     "PostgreSQL DR pricing",
@@ -56,6 +57,7 @@ export const pricingSeo: PageMetaInput = {
     "restore drill SaaS",
     "disaster recovery plans",
     "Revenant Cloud pricing",
+    "Redis restore proof pricing",
   ],
 };
 
@@ -100,7 +102,7 @@ export const coffeeSeo: PageMetaInput = {
 export const docsIndexSeo: PageMetaInput = {
   title: "Documentation",
   description:
-    "Revenant documentation: quickstart, CLI commands, AWS RDS restore drills, evidence exports, Slack and email alerts, and cloud schedules.",
+    "Revenant documentation: PostgreSQL and Redis restore proofs, CLI commands, AWS RDS drills, evidence exports, alerts, and cloud schedules.",
   path: "/docs",
   keywords: [
     "Revenant docs",

@@ -18,10 +18,10 @@ export function PricingPreview() {
     <section className="px-4 py-16 sm:px-6">
       <div className="mx-auto max-w-6xl">
         <div className="text-center">
-          <h2 className="ui-heading text-3xl sm:text-4xl">Start free. Scale when ready.</h2>
+          <h2 className="ui-heading text-3xl sm:text-4xl">Recovery proof for PostgreSQL and Redis.</h2>
           <p className="mx-auto mt-4 max-w-xl ui-body">
-            Developer tier is free forever. Cloud Starter includes a 30-day trial
-            — no card at signup.
+            Start with the free CLI, then add managed database drills and
+            time-limited Redis snapshot storage as your team grows.
           </p>
         </div>
 
@@ -48,7 +48,7 @@ export function PricingPreview() {
                 </div>
                 <p className="mt-3 text-sm text-foreground-muted">{plan.tagline}</p>
                 <ul className="mt-6 flex-1 space-y-2.5">
-                  {plan.highlights.slice(0, 4).map((h) => (
+                  {plan.highlights.slice(0, 6).map((h) => (
                     <li key={h} className="flex gap-2 text-sm text-foreground-muted">
                       <Check size={16} className="mt-0.5 shrink-0 text-accent" />
                       {h}

@@ -24,6 +24,10 @@ const PROOF_POINTS = [
     title: "Evidence you can hand over",
     body: "Signed PDF and JSON proof for auditors and leadership.",
   },
+  {
+    title: "Redis, proven separately",
+    body: "Capture an RDB, restore it in isolation, and verify the result — without mixing it into PostgreSQL or AWS workflow limits.",
+  },
 ] as const;
 
 export function HeroSection() {
@@ -42,8 +46,9 @@ export function HeroSection() {
             <ProofHeadline />
 
             <p className="mt-6 max-w-[34rem] text-base leading-relaxed text-foreground-muted sm:text-lg">
-              Revenant runs your PostgreSQL recovery on a schedule and keeps the
-              evidence, so you find out it works before an outage asks.
+              Revenant runs PostgreSQL recovery drills on a schedule and keeps
+              the evidence. Now you can separately prove Redis snapshots restore,
+              before an outage asks.
             </p>
 
             <div className="mt-8 flex flex-wrap items-center gap-3">
@@ -61,7 +66,7 @@ export function HeroSection() {
           <RestoreChamber />
         </div>
 
-        <ul className="mt-16 grid gap-8 border-t border-border pt-8 sm:mt-20 sm:grid-cols-3 sm:gap-10">
+        <ul className="mt-16 grid gap-8 border-t border-border pt-8 sm:mt-20 sm:grid-cols-2 sm:gap-10 lg:grid-cols-4">
           {PROOF_POINTS.map((p) => (
             <li key={p.title}>
               <p className="text-sm font-semibold text-foreground">{p.title}</p>
@@ -75,4 +80,3 @@ export function HeroSection() {
     </section>
   );
 }
-

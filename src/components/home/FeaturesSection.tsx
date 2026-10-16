@@ -1,4 +1,12 @@
-import { Database, FileCheck, Zap, Lock, GitBranch, BarChart3 } from "lucide-react";
+import {
+  BarChart3,
+  Database,
+  FileCheck,
+  GitBranch,
+  HardDrive,
+  Lock,
+  Zap,
+} from "lucide-react";
 import { AmbientMotion } from "../ui/AmbientMotion";
 
 const FEATURES = [
@@ -37,6 +45,12 @@ const FEATURES = [
     title: "Fleet health",
     body:
       "Dashboard: which workflows passed, which are stale, and your RTO trend over time.",
+  },
+  {
+    icon: HardDrive,
+    title: "Redis restore proof",
+    body:
+      "Capture an RDB and prove it loads in an isolated Redis instance. Snapshot storage is opt-in, compressed by default, and expires within your plan's retention limit.",
   },
 ];
 
