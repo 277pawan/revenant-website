@@ -16,7 +16,7 @@ const ctaClass =
 const FLOW = [
   "No card at signup",
   "₹1 card check",
-  `₹${STARTER_PRICE_INR}/mo from day 31`,
+  `₹${STARTER_PRICE_INR}/mo from day 91`,
 ];
 
 export function TrialPromoBanner() {
@@ -99,16 +99,16 @@ export function TrialPromoBanner() {
         <div className="relative flex flex-col gap-5 lg:flex-row lg:items-center lg:gap-8">
           <div className="tb-item flex h-14 w-14 shrink-0 flex-col items-center justify-center rounded-2xl border border-accent/30 bg-background/60">
             <span className="text-xl font-bold leading-none text-accent-bright">
-              30
+              3
             </span>
             <span className="mt-1 text-[9px] font-semibold uppercase tracking-[0.18em] text-foreground-subtle">
-              days
+              months
             </span>
           </div>
 
           <div className="min-w-0 flex-1">
             <p className="tb-item text-base font-semibold text-foreground">
-              Starter: 30-day free trial
+              Starter: 3-month free trial
             </p>
             <p className="tb-item mt-1 text-sm leading-relaxed text-foreground-muted">
               Managed AWS restore drills, evidence vault, and schedules
@@ -140,10 +140,10 @@ export function TrialPromoBanner() {
 export function StarterTrialBadge() {
   return (
     <div className="rounded-xl border border-accent/25 bg-accent-muted/50 px-3 py-2 text-center text-xs leading-relaxed text-foreground-muted">
-      <span className="font-semibold text-accent-bright">First month free</span>
+      <span className="font-semibold text-accent-bright">First 3 months free</span>
       {" · "}
       No credit card today
-      {" · "}₹{STARTER_PRICE_INR}/mo after 30 days
+      {" · "}₹{STARTER_PRICE_INR}/mo after 3 months
     </div>
   );
 }

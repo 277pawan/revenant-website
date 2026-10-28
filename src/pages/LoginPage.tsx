@@ -108,7 +108,7 @@ export function LoginPage() {
           <h1 className="mt-4 text-2xl font-bold text-foreground">Sign in</h1>
           <p className="mt-1 text-sm text-foreground-subtle">
             Active Starter trial required for the cloud dashboard. New accounts:
-            register for 30 days free.
+            register for a 3-month free trial.
           </p>
         </div>
 

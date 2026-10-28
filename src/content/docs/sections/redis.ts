@@ -65,7 +65,7 @@ export const redisSection: DocSection = {
           type: "list",
           items: [
             "Developer (free): run Redis proof locally with the Revenant CLI; no Revenant Cloud snapshot storage.",
-            "Starter (₹499/month after the 30-day trial): 1 Redis instance, 4 restore proofs per calendar month, and up to 24 hours of opt-in snapshot retention.",
+            "Starter (₹499/month after the 3-month trial): 1 Redis instance, 4 restore proofs per calendar month, and up to 24 hours of opt-in snapshot retention.",
             "Pro (₹1,499/month): 10 Redis instances, 30 restore proofs per calendar month, and up to 7 days of opt-in snapshot retention.",
             "Enterprise: contact Revenant for custom limits and retention.",
           ],

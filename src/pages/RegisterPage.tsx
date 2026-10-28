@@ -102,7 +102,7 @@ export function RegisterPage() {
             className="mx-auto h-16 w-auto max-w-[280px] object-contain"
           />
           <h1 className=" text-2xl font-bold text-foreground">
-            Start 30-day trial
+            Start 3-month trial
           </h1>
           <p className="my-2 text-sm text-foreground-subtle">
             Same backend as the cloud app — no card required.

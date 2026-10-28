@@ -9,12 +9,12 @@ export const cloudSection: DocSection = {
     {
       slug: "sign-up",
       title: "Create an account",
-      summary: "30-day Starter trial — no card at signup.",
+      summary: "3-month Starter trial — no card at signup.",
       blocks: [
         {
           type: "paragraph",
           text:
-            `Register on this site (/register) or sign in at the cloud dashboard (${docsPublicUrls.cloudDashboard}/login). New orgs start on Starter with subscription_status=trialing and trial_ends_at +30 days. Sign in with Google or GitHub — no separate SSO setup required for users.`,
+            `Register on this site (/register) or sign in at the cloud dashboard (${docsPublicUrls.cloudDashboard}/login). New orgs start on Starter with subscription_status=trialing and trial_ends_at +90 days. Sign in with Google or GitHub — no separate SSO setup required for users.`,
         },
         {
           type: "list",
@@ -197,7 +197,7 @@ export const cloudSection: DocSection = {
           type: "list",
           items: [
             "Developer — free CLI + GitHub Action, no cloud account.",
-            "Starter — ₹499/mo after 30-day trial; 1 PostgreSQL workflow; managed AWS; 1 Redis instance, 4 Redis proofs/month, opt-in snapshots up to 24h.",
+            "Starter — ₹499/mo after 3-month trial; 1 PostgreSQL workflow; managed AWS; 1 Redis instance, 4 Redis proofs/month, opt-in snapshots up to 24h.",
             "Pro — ₹1,499/mo; 10 PostgreSQL workflows; 3 parallel drills; separate MongoDB read-only validation; 10 Redis instances, 30 Redis proofs/month, opt-in snapshots up to 7 days.",
             "Enterprise — contact us for SSO and custom SLAs.",
           ],

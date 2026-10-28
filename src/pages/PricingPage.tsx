@@ -24,7 +24,7 @@ import { planCheckoutTarget } from "../lib/session";
 const HERO_CHIPS = [
   "Free CLI",
   "Billed monthly in INR",
-  "Starter: 30-day trial",
+  "Starter: 3-month trial",
 ];
 
 const REDIS_TIERS = [

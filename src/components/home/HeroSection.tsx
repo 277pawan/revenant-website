@@ -53,7 +53,7 @@ export function HeroSection() {
 
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <Button variant="primary" href="/register" size="lg">
-                Start 30-day trial
+                Start 3-month trial
                 <ArrowRight size={18} />
               </Button>
               <Button variant="secondary" href="/cli" size="lg">

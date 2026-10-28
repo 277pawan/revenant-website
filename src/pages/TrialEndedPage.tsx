@@ -26,7 +26,7 @@ export function TrialEndedPage() {
       <aside className="border-t border-border-subtle pt-6 md:border-l md:border-t-0 md:pl-8 md:pt-0">
         <p className="text-sm leading-relaxed text-foreground-muted">
           A ₹1 card check activates dashboard access. Your plan charge begins after the
-          30-day trial.
+          3-month trial.
         </p>
         <div className="mt-5 flex flex-col items-start gap-3">
           <Button href="/billing">Set up autopay — ₹1</Button>

@@ -36,7 +36,7 @@ export function CtaBanner() {
           </h2>
           <p className="mt-3 max-w-2xl ui-body">
             Run your first restore drill today. Free CLI in CI, or start a
-            30-day cloud trial with managed AWS sandboxes.
+            3-month cloud trial with managed AWS sandboxes.
           </p>
         </div>
         <div className="flex flex-wrap gap-3 lg:justify-end">

@@ -48,7 +48,8 @@ export function applyCatalogToPlans(
     } else if (fromApi.priceInr != null) {
       price = `₹${fromApi.priceInr.toLocaleString("en-IN")}`;
       if (plan.id === "starter" && trialDays > 0) {
-        priceNote = `/ month after ${trialDays}-day free trial`;
+        const trialLabel = trialDays === 90 ? "90-day (3-month)" : `${trialDays}-day`;
+        priceNote = `/ month after ${trialLabel} free trial`;
       } else if (plan.id === "pro") {
         priceNote = "/ month";
       }

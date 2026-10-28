@@ -128,7 +128,7 @@ export const gettingStartedSection: DocSection = {
         {
           type: "paragraph",
           text:
-            `Hosted dashboard at ${docsPublicUrls.cloudDashboard}. Register databases, build validation plans, schedule automatic drills, view fleet health and RTO trends, invite teammates, and browse the Evidence Vault. Starter runs one managed AWS RDS workflow with a 30-day trial. Pro expands to a fleet (up to 10 workflows), parallel drills, Slack integrations, and longer evidence retention.`,
+            `Hosted dashboard at ${docsPublicUrls.cloudDashboard}. Register databases, build validation plans, schedule automatic drills, view fleet health and RTO trends, invite teammates, and browse the Evidence Vault. Starter runs one managed AWS RDS workflow with a 3-month trial. Pro expands to a fleet (up to 10 workflows), parallel drills, Slack integrations, and longer evidence retention.`,
         },
         {
           type: "heading",
@@ -227,7 +227,7 @@ export const gettingStartedSection: DocSection = {
           type: "list",
           items: [
             "Just need CI proof? → Free Developer CLI + GitHub Action.",
-            "One critical RDS and want Revenant to run drills? → Starter (30-day trial).",
+            "One critical RDS and want Revenant to run drills? → Starter (3-month trial).",
             "Fleet of DBs, Slack alerts, private Postgres? → Pro.",
             "SSO / custom contracts? → Enterprise (Talk to us).",
           ],

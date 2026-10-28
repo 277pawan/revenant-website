@@ -79,7 +79,7 @@ export function RazorpayStarterCheckout({
 
   const helperText = isUpgrade
     ? `Same Razorpay modal as Starter. ₹${PRO_PRICE_INR}/month starts after your trial.`
-    : `₹${monthlyInr}/month starts automatically after your 30-day trial.`;
+    : `₹${monthlyInr}/month starts automatically after your 3-month trial.`;
 
   return (
     <div>

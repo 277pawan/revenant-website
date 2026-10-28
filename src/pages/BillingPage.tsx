@@ -209,7 +209,7 @@ export function BillingPage() {
               </li>
               <li>· Unlocks the cloud dashboard immediately</li>
               <li>
-                · <strong>₹{monthlyInr}/month</strong> after your 30-day free
+                · <strong>₹{monthlyInr}/month</strong> after your 3-month free
                 trial
               </li>
             </ul>
