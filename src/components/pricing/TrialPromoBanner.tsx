@@ -97,7 +97,7 @@ export function TrialPromoBanner() {
         />
 
         <div className="relative flex flex-col gap-5 lg:flex-row lg:items-center lg:gap-8">
-          <div className="tb-item flex h-14 w-14 shrink-0 flex-col items-center justify-center rounded-2xl border border-accent/30 bg-background/60">
+          <div className="tb-item flex h-14 w-14 shrink-0 flex-col items-center justify-center px-8 rounded-md border border-accent/30 bg-background/60">
             <span className="text-xl font-bold leading-none text-accent-bright">
               3
             </span>
@@ -140,7 +140,9 @@ export function TrialPromoBanner() {
 export function StarterTrialBadge() {
   return (
     <div className="rounded-xl border border-accent/25 bg-accent-muted/50 px-3 py-2 text-center text-xs leading-relaxed text-foreground-muted">
-      <span className="font-semibold text-accent-bright">First 3 months free</span>
+      <span className="font-semibold text-accent-bright">
+        First 3 months free
+      </span>
       {" · "}
       No credit card today
       {" · "}₹{STARTER_PRICE_INR}/mo after 3 months
